@@ -11,10 +11,10 @@
             {data.passage.title}
         </DL>
         <DL label="Author">
-            <NavLink href={`/authors/${data.passage.work[0].author[0].loi_id}`}>{data.passage.work[0].author[0].name}</NavLink>
+            <NavLink href={`/authors/${data.passage.work[0]?.author[0]?.loi_id}`}>{data.passage.work[0]?.author[0]?.name}</NavLink>
         </DL>
         <DL label="Work">
-            <NavLink href={`/works/${data.passage.work[0].loi_id}`}>{data.passage.work[0].title}</NavLink>
+            <NavLink href={`/works/${data.passage.work[0]?.loi_id}`}>{data.passage.work[0]?.title}</NavLink>
         </DL>
     
         <DL label="Text">
@@ -32,7 +32,7 @@
 
     {#if data.passage.keywords.length > 0}
     <DL label="Keywords">
-        {#each data.passage.keywords as keyword}
+        {#each data.passage.keywords as keyword (keyword.loi_id)}
             <NavLink href={`/keywords/${keyword.loi_id}`}>{keyword.value}</NavLink>
         {/each}
         </DL>
@@ -40,7 +40,7 @@
 
     {#if data.passage.bibl_quotes.length > 0}
          <DL label="Biblical quotes">
-         {#each data.passage.bibl_quotes as quote}
+         {#each data.passage.bibl_quotes as quote (quote.loi_id)}
 		    <NavLink href={`/bible-quotes/${quote.loi_id}`}>{quote.bible}</NavLink>
         {/each}
 	    </DL>
