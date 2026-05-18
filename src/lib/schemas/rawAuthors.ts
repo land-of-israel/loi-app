@@ -1,5 +1,3 @@
-// src/lib/schemas/authors.ts
-
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 

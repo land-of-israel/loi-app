@@ -13,7 +13,7 @@ mkdirSync(folderPath, { recursive: true });
 
 const fileNames: string[] = [
 	"authors.json",
-    "bibl_ref.json",
+    "bible_ref.json",
     "corpora.json",
     "dates.json",
 	"genres.json",
@@ -30,8 +30,18 @@ const fileNames: string[] = [
 
 async function fetchData(fileName: string): Promise<void> {
 	try {
-		const data: unknown = await request(new URL(fileName, baseUrl), { responseType: "json" });
-		writeFileSync(join(folderPath, fileName), JSON.stringify(data, null, 2), "utf-8");
+		const response = await request(new URL(fileName, baseUrl), {
+			responseType: "json"
+		});
+
+		const data = response.value?.data;
+
+		writeFileSync(
+			join(folderPath, fileName),
+			JSON.stringify(data, null, 2),
+			"utf-8"
+		);
+
 		console.log(`✅ Saved: ${fileName}`);
 	} catch (error: unknown) {
 		console.error(`❌ Error fetching ${fileName}:`, error);
