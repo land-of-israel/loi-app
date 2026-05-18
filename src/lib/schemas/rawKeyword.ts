@@ -1,20 +1,15 @@
 import { z } from 'zod';
-import { NullableString } from './rawShared';
+import { NullableString, ReferencedSchema } from './rawShared';
 
 export const KeywordSchema = z.object ({
     id: z.number,
     order: z.string,
-    name: NullableString,
-    note: NullableString,
-    reference: NullableString,
+    label: NullableString,
+    notes: NullableString,
     loi_id: NullableString,
-    main_genre: z.array(
-        z.object({
-        id: z.number,
-        value: NullableString,
-        order: z.string
-    }))
+    passages: z.array(ReferencedSchema)
 })
+
 
 export const KeywordsSchema = z.array(KeywordSchema);
 

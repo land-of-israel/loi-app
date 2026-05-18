@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { NullableString } from './rawShared';
+import { NullableString, ReferencedSchema } from './rawShared';
 
 export const GenreSchema = z.object ({
     id: z.number,
@@ -8,12 +8,7 @@ export const GenreSchema = z.object ({
     note: NullableString,
     reference: NullableString,
     loi_id: NullableString,
-    main_genre: z.array(
-        z.object({
-        id: z.number,
-        value: NullableString,
-        order: z.string
-    }))
+    main_genre: z.array(ReferencedSchema)
 })
 
 export const GenresSchema = z.array(GenreSchema);
