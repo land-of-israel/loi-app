@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const ManuscriptSchema = z.object ({
-    id: z.number,
-    order: z.string,
-    shelfmark: z.array(
+export const RawManuscriptSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
+    shelfmark: z.array( 
         z.object({
-            id: z.number,
+            id: z.number(),
             value: NullableString
         })
     ),
@@ -16,6 +16,6 @@ export const ManuscriptSchema = z.object ({
 })
 
 
-export const ManuscriptsSchema = z.array(ManuscriptSchema);
+export const RawManuscriptsSchema = z.record(z.string(), RawManuscriptSchema);
 
-export type Manuscript = z.infer<typeof ManuscriptSchema>;
+export type RawManuscript = z.infer<typeof RawManuscriptSchema>;

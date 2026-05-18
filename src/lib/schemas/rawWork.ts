@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const WorkSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawWorkSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     title: NullableString,
     reference: NullableString,
     author: z.array(ReferencedSchema),
@@ -16,6 +16,6 @@ export const WorkSchema = z.object ({
 })
 
 
-export const WorksSchema = z.array(WorkSchema);
+export const RawWorksSchema = z.record(z.string(), RawWorkSchema);
 
-export type Work = z.infer<typeof WorkSchema>;
+export type RawWork = z.infer<typeof RawWorkSchema>;

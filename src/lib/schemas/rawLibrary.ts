@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const LibrarySchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawLibrarySchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     label: NullableString,
     place: z.array(ReferencedSchema),
     full_label: NullableString,
@@ -11,6 +11,6 @@ export const LibrarySchema = z.object ({
 })
 
 
-export const LibrariesSchema = z.array(LibrarySchema);
+export const RawLibrariesSchema = z.record(z.string(), RawLibrarySchema);
 
-export type Library = z.infer<typeof LibrarySchema>;
+export type RawLibrary = z.infer<typeof RawLibrarySchema>;

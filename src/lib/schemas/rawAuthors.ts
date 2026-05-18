@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const AuthorSchema = z.object({
+export const RawAuthorSchema = z.object({
 	id: z.number(),
-	order: z.string,
+	order: z.string(),
 	name: z.string(),
 	gnd: NullableString,
 	wikidata: NullableString,
 	loi_id: NullableString
 });
 
-export const AuthorsSchema = z.array(AuthorSchema);
+export const RawAuthorsSchema = z.record(z.string(), RawAuthorSchema);
 
-export type Author = z.infer<typeof AuthorSchema>;
+export type RawAuthor = z.infer<typeof RawAuthorSchema>;

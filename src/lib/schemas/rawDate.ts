@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const DateSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawDateSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     label: NullableString,
     tpq: NullableString,
     taq: NullableString,
     loi_id: NullableString
 })
 
-export const DatesSchema = z.array(DateSchema);
+export const RawDatesSchema = z.record(z.string(), RawDateSchema);
 
-export type Date = z.infer<typeof DateSchema>;
+export type RawDate = z.infer<typeof RawDateSchema>;

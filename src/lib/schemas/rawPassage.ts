@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const PassageSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawPassageSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     title: NullableString,
     text: NullableString,
     loi_id: NullableString,
@@ -18,6 +18,6 @@ export const PassageSchema = z.object ({
 })
 
 
-export const PassagesSchema = z.array(PassageSchema);
+export const RawPassagesSchema = z.record(z.string(), RawPassageSchema);
 
-export type Passage = z.infer<typeof PassageSchema>;
+export type RawPassage = z.infer<typeof RawPassageSchema>;

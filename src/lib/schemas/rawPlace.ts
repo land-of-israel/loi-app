@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const PlaceSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawPlaceSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     name: NullableString,
     geonames: NullableString,
     loi_id: NullableString,
@@ -11,6 +11,6 @@ export const PlaceSchema = z.object ({
     note: NullableString
 })
 
-export const PlacesSchema = z.array(PlaceSchema);
+export const RawPlacesSchema = z.record(z.string(), RawPlaceSchema);
 
-export type Place = z.infer<typeof PlaceSchema>;
+export type RawPlace = z.infer<typeof RawPlaceSchema>;

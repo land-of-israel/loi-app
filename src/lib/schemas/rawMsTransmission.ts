@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const MsTransmissionSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawMsTransmissionSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     name: NullableString,
     passage: z.array(ReferencedSchema),
     manuscript: z.array(ReferencedSchema),
@@ -12,6 +12,6 @@ export const MsTransmissionSchema = z.object ({
 })
 
 
-export const MsTransmissionsSchema = z.array(MsTransmissionSchema);
+export const RawMsTransmissionsSchema = z.record(z.string(), RawMsTransmissionSchema);
 
-export type MsTransmission = z.infer<typeof MsTransmissionSchema>;
+export type RawMsTransmission = z.infer<typeof RawMsTransmissionSchema>;

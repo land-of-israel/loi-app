@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const BiblRefSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawBiblRefSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     bible: NullableString,
     text: NullableString,
     url: NullableString,
     loi_id: NullableString
 })
 
-export const BiblRefsSchema = z.array(BiblRefSchema);
+export const RawBiblRefsSchema = z.record(z.string(), RawBiblRefSchema);
 
-export type BiblRef = z.infer<typeof BiblRefSchema>;
+export type RawBiblRef = z.infer<typeof RawBiblRefSchema>;

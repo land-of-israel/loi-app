@@ -1,14 +1,14 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const LanguageSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawLanguageSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     language: NullableString,
     notes: NullableString,
     loi_id: NullableString
 })
 
-export const LanguagesSchema = z.array(LanguageSchema);
+export const RawLanguagesSchema = z.record(z.string(), RawLanguageSchema);
 
-export type Language = z.infer<typeof LanguageSchema>;
+export type RawLanguage = z.infer<typeof RawLanguageSchema>;

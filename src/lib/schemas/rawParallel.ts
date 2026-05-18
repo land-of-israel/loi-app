@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const ParallelSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawParallelSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     label: NullableString,
     excerpt: NullableString,
-    active: z.boolean,
+    active: z.boolean(),
     loi_id: NullableString
 })
 
-export const ParallelsSchema = z.array(ParallelSchema);
+export const RawParallelsSchema = z.record(z.string(), RawParallelSchema);
 
-export type Parallel = z.infer<typeof ParallelSchema>;
+export type RawParallel = z.infer<typeof RawParallelSchema>;

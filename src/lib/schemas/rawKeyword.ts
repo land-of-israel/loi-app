@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const KeywordSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawKeywordSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     label: NullableString,
     notes: NullableString,
     loi_id: NullableString,
@@ -11,6 +11,6 @@ export const KeywordSchema = z.object ({
 })
 
 
-export const KeywordsSchema = z.array(KeywordSchema);
+export const RawKeywordsSchema = z.record(z.string(), RawKeywordSchema);
 
-export type Keyword = z.infer<typeof KeywordSchema>;
+export type RawKeyword = z.infer<typeof RawKeywordSchema>;

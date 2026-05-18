@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString } from './rawShared';
 
-export const CorpusSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawCorpusSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     name: NullableString,
     note: NullableString,
     reference: NullableString,
@@ -11,6 +11,6 @@ export const CorpusSchema = z.object ({
     loi_id: NullableString
 })
 
-export const CorporaSchema = z.array(CorpusSchema);
+export const RawCorporaSchema = z.record(z.string(), RawCorpusSchema);
 
-export type Corpus = z.infer<typeof CorpusSchema>;
+export type RawCorpus = z.infer<typeof RawCorpusSchema>;

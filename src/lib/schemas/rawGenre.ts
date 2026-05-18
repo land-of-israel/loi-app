@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NullableString, ReferencedSchema } from './rawShared';
 
-export const GenreSchema = z.object ({
-    id: z.number,
-    order: z.string,
+export const RawGenreSchema = z.object ({
+    id: z.number(),
+    order: z.string(),
     name: NullableString,
     note: NullableString,
     reference: NullableString,
@@ -11,6 +11,6 @@ export const GenreSchema = z.object ({
     main_genre: z.array(ReferencedSchema)
 })
 
-export const GenresSchema = z.array(GenreSchema);
+export const RawGenresSchema = z.record(z.string(), RawGenreSchema);
 
-export type Genre = z.infer<typeof GenreSchema>;
+export type RawGenre = z.infer<typeof RawGenreSchema>;
