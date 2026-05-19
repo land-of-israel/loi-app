@@ -1,17 +1,92 @@
 <script lang="ts">
   import NavButton from '$lib/components/NavButton.svelte'
+  import * as NavigationMenu from "$lib/components/ui/navigation-menu";
+
 </script>
 <header>
-  <nav class="flex items-center gap-6 bg-brand-600 p-4 text-lg font-bold text-white">
-    <div class="mr-auto text-2xl">
+<nav class="flex items-center gap-6 bg-brand-600 p-4 text-lg font-bold text-white">
+    
+    
+
+    <NavigationMenu.Root viewport={false}>
+      <NavigationMenu.List class="flex items-center gap-4">
+
+       <NavigationMenu.Item>
+          <NavigationMenu.Trigger>
+            Browse
+          </NavigationMenu.Trigger>
+
+          <NavigationMenu.Content>
+            <ul class="grid gap-2 p-4 w-48">
+              <li>
+                <NavigationMenu.Link href="/passages">
+                  Passages
+                </NavigationMenu.Link>
+              </li>
+
+              <li>
+                <NavigationMenu.Link href="/works">
+                  Works
+                </NavigationMenu.Link>
+              </li>
+
+              <li>
+                <NavigationMenu.Link href="/authors">
+                  Authors
+                </NavigationMenu.Link>
+              </li>
+
+            </ul>
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item>
+         <NavigationMenu.Link href="/about">
+                  Tools
+          </NavigationMenu.Link>          
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item>
+         <NavigationMenu.Link href="/about">
+              Advanced Search
+          </NavigationMenu.Link>          
+        </NavigationMenu.Item>
+
+         <NavigationMenu.Item>
+          <NavigationMenu.Trigger >
+            About
+          </NavigationMenu.Trigger>
+
+          <NavigationMenu.Content>
+            <ul class="grid gap-2 p-4 w-48">
+              <li>
+                <NavigationMenu.Link href="/about">
+                  Project
+                </NavigationMenu.Link>
+              </li>
+
+              <li>
+                <NavigationMenu.Link href="/about">
+                  Content of the Database
+                </NavigationMenu.Link>
+              </li>
+
+              <li>
+                <NavigationMenu.Link href="/">
+                  Using the Database
+                </NavigationMenu.Link>
+              </li>
+
+            </ul>
+          </NavigationMenu.Content>
+</NavigationMenu.Item>  
+      </NavigationMenu.List>
+    </NavigationMenu.Root>
+
+    <div class="ml-auto text-2xl">
       <NavButton href="/">
         The Land of Israel in Geonic Times
       </NavButton>
     </div>
-
-    <ul class="flex item-center gap-4">
-      <li><NavButton href="/">Home</NavButton></li>
-      <li><NavButton href="/about">About</NavButton></li>
-    </ul>
   </nav>
 </header>

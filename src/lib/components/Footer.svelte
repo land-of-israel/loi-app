@@ -104,7 +104,7 @@
 		</NavLink>
 		|
 		<NavLink
-			href="https://github.com/histories-in-transition/hit-astro"
+			href="https://github.com/land-of-israel"
 		>
 			Code Repo
 			<img src={gitHubLogo} alt="" class="inline h-7"/>
