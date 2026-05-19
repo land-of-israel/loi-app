@@ -2,7 +2,7 @@
   import NavButton from '$lib/components/NavButton.svelte'
 </script>
 <header>
-  <nav class="flex items-center gap-6 bg-amber-600 p-4 text-lg font-bold text-white">
+  <nav class="flex items-center gap-6 bg-brand-600 p-4 text-lg font-bold text-white">
     <div class="mr-auto text-2xl">
       <NavButton href="/">
         The Land of Israel in Geonic Times

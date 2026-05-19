@@ -1,2 +1,12 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+@theme {
+  --color-brand-600: #19647E;
+  --color-brand-400: #28AFB0;
+  --color-brand-200: #dbe8e8;
+  --color-secondary: #F4D35E;
+  --color-accent: #faaf0c;
+
+  --color-text: #1F271B;
+  --color-bg: #ffffff;
+}

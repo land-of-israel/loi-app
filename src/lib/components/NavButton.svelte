@@ -5,6 +5,6 @@
     
 </script>
 
-<a href={href} class="hover:text-amber-950 font-lg text-semibold">
+<a href={href} class="hover:text-accent font-lg text-semibold">
     {@render children()}
 </a>

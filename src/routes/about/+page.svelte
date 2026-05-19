@@ -4,7 +4,7 @@
     import NavLink from '$lib/components/NavLink.svelte';
 </script>
 <div class="grid justify-center gap-4 py-8">
-    <h1 class="text-3xl font-semibold">About the Projekt</h1>
+    <h1 class="text-3xl font-semibold">About the Project</h1>
     <p class="prose">        
         The Land of Israel in Geonic times is a project dedicated to the study of how Jews
         related to their ancestral homeland, as it emerges from the literature of the period,
@@ -34,7 +34,7 @@
         <dd><NavLink href="https://judaistik.univie.ac.at/ueber-uns/institutsmitarbeiterinnen/daniel-edelhofer/">Daniel Edelhofer</NavLink></dd>
     </dl>
     <p>
-        <a class="bg-amber-400 px-4 py-2 rounded-md" href="https://www.oeaw.ac.at/en/imafo/research/historical-identity-research/projects/the-land-of-israel-in-geonic-times">Visit the Project Website at IMAFO
+        <a class="bg-accent px-4 py-2 rounded-md" href="https://www.oeaw.ac.at/en/imafo/research/historical-identity-research/projects/the-land-of-israel-in-geonic-times">Visit the Project Website at IMAFO
          <SquareArrowUpRight class="inline" size="16" />
         </a>
     </p>
