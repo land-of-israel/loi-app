@@ -1,10 +1,15 @@
 <script lang="ts">
   import * as NavigationMenu from "$lib/components/ui/navigation-menu";
 import { resolve } from "$app/paths";
+import Logo from "$lib/assets/loi-logo.png";
 </script>
 <header>
-<nav class="flex items-center gap-6 bg-brand-600 p-4 text-lg font-bold text-white">
-    
+<nav class="flex items-center gap-6 bg-brand-600 px-4 py-2 text-lg font-bold text-white">
+     <div>
+      <a href={resolve("/")} >
+        <img src={Logo} alt="LOI Logo" class="h-12 rounded-lg"/>
+      </a>
+    </div>
     
 
     <NavigationMenu.Root viewport={false}>
