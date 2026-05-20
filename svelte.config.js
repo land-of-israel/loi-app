@@ -14,8 +14,7 @@ const config = {
     }),
 		paths: {
       base: base,
-    },
-    	trailingSlash: 'always'
+    },    
 	},
 
   vitePlugin: {
