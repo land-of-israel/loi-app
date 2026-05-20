@@ -2,6 +2,8 @@
 	let { data } = $props();
     import DL  from '$lib/components/DL.svelte';
     import NavLink from "$lib/components/NavLink.svelte"
+
+import { resolve } from "$app/paths";
 </script>
 
 <div class="grid gap-4 p-10">
@@ -10,12 +12,16 @@
         <DL label="Passage">
             {data.passage.title}
         </DL>
+        {#if data.passage.work.length > 0 && data.passage.work[0].author.length > 0}
         <DL label="Author">
-            <NavLink href={`/authors/${data.passage.work[0]?.author[0]?.loi_id}`}>{data.passage.work[0]?.author[0]?.name}</NavLink>
+            <NavLink href={resolve(`/authors/${data.passage.work[0]?.author[0]?.loi_id}`)}>{data.passage.work[0]?.author[0]?.name}</NavLink>
         </DL>
+        {/if}
+        {#if data.passage.work.length > 0 }
         <DL label="Work">
-            <NavLink href={`/works/${data.passage.work[0]?.loi_id}`}>{data.passage.work[0]?.title}</NavLink>
+            <NavLink href={resolve(`/works/${data.passage.work[0]?.loi_id}`)}>{data.passage.work[0]?.title}</NavLink>
         </DL>
+        {/if}
     
         <DL label="Text">
             {data.passage.text}
@@ -33,18 +39,18 @@
     {#if data.passage.keywords.length > 0}
     <DL label="Keywords">
         {#each data.passage.keywords as keyword (keyword.loi_id)}
-            <NavLink href={`/keywords/${keyword.loi_id}`}>{keyword.value}</NavLink>
+            <NavLink href={resolve(`/keywords/${keyword.loi_id}`)}>{keyword.value}</NavLink>
         {/each}
         </DL>
     {/if}
 
-    {#if data.passage.bibl_quotes.length > 0}
+    <!-- {#if data.passage.bibl_quotes.length > 0}
          <DL label="Biblical quotes">
          {#each data.passage.bibl_quotes as quote (quote.loi_id)}
-		    <NavLink href={`/bible-quotes/${quote.loi_id}`}>{quote.bible}</NavLink>
+		    <NavLink href={resolve(`/bible-quotes/${quote.loi_id}`)}></NavLink>{quote.bible}</NavLink>
         {/each}
 	    </DL>
-    {/if}
+    {/if} -->
 
     {#if data.passage.commentary}
         <DL label="Commentary">

@@ -5,6 +5,7 @@
   import acdhLogo from "$lib/assets/acdh-logo.svg"
   import gitHubLogo from "$lib/assets/GitHub_Invertocat_White_Clearspace.svg"
   import NavLink from "./NavLink.svelte";
+  import { resolve } from "$app/paths";
 </script>
 
 <footer class="bg-brand-200 border-t-2 border-brand-600 text-text pt-5">
@@ -97,11 +98,11 @@
 </div>
   <div class="bg-brand-600 text-white py-2 text-center">
 		&copy; Copyright OEAW |
-		<NavLink
-			href="/imprint"
+		<!-- <NavLink
+			href={resolve("/imprint")}
 		>
 			Impressum
-		</NavLink>
+		</NavLink> -->
 		|
 		<NavLink
 			href="https://github.com/land-of-israel"
