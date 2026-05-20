@@ -3,6 +3,9 @@ import { error } from '@sveltejs/kit';
 
 import passages from '$lib/data/processed/passages.json';
 
+
+export const prerender = true;
+
 export function entries() {
 	return passages.map((p) => ({
 		id: p.loi_id.toString()
