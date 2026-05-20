@@ -8,7 +8,7 @@
 </script>
 
 <footer class="bg-brand-200 border-t-2 border-brand-600 text-text pt-5">
-  <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,300px))] justify-between gap-4 md:w-3/4 mx-auto py-2">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,300px))] justify-between gap-4 md:w-3/4 mx-auto py-2 px-10">
    			
         <div class="flex flex-col gap-4">
 					<a class="hidden md:inline-flex py-1" href="https://www.univie.ac.at/">

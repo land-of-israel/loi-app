@@ -1,7 +1,6 @@
 <script lang="ts">
-  import NavButton from '$lib/components/NavButton.svelte'
   import * as NavigationMenu from "$lib/components/ui/navigation-menu";
-
+import { resolve } from "$app/paths";
 </script>
 <header>
 <nav class="flex items-center gap-6 bg-brand-600 p-4 text-lg font-bold text-white">
@@ -19,19 +18,19 @@
           <NavigationMenu.Content>
             <ul class="grid gap-2 p-4 w-48">
               <li>
-                <NavigationMenu.Link href="/passages">
+                <NavigationMenu.Link href={resolve("/passages")}>
                   Passages
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href="/works">
+                <NavigationMenu.Link href={resolve("/works")}>
                   Works
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href="/authors">
+                <NavigationMenu.Link href={resolve("/authors")}>
                   Authors
                 </NavigationMenu.Link>
               </li>
@@ -41,13 +40,13 @@
         </NavigationMenu.Item>
 
         <NavigationMenu.Item>
-         <NavigationMenu.Link href="/about">
+         <NavigationMenu.Link href={resolve("/about")}>
                   Tools
           </NavigationMenu.Link>          
         </NavigationMenu.Item>
 
         <NavigationMenu.Item>
-         <NavigationMenu.Link href="/about">
+         <NavigationMenu.Link href={resolve("/about")}>
               Advanced Search
           </NavigationMenu.Link>          
         </NavigationMenu.Item>
@@ -60,19 +59,19 @@
           <NavigationMenu.Content>
             <ul class="grid gap-2 p-4 w-48">
               <li>
-                <NavigationMenu.Link href="/about">
+                <NavigationMenu.Link href={resolve("/about")}>
                   Project
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href="/about">
+                <NavigationMenu.Link href={resolve("/about")}>
                   Content of the Database
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href="/">
+                <NavigationMenu.Link href={resolve("/about")}>
                   Using the Database
                 </NavigationMenu.Link>
               </li>
@@ -84,9 +83,9 @@
     </NavigationMenu.Root>
 
     <div class="ml-auto text-2xl">
-      <NavButton href="/">
+      <a href={resolve("/")} class="hover:text-accent font-lg text-semibold">
         The Land of Israel in Geonic Times
-      </NavButton>
+      </a>
     </div>
   </nav>
 </header>

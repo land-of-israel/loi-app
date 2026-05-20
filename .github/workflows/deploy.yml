@@ -1,0 +1,82 @@
+name: Fetch data, generate index, build website and deploy to github pages
+# defines when the action should be executed in this case on push to the main branch or manual trigger
+on:
+  schedule:
+    - cron: "41 3 * * *"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# can have several jobs which run parallel. each job can have several steps which are listed and follow one another
+# if there are several jobs watch out if one need another to be executed first e.g. build need: fetch
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout the repo # clone the repo to the docker run in ubuntu
+        uses: actions/checkout@v4 # there is already a code for this step, we refer to the path in the github ans state the version
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+          xmllint --version
+
+      - name: set up node.js 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 
+          cache: 'pnpm'
+
+      - name: set up pnpm
+        uses: pnpm/action-setup@v4 
+        with:
+          version: 11
+
+      - name: install dependencies 
+        run: pnpm install
+
+      - name: fetch fresh data using script
+        run: pnpm run fetch-data 
+
+      - name: data processing 
+        run: |
+          echo "Processing data..."
+          pnpm run process-data
+
+      # - name: generate typesense index
+      #   env:
+      #     TYPESENSE_ADMIN_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
+      #     PUBLIC_TYPESENSE_API_HOST: ${{ secrets.PUBLIC_TYPESENSE_API_HOST }}
+      #     PUBLIC_TYPESENSE_API_PORT: ${{ secrets.PUBLIC_TYPESENSE_API_PORT }}
+      #     PUBLIC_TYPESENSE_API_PROTOCOL: ${{ secrets.PUBLIC_TYPESENSE_API_PROTOCOL }}
+      #   run: pnpm run generate-index
+
+      - name: setup pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: build website
+        env:
+            BASE_PATH: '/${{ github.event.repository.name }}'
+       
+        run: pnpm run build
+
+      - name: upload artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'build/'
+
+      - name: Deploy to Github pages
+        id: deployment
+        uses: actions/deploy-pages@v4
