@@ -4,12 +4,11 @@
 	import Footer from '$lib/components/Footer.svelte';
 	let { children } = $props();
 </script>
-<div class="min-h-screen flex flex-col">
+<div class="min-h-screen grid grid-rows-[auto_1fr_auto]">
 	<Header />
 	
-	<main class="flex-1 max-w-6xl mx-auto">
-		{@render children()}
-	
+	<main>
+		{@render children()}	
 	</main>
 	<Footer />
 </div>

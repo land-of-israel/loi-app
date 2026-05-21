@@ -51,6 +51,7 @@
 	},
 	"dependencies": {
 		"@acdh-oeaw/lib": "^1.0.7",
+		"@fontsource/cormorant-garamond": "^5.2.11",
 		"zod": "^4.4.3"
 	}
 }
