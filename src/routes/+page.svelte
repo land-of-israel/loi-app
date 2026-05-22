@@ -19,8 +19,8 @@ import { resolve } from "$app/paths";
             <div class="grid grid-cols-2 mx-auto gap-2 md:gap-4 p-5">
                 <MenuItem title="Passages" link={resolve('/passages')}/>
                 <MenuItem title="Works" link={resolve('/works')}/>
-                <MenuItem title="Authors" link={resolve('/passages')}/>
-                <MenuItem title="Keywords" link={resolve('/passages')}/>
+                <MenuItem title="Authors" link={resolve('/authors')}/>
+                <MenuItem title="Keywords" link={resolve('/keywords')}/>
                 </div>
             </MenuCard>
 

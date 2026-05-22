@@ -13,6 +13,7 @@
   --color-brand-200: #dbe8e8;
   --color-brand-100: #edf3f3;
 
+  --color-primary: #19647E;
   --color-secondary: #F4D35E;
   --color-secondary-100: #f4e7ba;
   --color-secondary-600: #fbc606;
@@ -68,7 +69,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: var(--color-brand-600);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);

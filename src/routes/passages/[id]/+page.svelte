@@ -43,7 +43,8 @@
 
     {#if data.keywords.length > 0}
     <DL label="Keywords">
-        {#each data.keywords as keyword (keyword.loi_id)}
+        {#each data.keywords as keyword , i (keyword.loi_id)}
+            {#if i > 0} , {/if}
             <NavLink href={resolve(`/keywords/${keyword.loi_id}`)}>{keyword.value}</NavLink>
         {/each}
         </DL>

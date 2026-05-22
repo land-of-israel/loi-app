@@ -6,7 +6,7 @@
 </script>
 
 <!-- description list item to be used for slots -->
-<dt class="font-semibold md:border-r border-gray-300 pr-2">
+<dt class="font-semibold pr-2 text-brand-600">
 	{label}
 </dt>
 <dd class="pl-5">

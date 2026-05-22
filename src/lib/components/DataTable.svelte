@@ -31,11 +31,11 @@ const filterValue = $derived(pluginStates?.filter?.filterValue);
   </div>
   <div class="overflow-hidden rounded-md border border-secondary-800">
     <table {...$tableAttrs} class="w-full">
-      <thead class="bg-secondary-600">
+      <thead>
         {#each $headerRows as headerRow (headerRow)}
-          <tr class="bg-secondary-600 text-text">
+          <tr class="bg-brand-400 text-text">
             {#each headerRow.cells as cell (cell)}
-              <th class="py-2 px-4 border border-secondary-800 first:rounded-tl-sm last:rounded-tr-sm">
+              <th class="py-2 px-4 border border-black text-white first:rounded-tl-sm last:rounded-tr-sm">
                 <Render of={cell.render()} />
               </th>
             {/each}
@@ -45,7 +45,7 @@ const filterValue = $derived(pluginStates?.filter?.filterValue);
   
       <tbody {...$tableBodyAttrs}>
         {#each $pageRows as row (row)}
-          <tr class="odd:bg-white even:bg-secondary-100 hover:bg-secondary-600 cursor-pointer"
+          <tr class="odd:bg-white even:bg-brand-100 hover:bg-brand-300 cursor-pointer"
           onclick={() => goto(`/${basePath}/${row.original.loi_id}`)}>
             {#each row.cells as cell (cell)}
               <td class="py-2 px-4 border border-r-neutral-300">
