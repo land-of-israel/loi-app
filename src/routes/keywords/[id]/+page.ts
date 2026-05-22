@@ -21,5 +21,5 @@ export const load: PageLoad = ({ params }) => {
 		throw error(404, 'keyword not found');
 	}
 
-	return { keyword };
+	return { ... keyword };
 };

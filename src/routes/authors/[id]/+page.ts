@@ -21,5 +21,5 @@ export const load: PageLoad = ({ params }) => {
         throw error(404, 'Author not found');
     }
 
-    return { author };
+    return { ... author };
 };
