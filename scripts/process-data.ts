@@ -27,13 +27,14 @@ async function main() {
                 loi_id: author.loi_id,
                 id: author.id,
                 name: author.name.trim(),
+                view_label: author.name.trim() ?? 'N/A',
                 works: related_works,
                 gnd: author.gnd ?? '',
                 wikidata: author.wikidata ?? '', 
                 }   
         });
 
-        writeJson("authors.json", processedAuthors)
+        writeJson("authors.json", addPrevNext(processedAuthors))
 
 
         const processed_works = rawData.works.map(w => {
@@ -83,10 +84,11 @@ async function main() {
                 place: place,
                 language: w.language.map(l => l.value).join(" | "),
                 passages: related_passages,
+                view_label: w.title ?? 'N/A'
             }
         })
 
-        writeJson("works.json", processed_works)
+        writeJson("works.json", addPrevNext(processed_works))
 
         const processed_passages = rawData.passages.map(p => {
             const quotes = rawData.bible_ref.filter(ref => p.bibl_quotes.some(q => q.id === ref.id))
@@ -107,6 +109,7 @@ async function main() {
             return {
                 loi_id: p.loi_id,
                 title: p.title ?? "N/A",
+                view_label: p.title ?? "N/A",
                 work: work_aut,
                 text: p.text ?? "",
                 translation: p.translation ?? "",
@@ -121,8 +124,7 @@ async function main() {
                 })
             }
         })
-
-        writeJson("passages.json", processed_passages)
+        writeJson("passages.json", addPrevNext(processed_passages))
 
         const processed_keywords = rawData.keywords.map(kw => {
             const related_passages = processed_passages.filter(pp => pp.keywords.some(k => k.loi_id === kw.loi_id)).map(p => {
@@ -135,11 +137,12 @@ async function main() {
             return {
                 loi_id: kw.loi_id,
                 label: kw.label,
+                view_label: kw.label,
                 notes: kw.notes,
                 passages: related_passages
             }
         })
-        writeJson("keywords.json", processed_keywords)
+        writeJson("keywords.json", addPrevNext(processed_keywords))
     }
      catch (error) {
         log.error("Processing failed", error)
@@ -163,3 +166,31 @@ function writeJson(filename: string, data: unknown) : void {
    }
 }
 
+// add prev next
+
+function addPrevNext(items, idField = "loi_id", labelField = "view_label") {
+	// Sort msItems by their keys or any specific field (if needed)
+	const sortedItems = [...items].sort((a, b) => a[idField] - b[idField]);
+
+	// Loop through the sorted array and add 'prev' and 'next' properties
+	for (let i = 0; i < sortedItems.length; i++) {
+		const prevIndex = (i - 1 + sortedItems.length) % sortedItems.length; // Wrap around to the last item
+		const nextIndex = (i + 1) % sortedItems.length; // Wrap around to the first item
+
+		// Get the previous and next items
+		const prevItem = sortedItems[prevIndex];
+		const nextItem = sortedItems[nextIndex];
+
+		// Add 'prev' and 'next' properties to the current item
+		sortedItems[i]["prev"] = {
+			id: prevItem[idField],
+			label: prevItem[labelField] || prevItem[idField], // Fallback to id if label is not available
+		};
+		sortedItems[i]["next"] = {
+			id: nextItem[idField],
+			label: nextItem[labelField] || nextItem[idField], // Fallback to id if label is not available
+		};
+	}
+
+	return sortedItems;
+}

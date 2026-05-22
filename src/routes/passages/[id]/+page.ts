@@ -21,5 +21,7 @@ export const load: PageLoad = ({ params }) => {
 		throw error(404, 'Passage not found');
 	}
 
-	return { passage };
+	return { 
+		... passage 
+	};
 };
