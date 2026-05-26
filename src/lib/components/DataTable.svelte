@@ -18,7 +18,7 @@
   const pluginStates = $derived(viewModel.pluginStates)
 
 const filterValue = $derived(pluginStates?.filter?.filterValue);
-const {pageIndex, pageCount, hasPreviousPage, hasNextPage} = $derived(pluginStates?.page)
+const {pageIndex, pageCount, hasPreviousPage, hasNextPage, pageSize} = $derived(pluginStates?.page)
 
 </script>
 <div class="grid gap-4 my-10 max-w-6xl mx-auto">
@@ -31,21 +31,31 @@ const {pageIndex, pageCount, hasPreviousPage, hasNextPage} = $derived(pluginStat
       class="py-2 px-4 rounded border italic focus:outline-2 focus:outline-offset-2 focus:outline-accent"
     />
   </div>
-  <div class="flex justify-end gap-1">
-    
-      <Button variant="secondary" disabled={$pageIndex == 0} onclick={() => pageIndex.set(0)}>First</Button>
-      <Button variant="secondary" disabled={!$hasPreviousPage} onclick={() => pageIndex.update((n: number) => n - 1)}>Previous Page</Button>    
-      {#each Array($pageCount) as _ , i (i)}
-        <Button
-          disabled={$pageIndex === i}
-          variant="ghost"
-          onclick={() => pageIndex.set(i)}
-        >
-          {i + 1}
-        </Button>
-      {/each}
-      <Button variant="secondary" disabled={!$hasNextPage} onclick={() => pageIndex.update((n: number) => n + 1)}>Next Page</Button>
-      <Button variant="secondary" onclick={() => pageIndex.set($pageCount-1)}>Last</Button>
+  <div class="flex justify-between gap-1">
+  <div class="bg-secondary/70 px-3 py-2 flex align-middle">
+    <label for="pages">Rows per page:</label>
+      <select id="pages" bind:value={$pageSize}>
+        <option value={10}>10</option>
+        <option value={20}>20</option>
+        <option value={50}>50</option>
+        <option value={100}>100</option>
+      </select>
+  </div>
+      <div>
+        <Button variant="secondary" disabled={$pageIndex == 0} onclick={() => pageIndex.set(0)}>First</Button>
+        <Button variant="secondary" disabled={!$hasPreviousPage} onclick={() => pageIndex.update((n: number) => n - 1)}>Previous Page</Button>
+        {#each Array($pageCount) as _ , i (i)}
+          <Button
+            disabled={$pageIndex === i}
+            variant="ghost"
+            onclick={() => pageIndex.set(i)}
+          >
+            {i + 1}
+          </Button>
+        {/each}
+        <Button variant="secondary" disabled={!$hasNextPage} onclick={() => pageIndex.update((n: number) => n + 1)}>Next Page</Button>
+        <Button variant="secondary" onclick={() => pageIndex.set($pageCount-1)}>Last</Button>
+      </div>
 
   </div>
   <div class="overflow-hidden rounded-md border border-secondary-800">
@@ -74,6 +84,6 @@ const {pageIndex, pageCount, hasPreviousPage, hasNextPage} = $derived(pluginStat
           </tr>
         {/each}
       </tbody>
-    </table>
+    </table>    
   </div>
 </div>
