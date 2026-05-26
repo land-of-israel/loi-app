@@ -108,6 +108,7 @@ async function main() {
             })
             return {
                 loi_id: p.loi_id,
+                id: p.id,
                 title: p.title ?? "N/A",
                 view_label: p.title ?? "N/A",
                 work: work_aut,
@@ -136,6 +137,7 @@ async function main() {
             })
             return {
                 loi_id: kw.loi_id,
+                id: kw.id,
                 label: kw.label,
                 view_label: kw.label,
                 notes: kw.notes,
@@ -167,9 +169,9 @@ function writeJson(filename: string, data: unknown) : void {
 }
 
 // add prev next
-
-function addPrevNext(items, idField = "loi_id", labelField = "view_label") {
-	// Sort msItems by their keys or any specific field (if needed)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function addPrevNext(items: any[], idField = "loi_id", labelField = "view_label") {
+	// Sort items by their keys or any specific field (if needed)
 	const sortedItems = [...items].sort((a, b) => a[idField] - b[idField]);
 
 	// Loop through the sorted array and add 'prev' and 'next' properties

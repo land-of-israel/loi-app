@@ -1,4 +1,5 @@
 <script lang="ts">
+import type {Component} from 'svelte'
 	const colors = {
 		sky: 'bg-sky-500 shadow-sky-500/40',
 		green: 'bg-green-500 shadow-green-500/40',
@@ -9,12 +10,15 @@
 		pink: 'bg-pink-800 shadow-pink-800/40',
 
 	};
-    let { heading, description, color = 'sky', icon: Icon, children } : {
-      heading?: string,
-      description: string,
-      color: string, 
-      children: import ('svelte').Snippet;
-    }= $props();
+	type Color = keyof typeof colors;
+  
+  let { heading, description, color = 'sky', icon: Icon, children } : {
+    heading?: string,
+    description: string,
+    color: Color,
+    icon: Component,
+    children: import ('svelte').Snippet;
+  }= $props();
 </script>
  
 

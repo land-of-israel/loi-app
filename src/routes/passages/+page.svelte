@@ -1,11 +1,12 @@
 <script lang="ts">
   import DataTable from '$lib/components/DataTable.svelte';
   import { createPassagesTable } from '$lib/tables/passagesTable';
+import type {Passage} from '$lib/types'
 
   let { data } = $props();
 
-  const rows = $derived(data.passages.map((p) => ({
-    id: p.loi_id.split('__')[1],
+  const rows = $derived(data.passages.map((p: Passage) => ({
+    id: p.id,
     loi_id: p.loi_id,
     title: p.title,
     text: p.text,

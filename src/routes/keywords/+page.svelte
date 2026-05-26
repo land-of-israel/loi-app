@@ -1,11 +1,11 @@
 <script lang="ts">
   import DataTable from '$lib/components/DataTable.svelte';
   import { createKeywordsTable } from '$lib/tables/keywordsTable';
-
+  import type {Keyword} from "$lib/types"
   let { data } = $props();
 
-  const rows = $derived(data.keywords.map((keyword) => ({
-    id: keyword.loi_id.split('__')[1],
+  const rows = $derived(data.keywords.map((keyword: Keyword) => ({
+    id: keyword.id,
     loi_id: keyword.loi_id,
     label: keyword.label,
     })));

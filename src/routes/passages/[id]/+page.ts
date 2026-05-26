@@ -2,6 +2,7 @@ import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
 import passages from '$lib/data/processed/passages.json';
+import type {Passage} from "$lib/types"
 
 
 export const prerender = true;
@@ -22,6 +23,6 @@ export const load: PageLoad = ({ params }) => {
 	}
 
 	return { 
-		... passage 
+		... passage as Passage
 	};
 };

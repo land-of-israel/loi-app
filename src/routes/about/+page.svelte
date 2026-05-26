@@ -1,7 +1,7 @@
 
 <script>
     import { SquareArrowUpRight} from '@lucide/svelte';
-    import NavLink from '$lib/components/NavLink.svelte';
+    import {Button} from '$lib/components/ui/button'
 </script>
 <div class="grid justify-center gap-4 py-8">
     <h1 class="text-3xl font-semibold">About the Project</h1>
@@ -29,13 +29,13 @@
     </p>
     <dl class="grid grid-cols-2 gap-2">
         <dt class="font-semibold">Project Leader:</dt>
-        <dd><NavLink href="https://judaistik.univie.ac.at/ueber-uns/institutsmitarbeiterinnen/constanza-cordoni/">Constanza Cordoni</NavLink></dd>
+        <dd><Button variant="link" href="https://judaistik.univie.ac.at/ueber-uns/institutsmitarbeiterinnen/constanza-cordoni/">Constanza Cordoni</Button></dd>
         <dt class="font-semibold">Principal Investigator:</dt>
-        <dd><NavLink href="https://judaistik.univie.ac.at/ueber-uns/institutsmitarbeiterinnen/daniel-edelhofer/">Daniel Edelhofer</NavLink></dd>
+        <dd><Button variant="link" href="https://judaistik.univie.ac.at/ueber-uns/institutsmitarbeiterinnen/daniel-edelhofer/">Daniel Edelhofer</Button></dd>
     </dl>
     <p>
-        <a class="bg-accent px-4 py-2 rounded-md" href="https://www.oeaw.ac.at/en/imafo/research/historical-identity-research/projects/the-land-of-israel-in-geonic-times">Visit the Project Website at IMAFO
+        <Button variant="default" href="https://www.oeaw.ac.at/en/imafo/research/historical-identity-research/projects/the-land-of-israel-in-geonic-times">Visit the Project Website at IMAFO
          <SquareArrowUpRight class="inline" size="16" />
-        </a>
+        </Button>
     </p>
 </div>

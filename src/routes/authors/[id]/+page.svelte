@@ -3,6 +3,7 @@
     import DL  from '$lib/components/DL.svelte';
     import PrevNextNav from "$lib/components/ui/prev-next-nav.svelte"
     import NavLink from '$lib/components/NavLink.svelte';
+    import {resolve} from "$app/paths"
 </script>
 
 <div class="grid gap-4 p-10">
@@ -21,7 +22,17 @@
             <NavLink href={data.wikidata}>Link</NavLink>
          </DL>
         {/if}
-       
+       {#if data.gnd}
+        <DL label="GND">
+            <NavLink href={data.gnd}>Link</NavLink>
+         </DL>
+        {/if}
+        <DL label="Works">
+            {#each data.works as work, i (work.loi_id)}
+             {#if i > 0} , {/if}
+                <NavLink href={resolve(`/works/${work.loi_id}`, {})}>{work.title}</NavLink>
+            {/each}
+        </DL>
       
     </dl>
 </div>

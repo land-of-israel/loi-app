@@ -1,9 +1,9 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
-
+import type {PassageRow} from "$lib/types"
 import { addTableFilter } from "@humanspeak/svelte-headless-table/plugins";
 
-export function createPassagesTable(data) {
+export function createPassagesTable(data: PassageRow[]) {
   const table = createTable(readable(data), {
     filter: addTableFilter({
         fn: ({ filterValue, value}) =>

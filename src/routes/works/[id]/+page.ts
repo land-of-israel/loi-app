@@ -2,6 +2,7 @@ import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
 import works from '$lib/data/processed/works.json';
+import type {Work} from "$lib/types"
 
 
 export const prerender = true;
@@ -21,5 +22,5 @@ export const load: PageLoad = ({ params }) => {
 		throw error(404, 'work not found');
 	}
 
-	return { ... work };
+	return { ... work as Work };
 };

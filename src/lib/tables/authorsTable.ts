@@ -2,8 +2,9 @@ import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 
 import { addTableFilter } from "@humanspeak/svelte-headless-table/plugins";
+import type {AuthorRow} from "$lib/types"
 
-export function createAuthorsTable(data) {
+export function createAuthorsTable(data : AuthorRow[]) {
   const table = createTable(readable(data), {
     filter: addTableFilter({
         fn: ({ filterValue, value}) =>

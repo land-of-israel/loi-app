@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import type {Author} from '$lib/types'
 
 import authors from '$lib/data/processed/authors.json';
 
@@ -21,5 +22,5 @@ export const load: PageLoad = ({ params }) => {
         throw error(404, 'Author not found');
     }
 
-    return { ... author };
+    return { ... author as Author };
 };

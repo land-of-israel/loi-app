@@ -105,7 +105,7 @@
   <div class="bg-brand-600 text-white py-2 text-center">
 		&copy; Copyright OEAW |
 		<NavLink
-			href={resolve("/imprint")}
+			href={resolve("/imprint", {})}
 		>
 			Impressum
 		</NavLink>

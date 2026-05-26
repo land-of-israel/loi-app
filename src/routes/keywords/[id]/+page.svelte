@@ -36,7 +36,7 @@
                                
                             </dl>
                             <div class="justify-self-end">
-                                <Button href={resolve(`/passages/${passage.loi_id}`)} variant="default">
+                                <Button href={resolve(`/passages/${passage.loi_id}`, {})} variant="default">
                                     See passage
                                 </Button>
                             </div>

@@ -5,7 +5,7 @@
   let { data } = $props();
 
   const rows = $derived(data.authors.map((author) => ({
-    id: author.loi_id.split('__')[1],
+    id: author.id,
     loi_id: author.loi_id,
     name: author.name,
     works: author.works.map(w => w.title).join(' | ')

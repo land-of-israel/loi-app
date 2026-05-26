@@ -3,6 +3,7 @@ import MenuCard from '$lib/components/ui/menu-card.svelte';
 import MenuItem from "$lib/components/ui/menu-item.svelte";
 import { Search, BookOpenText, Wrench } from '@lucide/svelte';
 import { resolve } from "$app/paths";
+	import {Button} from '$lib/components/ui/button';
 </script>
 
 <div class="w-full h-full bg-brand-200">
@@ -11,29 +12,30 @@ import { resolve } from "$app/paths";
         <p class="font-heading font-normal text-2xl text-center text-text max-w-3/5">
             Exploring Jewish relationships with the ancestral homeland through literature 
             from the rise of Islam to the First Crusade (7th–11th centuries).</p>
+            <Button href={resolve(`/about`, {})} variant="link">Read More</Button>
     </div>
     <div class="grid gap-10 md:grid-cols-3 md-gap-5 py-20 px-10">
             <MenuCard heading="Browse the database" description="See all entries in tablular format; filter by work, author or keyword"
             color="green"
             icon={BookOpenText}>
             <div class="grid grid-cols-2 mx-auto gap-2 md:gap-4 p-5">
-                <MenuItem title="Passages" link={resolve('/passages')}/>
-                <MenuItem title="Works" link={resolve('/works')}/>
-                <MenuItem title="Authors" link={resolve('/authors')}/>
-                <MenuItem title="Keywords" link={resolve('/keywords')}/>
+                <MenuItem title="Passages" link={resolve('/passages', {})}/>
+                <MenuItem title="Works" link={resolve('/works', {})}/>
+                <MenuItem title="Authors" link={resolve('/authors', {})}/>
+                <MenuItem title="Keywords" link={resolve('/keywords', {})}/>
                 </div>
             </MenuCard>
 
             <MenuCard description="Advanced search coming soon"
                 color="sky"
                 icon={Search}>
-                    <MenuItem title="Search" link={resolve('/search')}/>
+                    <MenuItem title="Search" link={resolve('/search', {})}/>
             </MenuCard>
            
            <MenuCard description="Place to find charts, graph & Co ... in the future"
             color="amber"
             icon={Wrench}>
-                <MenuItem title="Tools" link={resolve('/tools')}/>
+                <MenuItem title="Tools" link={resolve('/tools', {})}/>
             </MenuCard>
     </div>
 </div>

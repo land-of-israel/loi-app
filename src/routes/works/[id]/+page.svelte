@@ -20,7 +20,7 @@
         </DL>
         {#if data.author.length > 0}
         <DL label="Author">
-            <NavLink href={resolve(`/authors/${data.author[0]?.loi_id}`)}>{data.author[0]?.name}</NavLink>
+            <NavLink href={resolve(`/authors/${data.author[0]?.loi_id}`, {})}>{data.author[0]?.name}</NavLink>
         </DL>
         {/if}
         {#if data.date.length > 0}
@@ -57,13 +57,13 @@
                                     <DL label="Keywords">
                                     {#each passage.keywords as keyword, i (keyword.loi_id)}
                                         {#if i > 0} , {/if}
-                                        <NavLink href={resolve(`/keywords/${keyword.loi_id}`)}>{keyword.value}</NavLink>                                    
+                                        <NavLink href={resolve(`/keywords/${keyword.loi_id}`, {})}>{keyword.value}</NavLink>                                    
                                     {/each}
                                 </DL>
                                 {/if}
                             </dl>
                             <div class="justify-self-end">
-                                <Button href={resolve(`/passages/${passage.loi_id}`)} variant="default">
+                                <Button href={resolve(`/passages/${passage.loi_id}`, {})} variant="default">
                                     See passage
                                 </Button>
                             </div>

@@ -6,7 +6,7 @@ import Logo from "$lib/assets/loi-logo.png";
 <header>
 <nav class="flex items-center gap-6 bg-brand-600 px-4 py-2 text-lg font-bold text-white">
      <div>
-      <a href={resolve("/")} >
+      <a href={resolve("/", {})} >
         <img src={Logo} alt="LOI Logo" class="h-12 rounded-lg"/>
       </a>
     </div>
@@ -23,20 +23,26 @@ import Logo from "$lib/assets/loi-logo.png";
           <NavigationMenu.Content>
             <ul class="grid gap-2 p-4 w-48">
               <li>
-                <NavigationMenu.Link href={resolve("/passages")}>
+                <NavigationMenu.Link href={resolve("/passages", {})}>
                   Passages
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href={resolve("/works")}>
+                <NavigationMenu.Link href={resolve("/works", {})}>
                   Works
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href={resolve("/authors")}>
+                <NavigationMenu.Link href={resolve("/authors", {})}>
                   Authors
+                </NavigationMenu.Link>
+              </li>
+
+              <li>
+                <NavigationMenu.Link href={resolve("/keywords", {})}>
+                  Keywords
                 </NavigationMenu.Link>
               </li>
 
@@ -45,13 +51,13 @@ import Logo from "$lib/assets/loi-logo.png";
         </NavigationMenu.Item>
 
         <NavigationMenu.Item>
-         <NavigationMenu.Link href={resolve("/about")}>
+         <NavigationMenu.Link href={resolve("/about", {})}>
                   Tools
           </NavigationMenu.Link>          
         </NavigationMenu.Item>
 
         <NavigationMenu.Item>
-         <NavigationMenu.Link href={resolve("/about")}>
+         <NavigationMenu.Link href={resolve("/about", {})}>
               Advanced Search
           </NavigationMenu.Link>          
         </NavigationMenu.Item>
@@ -64,19 +70,19 @@ import Logo from "$lib/assets/loi-logo.png";
           <NavigationMenu.Content>
             <ul class="grid gap-2 p-4 w-48">
               <li>
-                <NavigationMenu.Link href={resolve("/about")}>
+                <NavigationMenu.Link href={resolve("/about", {})}>
                   Project
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href={resolve("/about")}>
+                <NavigationMenu.Link href={resolve("/about", {})}>
                   Content of the Database
                 </NavigationMenu.Link>
               </li>
 
               <li>
-                <NavigationMenu.Link href={resolve("/about")}>
+                <NavigationMenu.Link href={resolve("/about", {})}>
                   Using the Database
                 </NavigationMenu.Link>
               </li>
@@ -88,7 +94,7 @@ import Logo from "$lib/assets/loi-logo.png";
     </NavigationMenu.Root>
 
     <div class="ml-auto text-2xl">
-      <a href={resolve("/")} class="hover:text-accent font-lg text-semibold">
+      <a href={resolve("/", {})} class="hover:text-accent font-lg text-semibold">
         The Land of Israel in Geonic Times
       </a>
     </div>

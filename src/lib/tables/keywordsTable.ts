@@ -1,9 +1,9 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
-
+import type {KeywordRow} from "$lib/types"
 import { addTableFilter } from "@humanspeak/svelte-headless-table/plugins";
 
-export function createKeywordsTable(data) {
+export function createKeywordsTable(data: KeywordRow[]) {
   const table = createTable(readable(data), {
     filter: addTableFilter({
         fn: ({ filterValue, value}) =>
