@@ -1,7 +1,7 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 import type {PassageRow} from "$lib/types"
-import { addTableFilter } from "@humanspeak/svelte-headless-table/plugins";
+import { addTableFilter, addPagination } from "@humanspeak/svelte-headless-table/plugins";
 
 export function createPassagesTable(data: PassageRow[]) {
   const table = createTable(readable(data), {
@@ -11,6 +11,9 @@ export function createPassagesTable(data: PassageRow[]) {
         .toLowerCase()
         .includes(filterValue.toLowerCase())
     }),
+    page: addPagination({
+      initialPageSize: 20
+    })
   });
 // create columns to access the values of each data item
   const columns = table.createColumns([

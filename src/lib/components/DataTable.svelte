@@ -4,6 +4,7 @@
     Render
   } from "@humanspeak/svelte-headless-table";
 
+  import {Button} from '$lib/components/ui/button'
   let { table, columns, basePath } = $props();
 
   const viewModel = $derived(
@@ -17,6 +18,7 @@
   const pluginStates = $derived(viewModel.pluginStates)
 
 const filterValue = $derived(pluginStates?.filter?.filterValue);
+const {pageIndex, pageCount, hasPreviousPage, hasNextPage} = $derived(pluginStates?.page)
 
 </script>
 <div class="grid gap-4 my-10 max-w-6xl mx-auto">
@@ -28,6 +30,23 @@ const filterValue = $derived(pluginStates?.filter?.filterValue);
       placeholder = 'calendar'
       class="py-2 px-4 rounded border italic focus:outline-2 focus:outline-offset-2 focus:outline-accent"
     />
+  </div>
+  <div class="flex justify-end gap-1">
+    
+      <Button variant="secondary" disabled={$pageIndex == 0} onclick={() => pageIndex.set(0)}>First</Button>
+      <Button variant="secondary" disabled={!$hasPreviousPage} onclick={() => pageIndex.update((n: number) => n - 1)}>Previous Page</Button>    
+      {#each Array($pageCount) as _ , i (i)}
+        <Button
+          disabled={$pageIndex === i}
+          variant="ghost"
+          onclick={() => pageIndex.set(i)}
+        >
+          {i + 1}
+        </Button>
+      {/each}
+      <Button variant="secondary" disabled={!$hasNextPage} onclick={() => pageIndex.update((n: number) => n + 1)}>Next Page</Button>
+      <Button variant="secondary" onclick={() => pageIndex.set($pageCount-1)}>Last</Button>
+
   </div>
   <div class="overflow-hidden rounded-md border border-secondary-800">
     <table {...$tableAttrs} class="w-full">

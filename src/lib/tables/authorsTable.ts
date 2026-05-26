@@ -1,7 +1,7 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 
-import { addTableFilter } from "@humanspeak/svelte-headless-table/plugins";
+import { addTableFilter, addPagination } from "@humanspeak/svelte-headless-table/plugins";
 import type {AuthorRow} from "$lib/types"
 
 export function createAuthorsTable(data : AuthorRow[]) {
@@ -12,6 +12,9 @@ export function createAuthorsTable(data : AuthorRow[]) {
         .toLowerCase()
         .includes(filterValue.toLowerCase())
     }),
+    page: addPagination({
+      initialPageSize: 20
+    })
   });
 // create columns to access the values of each data item
   const columns = table.createColumns([
