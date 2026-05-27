@@ -1,7 +1,7 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 import type {WorkRow} from "$lib/types"
-import { addTableFilter } from "@humanspeak/svelte-headless-table/plugins";
+import { addTableFilter, addColumnFilters, addPagination, addSortBy } from "@humanspeak/svelte-headless-table/plugins";
 
 export function createWorksTable(data: WorkRow[]) {
   const table = createTable(readable(data), {
@@ -11,12 +11,22 @@ export function createWorksTable(data: WorkRow[]) {
         .toLowerCase()
         .includes(filterValue.toLowerCase())
     }),
+    colfilter: addColumnFilters(),
+     page: addPagination({
+          initialPageSize: 20
+        }),
+      sort: addSortBy()
   });
 // create columns to access the values of each data item
   const columns = table.createColumns([
     table.column({
       header: "id",
-      accessor: "id"
+      accessor: "id",
+      plugins: {
+        sort: {
+          disable: true
+        }
+      }
     }),
     table.column({
       header: "Title",
@@ -30,12 +40,14 @@ export function createWorksTable(data: WorkRow[]) {
 
     table.column({
       header: "Date TPQ",
-      accessor: "tpq"
+      accessor: "tpq",
+      cell: ({ value }) => value ?? "",
     }),
 
     table.column({
       header: "Date TAQ",
-      accessor: "taq"
+      accessor: "taq",
+      cell: ({ value }) => value ?? "",
     }),
     
     table.column({

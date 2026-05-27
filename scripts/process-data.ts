@@ -56,8 +56,12 @@ async function main() {
             const dates = rawData.dates.filter(d => w.date.some(dat => dat.id === d.id))
                 .map(date => {
                     return {                  
-                        tpq: date.tpq ?? '',
-                        taq: date.taq ?? '',
+                        tpq: date.tpq
+                            ? parseInt(date.tpq, 10)
+                            : undefined,
+                        taq: date.taq 
+                            ? parseInt(date.taq , 10)
+                            : undefined,
                         label: date.label
                     }
                 });

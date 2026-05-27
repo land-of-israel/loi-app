@@ -13,10 +13,10 @@ export interface WorkRow {
     loi_id: string;
     title:      string;
     author:     string;
-    tpq:       string;
-    taq:       string;
+    tpq:       number | undefined;
+    taq:       number | undefined;
     place:      string;
-    passages:   string;
+    passages:   number | undefined;
 }
 
 export interface KeywordRow {

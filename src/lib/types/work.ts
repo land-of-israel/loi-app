@@ -17,8 +17,8 @@ export interface Work {
 
 
 export interface DateElement {
-    tpq:   string;
-    taq:   string;
+    tpq:   number | undefined;
+    taq:   number | undefined;
     label: string;
 }
 
