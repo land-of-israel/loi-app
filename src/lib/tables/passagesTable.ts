@@ -1,7 +1,8 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 import type {PassageRow} from "$lib/types"
-import { addTableFilter, addPagination, addSortBy } from "@humanspeak/svelte-headless-table/plugins";
+import { addTableFilter, addPagination, addSortBy, addColumnFilters } from "@humanspeak/svelte-headless-table/plugins";
+import { textFilter } from "./helpers";
 
 export function createPassagesTable(data: PassageRow[]) {
   const table = createTable(readable(data), {
@@ -12,6 +13,7 @@ export function createPassagesTable(data: PassageRow[]) {
         .toLowerCase()
         .includes(filterValue.toLowerCase())
     }),
+    colFilter: addColumnFilters(),
     page: addPagination({
       initialPageSize: 20
     }),
@@ -28,25 +30,44 @@ export function createPassagesTable(data: PassageRow[]) {
     table.column({
       header: "id",
       accessor: "id",
-      plugins: 
-        {sort: {
+      plugins: {
+        sort: {
           disable: true
-        }}    
+        },
+        colFilter: {
+          fn: textFilter
+        }
+      }   
     }),
     table.column({
       header: "Title",
       accessor: "title",
+      plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
      
     }),
 
     table.column({
       header: "Work",
-      accessor: "workTitle"
+      accessor: "workTitle",
+       plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     }),
 
     table.column({
       header: "Author",
-      accessor: "author"
+      accessor: "author",
+       plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     })
   ]);
 

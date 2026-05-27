@@ -21,6 +21,9 @@
   const tableBodyAttrs = $derived(viewModel.tableBodyAttrs)
   const pluginStates = $derived(viewModel.pluginStates)
 
+  const { colFilter } = pluginStates;
+const { filterValues } = colFilter;
+
 const filterValue = $derived(pluginStates?.filter?.filterValue);
 const {pageIndex, pageCount, hasPreviousPage, hasNextPage, pageSize} = $derived(pluginStates?.page)
 
@@ -29,6 +32,7 @@ type SortState = {
   disabled: boolean;
   toggle: (event: Event) => void;
   clear: () => void;
+  colFilter: () => void
 };
 
 </script>
@@ -51,6 +55,7 @@ type SortState = {
         <option value={100}>100</option>
       </select>
     </div>
+    <!-- pagination -->
       <div>
         <Button variant="secondary" disabled={$pageIndex == 0} onclick={() => pageIndex.set(0)}>First</Button>
         <Button variant="secondary" disabled={!$hasPreviousPage} onclick={() => pageIndex.update((n: number) => n - 1)}>Previous Page</Button>
@@ -78,23 +83,35 @@ type SortState = {
             {#each headerRow.cells as cell (cell)}
              <Subscribe props={cell.props()} let:props>
               {@const sort = (props as {sort: SortState}).sort}
-
                 <th
-                  class="py-2 px-4 border border-black text-white first:rounded-tl-sm last:rounded-tr-sm"
-                  onclick={sort ? sort.toggle : undefined}
+                  class="py-2 px-3 border border-black text-white first:rounded-tl-sm last:rounded-tr-sm"
+                  
                 >
-                  <div class="flex gap-2">
+                  <button class="flex gap-2 py-1" onclick={sort ? sort.toggle : undefined}>
                     <Render of={cell.render()} />
                     {#if sort && !sort.disabled}
                       {#if sort.order === 'asc'}
-                        <span class="red-800"><ArrowDown/></span>
+                        <span class="cursor-pointer"><ArrowDown/></span>
                       {:else if sort.order === 'desc'}
-                        <ArrowUp />
+                        <ArrowUp class="cursor-pointer" />
                       {:else}
-                        <ArrowDonwUp />
+                        <ArrowDonwUp class="cursor-pointer" />
                       {/if}
                     {/if}
-                  </div>
+                  </button>       
+                 
+                  {#if pluginStates.colFilter}
+                
+                    <input
+                      class="bg-brand-200 w-full text-text font-medium px-1 py-0.5 text-sm rounded"
+                      placeholder="Filter..."
+                      
+                      value={$filterValues[cell.id] ?? ''}
+                      oninput={(e) => {
+                        $filterValues[cell.id] = e.currentTarget.value;
+                      }}
+                    />
+                  {/if}
                 </th>
               </Subscribe>
             {/each}

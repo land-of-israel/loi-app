@@ -2,6 +2,9 @@ import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 import type {WorkRow} from "$lib/types"
 import { addTableFilter, addColumnFilters, addPagination, addSortBy } from "@humanspeak/svelte-headless-table/plugins";
+import { textFilter } from "./helpers";
+
+  
 
 export function createWorksTable(data: WorkRow[]) {
   const table = createTable(readable(data), {
@@ -11,7 +14,7 @@ export function createWorksTable(data: WorkRow[]) {
         .toLowerCase()
         .includes(filterValue.toLowerCase())
     }),
-    colfilter: addColumnFilters(),
+    colFilter: addColumnFilters(),
      page: addPagination({
           initialPageSize: 20
         }),
@@ -25,39 +28,73 @@ export function createWorksTable(data: WorkRow[]) {
       plugins: {
         sort: {
           disable: true
+        },
+        colFilter: {
+          fn: textFilter
         }
       }
     }),
     table.column({
       header: "Title",
-      accessor: "title"
+      accessor: "title",
+     plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     }),
 
     table.column({
       header: "Author",
-      accessor: "author"
+      accessor: "author",
+       plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     }),
 
     table.column({
       header: "Date TPQ",
       accessor: "tpq",
       cell: ({ value }) => value ?? "",
+      plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     }),
 
     table.column({
       header: "Date TAQ",
       accessor: "taq",
       cell: ({ value }) => value ?? "",
+      plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     }),
     
     table.column({
       header: "Place",
-      accessor: "place"
+      accessor: "place",
+      plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
+     
     }),
 
     table.column({
       header: "Passages",
-      accessor: "passages"
+      accessor: "passages",
+      plugins: {
+        colFilter: {
+          fn: textFilter      
+        }
+      }
     }),
   ]);
 
