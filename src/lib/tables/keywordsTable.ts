@@ -1,7 +1,9 @@
 import { createTable } from "@humanspeak/svelte-headless-table";
 import { readable } from "svelte/store";
 import type {KeywordRow} from "$lib/types"
-import { addTableFilter, addPagination, addSortBy } from "@humanspeak/svelte-headless-table/plugins";
+import { addTableFilter, addPagination, addColumnFilters, addSortBy } from "@humanspeak/svelte-headless-table/plugins";
+import { textFilter } from "./helpers";
+
 
 export function createKeywordsTable(data: KeywordRow[]) {
   const table = createTable(readable(data), {
@@ -11,6 +13,7 @@ export function createKeywordsTable(data: KeywordRow[]) {
         .toLowerCase()
         .includes(filterValue.toLowerCase())
     }),
+    colFilter: addColumnFilters(),
       page: addPagination({
               initialPageSize: 20
             }),
@@ -20,11 +23,24 @@ export function createKeywordsTable(data: KeywordRow[]) {
   const columns = table.createColumns([
     table.column({
       header: "id",
-      accessor: "id"
+      accessor: "id",
+      plugins: {
+        sort: {
+          disable: true
+        },
+        colFilter: {
+          fn: textFilter
+        }
+      }
     }),
     table.column({
       header: "Label",
-      accessor: "label"
+      accessor: "label",
+      plugins: {        
+        colFilter: {
+          fn: textFilter
+        }
+      }
     }),
 
     

@@ -31,9 +31,7 @@ export function createPassagesTable(data: PassageRow[]) {
       header: "id",
       accessor: "id",
       plugins: {
-        sort: {
-          disable: true
-        },
+        
         colFilter: {
           fn: textFilter
         }
