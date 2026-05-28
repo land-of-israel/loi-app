@@ -8,6 +8,7 @@
 @plugin '@tailwindcss/typography';
 @theme {
   --color-brand-600: #19647E;
+  --color-brand-500: #4d8ca1;
   --color-brand-400: #28AFB0;
   --color-brand-300: #cae7e7;
   --color-brand-200: #dbe8e8;

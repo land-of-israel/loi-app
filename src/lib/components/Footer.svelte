@@ -1,6 +1,5 @@
 <script lang="ts">
   import uniWienLogo from "$lib/assets/uni-wien-logo.svg"
-  import imafoLogo from "$lib/assets/imafo-logo.png"
   import fwfLogo from "$lib/assets/fwf-logo.png"
   import acdhLogo from "$lib/assets/acdh-logo.svg"
   import gitHubLogo from "$lib/assets/GitHub_Invertocat_White_Clearspace.svg"
@@ -13,7 +12,7 @@
    			
         <div class="flex flex-col gap-4">
 					<a class="hidden md:inline-flex py-1" href="https://www.univie.ac.at/">
-						<img src={uniWienLogo} alt="" class="w-60 h-auto m-auto" />
+						<img src={uniWienLogo} alt="" class="w-50 h-auto" />
 						<span class="sr-only">University of Vienna</span>
 					</a>
 					<p>
@@ -31,34 +30,11 @@
 					</p>
 				</div>
 			
-        <div class="flex flex-col gap-4">
-					<a class="hidden md:inline-flex py-1" href="https://www.oeaw.ac.at/en/imafo/home">
-						<img src={imafoLogo} alt="" class="h-auto w-60 m-auto" />
-						<span class="sr-only">Institute for Medieval Research (IMAFO)</span>
-					</a>
-					<p>
-						<span class="font-semibold">
-							<NavLink href="https://www.oeaw.ac.at/en/imafo/home"
-								>Institute for Medieval Research (IMAFO)</NavLink
-							>
-						</span>
-						<br/> Austrian Academy of Sciences
+       
 
-						<br /> Dominikanerbastei 16, 1010 Vienna
-						<br />
-						E:
-						<a
-							class="underline decoration-dotted underline-offset-4 hover:no-underline"
-							href="mailto:imafo.office@oeaw.ac.at"
-						>
-							imafo@oeaw.ac.at
-						</a>
-					</p>
-        </div>
-
-				<div class="flex flex-col gap-4">
+				<div class="flex flex-col gap-4 justify-start">
 					<a class="hidden md:inline-flex py-1" href="https://www.oeaw.ac.at/acdh/">
-						<img src={acdhLogo} alt="" class="w-60 h-auto m-auto"/>
+						<img src={acdhLogo} alt="" class="w-50 h-auto"/>
 						<span class="sr-only"> Austrian Centre for Digital Humanities </span>
 					</a>
 					<div class="grid gap-2 m-2">
@@ -92,7 +68,7 @@
     <div class="flex flex-col gap-4">
       <span class="hidden md:inline-flex py-1">
         <NavLink  href="https://www.oeaw.ac.at/acdh/">
-            <img src={fwfLogo} alt="" class="w-60 h-auto m-auto"/>
+            <img src={fwfLogo} alt="" class="w-50 h-auto"/>
         </NavLink>
       </span>
       <span>

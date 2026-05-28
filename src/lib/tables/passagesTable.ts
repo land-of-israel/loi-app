@@ -1,76 +1,48 @@
-import { createTable } from "@humanspeak/svelte-headless-table";
-import { readable } from "svelte/store";
-import type {PassageRow} from "$lib/types"
-import { addTableFilter, addPagination, addSortBy, addColumnFilters } from "@humanspeak/svelte-headless-table/plugins";
-import { textFilter } from "./helpers";
+import { createDataTable } from "./createDataTable";
+import type { PassageRow } from "$lib/types";
 
 export function createPassagesTable(data: PassageRow[]) {
-  const table = createTable(readable(data), {
-    // plugin register
-    filter: addTableFilter({
-        fn: ({ filterValue, value}) =>
-            String(value)
-        .toLowerCase()
-        .includes(filterValue.toLowerCase())
-    }),
-    colFilter: addColumnFilters(),
-    page: addPagination({
-      initialPageSize: 20
-    }),
-    sort: addSortBy({      
-      initialSortKeys: [
-        { id: "title",
-          order: "asc"
-        }
-      ],
-    })
-  });
-// create columns to access the values of each data item
-  const columns = table.createColumns([
-    table.column({
-      header: "id",
-      accessor: "id",
-      plugins: {
-        
-        colFilter: {
-          fn: textFilter
-        }
-      }   
-    }),
-    table.column({
-      header: "Title",
-      accessor: "title",
-      plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-     
-    }),
+  return createDataTable(data, (table, col) => [
+        col({
+            header: "Title",
+            accessor: "title",
+            plugins: { 
+              style: {
+                width: "w-3/12"
+              }
+            }
+          }),
+          col({
+            header: "Work",
+            accessor: "workTitle",  
+            plugins: {
+              style: {
+                width: "w-2/12"
+              }
+            }         
+          }),
 
-    table.column({
-      header: "Work",
-      accessor: "workTitle",
-       plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    }),
+          col({
+            header: "Author",
+            accessor: "author",
+            plugins: {
+              style: {
+                width: "w-2/12"
+              }
+            }
+          }),
 
-    table.column({
-      header: "Author",
-      accessor: "author",
-       plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    })
-  ]);
+          col({
+              header: "Text",
+              accessor: "text",
+              cell: ({ value }: {value: string }) => value.substring(0, 200) + "...",
+              plugins: {
+                style: {
+                  width: "w-5/12",
+                  align: "text-right"
+                }
+              }
+            })
+    ])
+  }
 
-  return {
-    table,
-    columns
-  };
-}

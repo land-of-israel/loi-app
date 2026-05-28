@@ -5,7 +5,8 @@ import type {Passage} from '$lib/types'
 
   let { data } = $props();
 
-  const rows = $derived(data.passages.map((p: Passage) => ({
+  const rows = $derived(data.passages.filter(p => p.title || p.text || p.work.length)
+  .map((p: Passage) => ({
     id: p.id,
     loi_id: p.loi_id,
     title: p.title,

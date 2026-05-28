@@ -8,6 +8,7 @@
     id: keyword.id,
     loi_id: keyword.loi_id,
     label: keyword.label,
+    passages: keyword.passages.length
     })));
 
   const tableConfig = $derived(

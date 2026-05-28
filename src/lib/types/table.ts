@@ -22,6 +22,7 @@ export interface WorkRow {
 export interface KeywordRow {
     id:         number;
     label:   string;
+    passages: number | undefined;
 }
 
 export interface AuthorRow {

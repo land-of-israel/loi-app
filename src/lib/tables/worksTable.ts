@@ -1,105 +1,63 @@
-import { createTable } from "@humanspeak/svelte-headless-table";
-import { readable } from "svelte/store";
+import { createDataTable } from "./createDataTable";
 import type {WorkRow} from "$lib/types"
-import { addTableFilter, addColumnFilters, addPagination, addSortBy } from "@humanspeak/svelte-headless-table/plugins";
-import { textFilter } from "./helpers";
-
-  
 
 export function createWorksTable(data: WorkRow[]) {
-  const table = createTable(readable(data), {
-    filter: addTableFilter({
-        fn: ({ filterValue, value}) =>
-            String(value)
-        .toLowerCase()
-        .includes(filterValue.toLowerCase())
-    }),
-    colFilter: addColumnFilters(),
-     page: addPagination({
-          initialPageSize: 20
+  return createDataTable(data, (table, col) => [
+        col({
+            header: "Title",
+            accessor: "title",
+            plugins: { 
+              style: {
+                width: "w-3/12"
+              }
+            }
+          }),
+        col({
+           header: "Author",
+          accessor: "author",
+          plugins: { 
+            style: {
+              width: "w-2/12"
+            }
+          }
         }),
-      sort: addSortBy()
-  });
-// create columns to access the values of each data item
-  const columns = table.createColumns([
-    table.column({
-      header: "id",
-      accessor: "id",
-      plugins: {
-        sort: {
-          disable: true
-        },
-        colFilter: {
-          fn: textFilter
-        }
-      }
-    }),
-    table.column({
-      header: "Title",
-      accessor: "title",
-     plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    }),
-
-    table.column({
-      header: "Author",
-      accessor: "author",
-       plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    }),
-
-    table.column({
-      header: "Date TPQ",
-      accessor: "tpq",
-      cell: ({ value }) => value ?? "",
-      plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    }),
-
-    table.column({
-      header: "Date TAQ",
-      accessor: "taq",
-      cell: ({ value }) => value ?? "",
-      plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    }),
-    
-    table.column({
-      header: "Place",
-      accessor: "place",
-      plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-     
-    }),
-
-    table.column({
-      header: "Passages",
-      accessor: "passages",
-      plugins: {
-        colFilter: {
-          fn: textFilter      
-        }
-      }
-    }),
-  ]);
-
-  return {
-    table,
-    columns
-  };
-}
+        col({
+          header: "Date TPQ",
+            accessor: "tpq",
+             cell: ({ value }: {value: string | undefined}) => value ?? "",
+          plugins: { 
+            style: {
+              width: "w-1/12"
+            }
+          }
+        }),
+        col({
+          header: "Date TAQ",
+            accessor: "taq",
+             cell: ({ value } : {value: string | undefined}) => value ?? "",
+          plugins: { 
+            style: {
+              width: "w-1/12"
+            }
+          }
+        }),
+         col({
+          header: "Place",
+            accessor: "place",
+          plugins: { 
+            style: {
+              width: "w-3/12"
+            }
+          }
+        }),
+        col({
+          header: "Passages",
+          accessor: "passages",
+          plugins: { 
+            style: {
+              width: "w-2/12"
+            }
+          }
+        }),
+    ])
+  }
