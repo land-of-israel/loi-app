@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+  import{ resolve} from "$app/paths"
   import {
     Render, Subscribe
   } from "@humanspeak/svelte-headless-table";
@@ -8,6 +9,7 @@
   import ArrowDonwUp from '@lucide/svelte/icons/arrow-down-up';
   import ArrowUp from '@lucide/svelte/icons/arrow-up-narrow-wide';
   import ArrowDown from '@lucide/svelte/icons/arrow-down-wide-narrow';
+
 
   let { table, columns, basePath } = $props();
 
@@ -27,6 +29,8 @@ const { filterValues } = colFilter;
 const filterValue = $derived(pluginStates?.filter?.filterValue);
 const {pageIndex, pageCount, hasPreviousPage, hasNextPage, pageSize} = $derived(pluginStates?.page)
 
+
+
 type SortState = {
   order?: 'asc' | 'desc';
   disabled: boolean;
@@ -37,6 +41,7 @@ type SortState = {
 
 </script>
 <div class="grid gap-4 my-10 max-w-6xl mx-auto">
+<!-- table filter -->
   <div class="flex gap-4 justify-end items-center-safe">
     <h2>Search inside the table</h2>
     <input
@@ -47,6 +52,7 @@ type SortState = {
     />
   </div>
   <div class="flex justify-between gap-1">
+  <!-- page size selection -->
     <div class=" flex items-center gap-2 px-2 py-1 rounded-md border ">
       <label for="pages">Rows per page:</label>
       <select id="pages" bind:value={$pageSize} class="rounded-md *:focus:outline-2 focus:outline-offset-2 focus:outline-accent">
@@ -122,7 +128,7 @@ type SortState = {
       <tbody {...$tableBodyAttrs}>
         {#each $pageRows as row (row)}
           <tr class="odd:bg-white even:bg-brand-100 hover:bg-brand-300 cursor-pointer"
-          onclick={() => goto(`/${basePath}/${row.original.loi_id}`)}>
+          onclick={() => goto(resolve(`/${basePath}/${row.original.loi_id}`, {}))}>
             {#each row.cells as cell (cell)}
               <td class="py-2 px-4 border border-r-neutral-300">
                 <Render of={cell.render()} />
