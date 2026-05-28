@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
-
+import type {Keyword} from '$lib/types'
 import keywords from '$lib/data/processed/keywords.json';
 
 
@@ -21,5 +21,5 @@ export const load: PageLoad = ({ params }) => {
 		throw error(404, 'keyword not found');
 	}
 
-	return { keyword };
+	return { ... keyword as Keyword };
 };

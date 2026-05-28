@@ -1,4 +1,5 @@
 <script lang="ts">
+import type {Component} from 'svelte'
 	const colors = {
 		sky: 'bg-sky-500 shadow-sky-500/40',
 		green: 'bg-green-500 shadow-green-500/40',
@@ -9,21 +10,27 @@
 		pink: 'bg-pink-800 shadow-pink-800/40',
 
 	};
-    let { title, description, color = 'sky', icon: Icon, link } = $props();
+	type Color = keyof typeof colors;
+  
+  let { heading, description, color = 'sky', icon: Icon, children } : {
+    heading?: string,
+    description: string,
+    color: Color,
+    icon: Component,
+    children: import ('svelte').Snippet;
+  }= $props();
 </script>
  
 
-    <div class="relative isolate rounded-lg bg-white p-6 text-center shadow-xl border border-neutral-300">
+    <div class="rounded-lg bg-white p-6 text-center shadow-xl border border-neutral-300 grid justify-center ">
       <div class={`mx-auto flex h-16 w-16 -translate-y-12 items-center justify-center rounded-full 
       filter saturate-60 shadow-lg ${colors[color]}`}>
         <Icon class="h-6 w-6 text-white" />
-      </div>      
-      <h1 class="text-darken mb-3 pt-3 text-xl font-medium lg:h-14 lg:px-14">
-        <a href={link} class="px-3 py-2 bg-brand-300  rounded-md">
-            <span class="absolute inset-0 z-10"></span>
-            {title}
-        </a>
-        </h1>
+      </div> 
+      {#if heading} 
+      <h2 class="text-xl font-semibold pb-5 text-brand-600">{heading}</h2>   
+      {/if}
+      {@render children()}
       <p class="px-4 text-gray-500">{description}</p>
       
     </div>

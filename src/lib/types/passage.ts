@@ -1,0 +1,29 @@
+import type {Navigation, WorkRef} from "$lib/types/common"
+
+
+export interface Passage {
+    id:                 number;
+    loi_id:             string;
+    title:              string;
+    view_label:         string;
+    work:               WorkRef[];
+    text:               string;
+    translation:        string;
+    german_translation: string;
+    bibl_quotes:        BiblQuot[];
+    commentary:         string;
+    keywords:           Keyword[];
+    prev:               Navigation;
+    next:               Navigation;
+}
+
+export interface Keyword {
+    loi_id: string;
+    value:  string;
+}
+
+export interface BiblQuot {
+    loi_id: string;
+    bible: string;
+    text: string
+}
