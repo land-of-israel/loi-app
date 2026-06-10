@@ -103,8 +103,19 @@ async function main() {
                     loi_id: pw.loi_id,
                     title: pw.title,
                     author: pw.author,
+                    date: pw.date,
+                    language: pw.language,
+                    place: pw.place
                 }
             })
+            const parallels = rawData.parallel_texts.filter(par => p.parallel_text.some(pt => pt.id === par.id))
+                .map(par => {
+                    return {
+                        loi_id: par.loi_id,
+                        label: par.label,
+                        excerpt: par.excerpt,
+                    }
+                })
             return {
                 loi_id: p.loi_id,
                 id: p.id,
@@ -121,7 +132,8 @@ async function main() {
                         loi_id: `loi_keyword__${k.id}`,
                         value: k.value
                     }
-                })
+                }), 
+                parallels: parallels
             }
         })
         writeJson("passages.json", addPrevNext(processed_passages))
