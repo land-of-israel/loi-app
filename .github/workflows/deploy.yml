@@ -19,8 +19,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout the repo # clone the repo to the docker run in ubuntu
-        uses: actions/checkout@v4 # there is already a code for this step, we refer to the path in the github ans state the version
+      - name: Checkout the repo 
+        uses: actions/checkout@v6 
 
       - name: Install system dependencies
         run: |
