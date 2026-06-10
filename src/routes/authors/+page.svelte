@@ -21,4 +21,4 @@ const columns = $derived(tableConfig.columns);
 </script>
 
     
-    <DataTable {table} {columns} {basePath} />
+    <DataTable {table} {columns} {basePath} title="Authors"/>

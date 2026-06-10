@@ -11,7 +11,7 @@
   import ArrowDown from '@lucide/svelte/icons/arrow-down-wide-narrow';
 
 
-  let { table, columns, basePath } = $props();
+  let { table, columns, basePath, title } = $props();
 
   const viewModel = $derived(
     table.createViewModel(columns)
@@ -41,6 +41,7 @@ type SortState = {
 
 </script>
 <div class="grid gap-4 my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
+<h1 class="text-2xl font-semibold md:text-3xl">{title}</h1>
 <!-- table filter -->
   <div class="flex gap-4 justify-end items-center-safe">
     <h2>Search inside the table</h2>
