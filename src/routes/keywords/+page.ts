@@ -1,6 +1,6 @@
 import keywords from '$lib/data/processed/keywords.json';
 export function load() {
   return {
-    keywords
+    keywords, breadcrumbs: [{label: "Keywords"}]
   };
 }

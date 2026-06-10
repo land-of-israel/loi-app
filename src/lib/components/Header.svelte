@@ -50,13 +50,13 @@ import Logo from "$lib/assets/loi-logo.svg";
         </NavigationMenu.Item>
 
         <NavigationMenu.Item>
-         <NavigationMenu.Link href={resolve("/about", {})}>
+         <NavigationMenu.Link href={resolve("/tools", {})}>
                   Tools
           </NavigationMenu.Link>          
         </NavigationMenu.Item>
 
         <NavigationMenu.Item>
-         <NavigationMenu.Link href={resolve("/about", {})}>
+         <NavigationMenu.Link href={resolve("/search", {})}>
               Advanced Search
           </NavigationMenu.Link>          
         </NavigationMenu.Item>

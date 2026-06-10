@@ -20,7 +20,7 @@
 		"@eslint/js": "latest",
 		"@fontsource-variable/geist": "^5.2.9",
 		"@internationalized/date": "^3.12.1",
-		"@lucide/svelte": "^1.16.0",
+		"@lucide/svelte": "^1.17.0",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.57.0",

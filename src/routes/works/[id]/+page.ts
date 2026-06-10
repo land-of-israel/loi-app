@@ -22,5 +22,5 @@ export const load: PageLoad = ({ params }) => {
 		throw error(404, 'work not found');
 	}
 
-	return { ... work as Work };
+	return { ... work as Work, breadcrumbs: [{label: "Works", href: "/works"}, {label: work.title}] };
 };

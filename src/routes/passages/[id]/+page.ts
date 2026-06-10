@@ -23,6 +23,6 @@ export const load: PageLoad = ({ params }) => {
 	}
 
 	return { 
-		... passage as Passage
+		... passage as Passage, breadcrumbs: [{label: "Passages", href: "/passages"}, {label: passage.view_label}]
 	};
 };

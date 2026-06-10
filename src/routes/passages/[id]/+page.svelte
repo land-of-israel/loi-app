@@ -13,7 +13,7 @@
     prev={data.prev.id}
     next={data.next.id}
 />
-    <dl class="grid grid-cols-[200px_1fr] gap-y-2">
+    <dl class="grid grid-cols-[auto_1fr] gap-y-2 d:w-3xl lg:w-6xl mx-auto">
         <DL label="Passage Title">
             {data.title || 'N/A'}
         </DL>

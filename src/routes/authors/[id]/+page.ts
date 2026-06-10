@@ -22,5 +22,5 @@ export const load: PageLoad = ({ params }) => {
         throw error(404, 'Author not found');
     }
 
-    return { ... author as Author };
+    return { ... author as Author , breadcrumbs: [{ label: "Authors", href: "/authors" },{label: author.name}]};
 };
