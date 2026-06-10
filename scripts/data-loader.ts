@@ -17,7 +17,7 @@ import {
     RawPassagesSchema,
     RawPlacesSchema,
     RawWorksSchema
-} from "../src/lib/schemas"
+} from "$lib/schemas"
 
 const rawDataDir = join(process.cwd(), "src", "lib", "data", "raw")
 

@@ -7,3 +7,11 @@ export const ReferencedSchema = z.object({
 	value: NullableString,
 	order: z.string()
 });
+
+export type Referenced = z.infer<typeof ReferencedSchema>;
+
+export const SingleSelectSchema = z.object({
+	id: z.number(),
+	value: NullableString,
+	color: NullableString
+});

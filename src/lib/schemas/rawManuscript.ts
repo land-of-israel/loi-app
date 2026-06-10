@@ -12,6 +12,7 @@ export const RawManuscriptSchema = z.object ({
     ),
     library: z.array(ReferencedSchema),
     idno: NullableString,
+    facsimile: NullableString,
     loi_id: NullableString,
 })
 

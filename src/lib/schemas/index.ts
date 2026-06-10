@@ -13,3 +13,4 @@ export * from './rawParallel';
 export * from './rawPassage';
 export * from './rawPlace';
 export * from './rawWork';
+export * from './rawShared';

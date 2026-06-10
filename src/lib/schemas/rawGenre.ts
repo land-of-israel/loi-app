@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { NullableString, ReferencedSchema } from './rawShared';
+import { NullableString, SingleSelectSchema } from './rawShared';
 
 export const RawGenreSchema = z.object ({
     id: z.number(),
@@ -8,7 +8,7 @@ export const RawGenreSchema = z.object ({
     note: NullableString,
     reference: NullableString,
     loi_id: NullableString,
-    main_genre: z.array(ReferencedSchema)
+    main_genre: SingleSelectSchema.nullable().optional(),
 })
 
 export const RawGenresSchema = z.record(z.string(), RawGenreSchema);

@@ -6,7 +6,6 @@ export const RawParallelSchema = z.object ({
     order: z.string(),
     label: NullableString,
     excerpt: NullableString,
-    active: z.boolean(),
     loi_id: NullableString
 })
 

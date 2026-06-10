@@ -2,10 +2,13 @@ import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import { loadAllData } from "./data-loader.ts";
 import {log} from "@acdh-oeaw/lib"
+import type { Referenced } from "$lib/schemas/index";
+import type { RawDate } from "$lib/schemas/index";
 
 
 const outputFolder = join(process.cwd(), "src", "lib", "data", "processed");
 mkdirSync(outputFolder, {recursive: true})
+
 
 async function main() {
     try {
@@ -23,6 +26,7 @@ async function main() {
                     title: w.title
                 }
             });
+           
             return {
                 loi_id: author.loi_id,
                 id: author.id,
@@ -31,6 +35,8 @@ async function main() {
                 works: related_works,
                 gnd: author.gnd ?? '',
                 wikidata: author.wikidata ?? '', 
+                date_birth: enrichDates(author.birth_date, rawData.dates),
+                date_death: enrichDates(author.death_date, rawData.dates) 
                 }   
         });
 
@@ -53,18 +59,7 @@ async function main() {
                         }),
                     }
                 });
-            const dates = rawData.dates.filter(d => w.date.some(dat => dat.id === d.id))
-                .map(date => {
-                    return {                  
-                        tpq: date.tpq
-                            ? parseInt(date.tpq, 10)
-                            : undefined,
-                        taq: date.taq 
-                            ? parseInt(date.taq , 10)
-                            : undefined,
-                        label: date.label
-                    }
-                });
+          
             const place = rawData.places.filter(pl => w.place.some(p => p.id === pl.id))
                 .map(pl => {
                     return {
@@ -84,7 +79,7 @@ async function main() {
                         name: a.value
                     }
                 }),
-                date: dates,
+                date: enrichDates(w.date, rawData.dates),
                 place: place,
                 language: w.language.map(l => l.value).join(" | "),
                 passages: related_passages,
@@ -154,6 +149,8 @@ async function main() {
         log.error("Processing failed", error)
         process.exit(1);
      }
+
+     
 }
 
 main()
@@ -199,4 +196,18 @@ function addPrevNext(items: any[], idField = "loi_id", labelField = "view_label"
 	}
 
 	return sortedItems;
+}
+// helper function to enrich dates 
+
+function enrichDates(
+    references: Referenced[],
+    allDates: RawDate[]
+) {
+    return allDates
+        .filter(d => references.some(ref => ref.id === d.id))
+        .map(date => ({
+            tpq: date.tpq ? parseInt(date.tpq, 10) : undefined,
+            taq: date.taq ? parseInt(date.taq, 10) : undefined,
+            label: date.label
+        }));
 }
