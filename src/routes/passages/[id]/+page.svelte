@@ -50,13 +50,33 @@
         </DL>
     {/if}
 
-    <!-- {#if data.bibl_quotes.length > 0}
+    {#if data.bibl_quotes.length > 0}
          <DL label="Biblical quotes">
          {#each data.bibl_quotes as quote (quote.loi_id)}
-		    <NavLink href={resolve(`/bible-quotes/${quote.loi_id}`)}></NavLink>{quote.bible}</NavLink>
+		  <li class="group relative">
+            {quote.bible}
+            {#if quote.text}  
+                <span class="italic invisible group-hover:visible absolute z-10 w-75 top-8 left-0 border-brand-600 border bg-brand-300 opacity-95 p-2 rounded-sm shadow-sm text-sm">{quote.text}</span>
+            {/if}
+         </li>   
         {/each}
 	    </DL>
-    {/if} -->
+    {/if}
+
+    {#if data.parallels.length > 0}
+         <DL label="Parallel texts">
+         <ul>
+         {#each data.parallels as parallel (parallel.loi_id)}
+         <li class="group relative">
+            {parallel.label}
+            {#if parallel.excerpt}  
+                <span class="italic invisible group-hover:visible absolute z-10 w-75 top-8 left-0 border-brand-600 border bg-brand-300 opacity-95 p-2 rounded-sm shadow-sm text-sm">{parallel.excerpt}</span>
+            {/if}
+         </li>
+        {/each}
+        </ul>
+	    </DL>
+    {/if}
 
     {#if data.commentary}
         <DL label="Commentary">

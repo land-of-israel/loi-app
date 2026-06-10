@@ -13,6 +13,7 @@ export interface Passage {
     bibl_quotes:        BiblQuot[];
     commentary:         string;
     keywords:           Keyword[];
+    parallels:      Parallel[];
     prev:               Navigation;
     next:               Navigation;
 }
@@ -26,4 +27,10 @@ export interface BiblQuot {
     loi_id: string;
     bible: string;
     text: string
+}
+
+interface Parallel {
+    loi_id: string;
+    label: string;
+    excerpt: string;
 }
