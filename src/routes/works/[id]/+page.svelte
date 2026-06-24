@@ -23,6 +23,11 @@
             <NavLink href={resolve(`/authors/${data.author[0]?.loi_id}`, {})}>{data.author[0]?.name}</NavLink>
         </DL>
         {/if}
+        {#if data.genre.length > 0}
+            <DL label="Genre">
+                {data.genre.map(g => g.name).join(' | ')}
+            </DL>
+        {/if}
         {#if data.date.length > 0}
             <DL label="Date">
                 {data.date.map(d => d.label).join(' | ')}

@@ -21,6 +21,15 @@ export function createWorksTable(data: WorkRow[]) {
             }
           }
         }),
+         col({
+           header: "Genre",
+          accessor: "genre",
+          plugins: { 
+            style: {
+              width: "w-2/12"
+            }
+          }
+        }),
         col({
           header: "Date TPQ",
             accessor: "tpq",

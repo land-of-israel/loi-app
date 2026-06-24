@@ -7,6 +7,7 @@
 @custom-variant dark (&:is(.dark *));
 @plugin '@tailwindcss/typography';
 @theme {
+  --color-brand-700: #084c63;
   --color-brand-600: #19647E;
   --color-brand-500: #4d8ca1;
   --color-brand-400: #28AFB0;
