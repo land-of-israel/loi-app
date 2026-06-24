@@ -40,7 +40,12 @@ Clone the repo, go in the folder, install the dependencies, fetch fresh raw data
    pnpm dev
    ```
 
+The project uses a typsense index for the search. To update the index itself you will need the environement variables (typsense admin key) see - > .env.example
 
+```bash
+source set_env_variables.sh
+pnpm generate-index
+``
 
 ## Project structure
 ```mermaid  
