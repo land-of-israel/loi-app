@@ -29,21 +29,14 @@ This project uses `pnpm`. If you haven't installed it:
 
 ### Setup
 
+Clone the repo, go in the folder, install the dependencies, fetch fresh raw data, process it, run the application: 
+
    ```bash
-   # clone the repo
    git clone https://github.com/land-of-israel/loi-app.git
    cd loi-app
-   
-   # install dependencies
-   pnpm install
-   
-   # fetch fresh data
-   pnpm fetch-data
-   
-   # process the fetch raw data
-   pnpm process-data
-   
-   # run the application
+   pnpm install   
+   pnpm fetch-data   
+   pnpm process-data   
    pnpm dev
    ```
 
