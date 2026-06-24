@@ -13,7 +13,8 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"fetch-data": "tsx scripts/fetch-data.ts",
-		"process-data": "tsx scripts/process-data.ts"
+		"process-data": "tsx scripts/process-data.ts",
+		"generate-index": "tsx scripts/generate-index.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "latest",
@@ -53,6 +54,9 @@
 		"@acdh-oeaw/lib": "^1.0.7",
 		"@fontsource/cormorant-garamond": "^5.2.11",
 		"@humanspeak/svelte-headless-table": "^6.0.6",
+		"instantsearch.js": "^4.102.0",
+		"typesense": "^3.0.6",
+		"typesense-instantsearch-adapter": "^3.0.2",
 		"zod": "^4.4.3"
 	}
 }
