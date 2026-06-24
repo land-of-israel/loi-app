@@ -1,4 +1,4 @@
-import type {Navigation, WorkRef} from "$lib/types/common"
+import type {Navigation, WorkFullRef} from "$lib/types/common"
 
 
 export interface Passage {
@@ -6,7 +6,7 @@ export interface Passage {
     loi_id:             string;
     title:              string;
     view_label:         string;
-    work:               WorkRef[];
+    work:               WorkFullRef[];
     text:               string;
     translation:        string;
     german_translation: string;

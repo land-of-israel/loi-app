@@ -69,6 +69,15 @@ async function main() {
                         wikidata: pl.wikidata,
                     }
                 })
+
+            const genre = rawData.genres.filter(g => w.genre.some(genre => genre.id === g.id))
+                .map(g => {
+                    return {
+                        loi_id: g.loi_id,
+                        name: g.name,
+                        main_genre: g.main_genre?.value
+                    }
+                } )
             return {
                 loi_id: w.loi_id,
                 id: w.id,
@@ -82,6 +91,7 @@ async function main() {
                 date: enrichDates(w.date, rawData.dates),
                 place: place,
                 language: w.language.map(l => l.value).join(" | "),
+                genre: genre,
                 passages: related_passages,
                 view_label: w.title ?? 'N/A'
             }
@@ -105,7 +115,8 @@ async function main() {
                     author: pw.author,
                     date: pw.date,
                     language: pw.language,
-                    place: pw.place
+                    place: pw.place,
+                    genre: pw.genre
                 }
             })
             const parallels = rawData.parallel_texts.filter(par => p.parallel_text.some(pt => pt.id === par.id))

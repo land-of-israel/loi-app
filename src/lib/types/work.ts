@@ -1,4 +1,4 @@
-import type {Navigation, AuthorRef} from "$lib/types/common"
+import type {Navigation, AuthorRef, GenreRef} from "$lib/types/common"
 
 
 export interface Work {
@@ -9,6 +9,7 @@ export interface Work {
     date:       DateElement[];
     place:      Place[];
     language:   string;
+    genre:      GenreRef[];
     passages:   Passage[];
     view_label: string;
     prev:       Navigation;
@@ -41,3 +42,4 @@ export interface Keyword {
     loi_id: string;
     value:  string;
 }
+

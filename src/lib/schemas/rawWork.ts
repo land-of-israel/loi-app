@@ -13,6 +13,7 @@ export const RawWorkSchema = z.object ({
     loi_id: NullableString,
     corpus: z.array(ReferencedSchema),
     language: z.array(ReferencedSchema),
+    genre: z.array(ReferencedSchema)
 })
 
 

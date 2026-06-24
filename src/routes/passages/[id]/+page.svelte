@@ -27,6 +27,12 @@
             <NavLink href={resolve(`/works/${data.work[0]?.loi_id}`, {})}>{data.work[0]?.title}</NavLink>
         </DL>
         {/if}
+
+         {#if data.work[0].genre.length > 0 }
+        <DL label="Genre">
+            {data.work[0]?.genre.map(g => g.name).join(", ")}
+        </DL>
+        {/if}
     
         <DL label="Text">
             {data.text}

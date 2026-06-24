@@ -32,13 +32,23 @@ export function createPassagesTable(data: PassageRow[]) {
             }
           }),
 
+           col({
+            header: "Genre",
+            accessor: "genre",
+            plugins: {
+              style: {
+                width: "w-1/12"
+              }
+            }
+          }),
+
           col({
               header: "Text",
               accessor: "text",
               cell: ({ value }: {value: string }) => value.substring(0, 200) + "...",
               plugins: {
                 style: {
-                  width: "w-5/12",
+                  width: "w-4/12",
                   align: "text-right"
                 }
               }

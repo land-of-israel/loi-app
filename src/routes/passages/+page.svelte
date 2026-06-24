@@ -13,6 +13,7 @@ import type {Passage} from '$lib/types'
     text: p.text,
     author: p.work[0]?.author?.map(a=> a.name).join(', ') ?? '',
     workTitle: p.work[0]?.title ?? '',
+    genre: p.work[0]?.genre[0]?.name ?? '',
     keywords: p.keywords.map(k => k.value).join(' | ') ?? ''
   })));
 
