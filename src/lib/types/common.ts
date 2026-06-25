@@ -30,7 +30,6 @@ export interface PlaceRef {
     name:   string;
     geoname: string;
     wikidata: string
-
 }
 
 export interface WorkFullRef extends WorkRef {

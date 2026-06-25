@@ -28,7 +28,7 @@
         </DL>
         {/if}
 
-         {#if data.work[0].genre.length > 0 }
+         {#if data.work.length > 0 &&  data.work[0].genre.length > 0 }
         <DL label="Genre">
             {data.work[0]?.genre.map(g => g.name).join(", ")}
         </DL>
