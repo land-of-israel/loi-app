@@ -45,7 +45,7 @@ The project uses a typsense index for the search. To update the index itself you
 ```bash
 source set_env_variables.sh
 pnpm generate-index
-``
+```
 
 ## Project structure
 ```mermaid  
