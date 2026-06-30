@@ -144,3 +144,39 @@
 		@apply font-sans;
   }
 }
+
+/* ############################## */
+/* #########ALGOLIA ############# */
+/* ############################## */
+
+/* Styles for Algolia search box */
+
+#searchbox .ais-SearchBox {
+	@apply relative w-full bg-brand-600 rounded-lg;
+}
+
+.ais-SearchBox-form {
+	@apply relative w-full bg-white rounded-lg;
+}
+
+.ais-SearchBox-input {
+	@apply w-full py-2 pl-10 pr-3 border rounded-lg border-gray-300 focus:outline-hidden focus:ring-1 focus:ring-brand-700 focus:border-transparent h-12;
+}
+
+/* Position the existing SVG icon inside the input */
+.ais-SearchBox-submit {
+	@apply absolute left-3 top-1/2 transform -translate-y-1/2 bg-transparent border-none;
+}
+
+.ais-SearchBox-submitIcon {
+	@apply w-5 h-5 text-gray-400;
+}
+
+/* Style the reset button */
+.ais-SearchBox-reset {
+	@apply absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent border-none;
+}
+
+.ais-SearchBox-resetIcon {
+	@apply w-5 h-5 text-gray-400;
+}
