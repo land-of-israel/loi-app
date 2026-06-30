@@ -66,6 +66,7 @@ async function generate() {
       { name: "keywords", type: "object[]", facet: true, optional: true },
       { name: "bibl_quotes", type: "object[]", facet: true, optional: true },
       { name: "parallels", type: "object[]", facet: true, optional: true },
+      { name: "date", type: "string" },
      
       
       // get dates as separate numbers for filtering 'from -to' in the frontend
@@ -106,6 +107,7 @@ async function generate() {
         place: value.work[0]?.place[0]?.name || '',      
         bibl_quotes: value.bibl_quotes,
         keywords: value.keywords,
+        date: value.work[0]?.date[0]?.label || "",
         tpq: value.work[0]?.date[0]?.tpq || 601,
         taq: value.work[0]?.date[0]?.taq || 1100,
   }));

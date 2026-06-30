@@ -180,3 +180,42 @@
 .ais-SearchBox-resetIcon {
 	@apply w-5 h-5 text-gray-400;
 }
+
+.ais-Hits-list {
+  @apply space-y-1
+}
+
+.ais-Hits-item {
+  @apply hover:bg-brand-200 rounded-md
+}
+
+/* Base Pagination List */
+
+.ais-Pagination-list {
+	@apply flex items-center justify-center gap-1 my-4;
+}
+
+/* All Pagination Items */
+.ais-Pagination-item {
+	@apply inline-flex items-center justify-center;
+}
+
+/* Pagination Links */
+.ais-Pagination-link {
+	@apply h-8 w-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors;
+	@apply hover:bg-brand-100;
+}
+
+/* Selected Page */
+.ais-Pagination-item--selected .ais-Pagination-link {
+	 @apply bg-brand-600 text-white pointer-events-none cursor-default;
+}
+
+/* Disabled Items */
+.ais-Pagination-item--disabled .ais-Pagination-link {
+	@apply text-gray-300 cursor-not-allowed hover:bg-transparent;
+}
+
+.ais-Pagination-item--page .ais-Pagination-link {
+	@apply border border-brand-600 rounded-lg  transition hover:bg-brand-100 hover:text-brand-700;
+}

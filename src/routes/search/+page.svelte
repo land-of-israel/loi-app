@@ -23,11 +23,18 @@ onMount(() => {
     return () => search.dispose();
 });
 </script>
-
-<div id="searchbox" class="max-w-3xl rounded-lg p-8 bg-brand-200"></div>
-<div id="clearRefinements"></div>
-<div id="currentRefinements"></div>
-
-<div id="stats"></div>
-<div id="hits"></div>
-<div id="pagination"></div>
+<div class="max-w-5xl mx-auto">
+    <div id="searchbox" class="w-full rounded-lg p-8 bg-brand-200"></div>
+    <div id="clearRefinements"></div>
+    <div id="currentRefinements"></div>
+    <div class="grid md:grid-cols-[1fr_3fr] md:gap-6 md:px-5">
+        <div id="refinements">Here some the filters</div>
+        <div>
+            <div id="stats"></div>
+            <div id="hits" ></div>
+            <div id="pagination"></div>
+        </div>
+    
+    
+    </div>
+</div>
