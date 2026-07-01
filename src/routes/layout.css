@@ -7,6 +7,7 @@
 @custom-variant dark (&:is(.dark *));
 @plugin '@tailwindcss/typography';
 @theme {
+  --color-brand-800: #05303e;
   --color-brand-700: #084c63;
   --color-brand-600: #19647E;
   --color-brand-500: #4d8ca1;
@@ -14,6 +15,7 @@
   --color-brand-300: #cae7e7;
   --color-brand-200: #dbe8e8;
   --color-brand-100: #edf3f3;
+  --color-brand-50: #f4fdfd;
 
   --color-primary: #19647E;
   --color-secondary: #F4D35E;
@@ -162,6 +164,124 @@
 .ais-SearchBox-input {
 	@apply w-full py-2 pl-10 pr-3 border rounded-lg border-gray-300 focus:outline-hidden focus:ring-1 focus:ring-brand-700 focus:border-transparent h-12;
 }
+/* Filter Panel  */
+
+/* Main panel container */
+.ais-Panel {
+	@apply md:mb-4 md:rounded-lg md:border border-brand-300 bg-white overflow-hidden md:shadow-xs;
+}
+
+/* Panel header */
+.ais-Panel-header {
+	@apply px-4 py-2 md:bg-brand-100 flex justify-between items-center md:border-b border-gray-200;
+}
+
+/* Panel header text */
+.ais-Panel-header span {
+	@apply text-brand-800 font-medium;
+}
+
+/* Collapse button */
+.ais-Panel-collapseButton {
+	@apply w-auto h-auto bg-transparent flex items-center justify-start pr-2 cursor-pointer;
+}
+
+/* Collapse icon */
+.ais-Panel-collapseIcon {
+	@apply transform transition-transform duration-300 text-brand-600;
+}
+
+/* Rotate icon when expanded */
+.ais-Panel--collapsed .ais-Panel-collapseIcon {
+	@apply rotate-90 text-brand-800;
+}
+
+/* Hide body when collapsed */
+.ais-Panel--collapsed .ais-Panel-body {
+	@apply hidden;
+}
+
+/* Panel body */
+.ais-Panel-body {
+	@apply px-4 py-2;
+}
+
+/* Refinement list */
+.ais-RefinementList-list {
+	@apply space-y-2 mt-2;
+}
+
+/* Refinement item */
+.ais-RefinementList-item {
+	@apply text-sm;
+}
+
+/* Active refinement item */
+.ais-RefinementList-item--selected {
+	@apply bg-brand-50 rounded-md;
+}
+
+/* Refinement label */
+.ais-RefinementList-label {
+	@apply flex items-center py-1 cursor-pointer hover:text-brand-600;
+}
+
+/* Checkbox */
+.ais-RefinementList-checkbox {
+	@apply mr-2 h-4 w-4 rounded-sm border-gray-300 text-brand-600 focus:ring-brand-600;
+	accent-color: var(--brand-600, #d44807);
+}
+
+/* Label text */
+.ais-RefinementList-labelText {
+	@apply text-gray-700 grow;
+}
+
+/* Count badge */
+.ais-RefinementList-count {
+	@apply ml-2 bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full;
+}
+
+/* Show more button */
+.ais-RefinementList-showMore,
+.ais-HierarchicalMenu-showMore {
+	@apply mt-2 text-sm bg-brand-600 text-brand-100 focus:outline-hidden px-2 py-0.5 border border-brand-600 rounded-md hover:bg-brand-800 transition;
+}
+
+/* Disabled show more button */
+.ais-RefinementList-showMore--disabled,
+.ais-HierarchicalMenu-showMore--disabled {
+	@apply hidden;
+}
+
+/* Search box in refinement */
+.ais-RefinementList-searchBox {
+	@apply mt-2 mb-3;
+}
+
+.ais-RefinementList-searchBox .ais-SearchBox-form {
+	@apply relative;
+}
+
+.ais-RefinementList-searchBox .ais-SearchBox-input {
+	@apply w-full text-sm py-1.5 pl-8 pr-2 border border-gray-300 rounded-sm;
+}
+
+.ais-RefinementList-searchBox .ais-SearchBox-submit {
+	@apply absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none;
+}
+
+.ais-RefinementList-searchBox .ais-SearchBox-submitIcon {
+	@apply w-3.5 h-3.5 text-gray-400;
+}
+
+.ais-RefinementList-searchBox .ais-SearchBox-reset {
+	@apply absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none;
+}
+
+.ais-RefinementList-searchBox .ais-SearchBox-resetIcon {
+	@apply w-3.5 h-3.5 text-gray-400;
+}
 
 /* Position the existing SVG icon inside the input */
 .ais-SearchBox-submit {
@@ -182,7 +302,7 @@
 }
 
 .ais-Hits-list {
-  @apply space-y-1
+  @apply space-y-2
 }
 
 .ais-Hits-item {

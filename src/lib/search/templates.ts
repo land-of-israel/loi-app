@@ -1,10 +1,6 @@
-import { highlight } from "instantsearch.js/es/helpers";
-
-export const searchBoxTemplate = {
-
-}
-
-export interface PassageHit {
+import type { resolve } from '$app/paths';
+import type { HitsTemplates } from 'instantsearch.js/es/widgets/hits/hits';
+interface PassageHit {
   rec_id: string;
   title: string;
   text: string;
@@ -13,26 +9,21 @@ export interface PassageHit {
   genre: string;
   date: string;
 }
-
-export const hitTemplates = {
-  empty(_items : PassageHit[], { html }) {
-    return html`
-      <p class="p-4 text-gray-600">No matches.</p>
-    `;
-  },
-
-  item(hit : PassageHit, { html }) {
-    const href = (`/passages/${hit.rec_id}`);
-
-    return html`
-      <article
+export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<PassageHit> {
+     return {
+        item(hit: PassageHit, { html }) {
+        const href = resolveFn('/passages/[id]', {
+            id: hit.rec_id
+            });
+        return html`
+         <article
         class="relative isolate w-full p-2 md:px-4 border-l-brand-700 border rounded-md"
       >
         <h2
-          class="text-lg underline underline-offset-2 font-semibold text-brand-800 break-words"
+          class="text-lg underline underline-offset-2 font-semibold text-brand-800 wrap-break-word"
         >
-          <a href="${href}">
-            <span class="absolute inset-0 z-10 bg-brand-300/15"></span>
+        <a href="${href}">
+         <span class="absolute inset-0 z-10 bg-brand-300/15"></span>
 
             ${hit.title || 'No title available'}
           </a>
@@ -45,9 +36,12 @@ export const hitTemplates = {
                 <dd class="pl-5">${hit.work}</dd>
                 <dt class="font-semibold pr-2">Date:</dt>
                 <dd class="pl-5">${hit.date}</dd>
+                <dt class="font-semibold pr-2">Text:</dt>
+                <dd class="pl-5">${hit.text.slice(0,100)} ...</dd>
             </dl>
         </div>
       </article>
     `;
-  },
-};
+    }
+  };
+}

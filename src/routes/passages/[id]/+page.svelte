@@ -19,12 +19,12 @@
         </DL>
         {#if data.work.length > 0 && data.work[0].author.length > 0}
         <DL label="Author">
-            <NavLink href={resolve(`/authors/${data.work[0]?.author[0]?.loi_id}`, {})}>{data.work[0]?.author[0]?.name}</NavLink>
+            <NavLink href={resolve('/authors/[id]', {id: data.work[0]?.author[0]?.loi_id})}>{data.work[0]?.author[0]?.name}</NavLink>
         </DL>
         {/if}
         {#if data.work.length > 0 }
         <DL label="Work Title">
-            <NavLink href={resolve(`/works/${data.work[0]?.loi_id}`, {})}>{data.work[0]?.title}</NavLink>
+            <NavLink href={resolve('/works/[id]', {id: data.work[0]?.loi_id})}>{data.work[0]?.title}</NavLink>
         </DL>
         {/if}
 
@@ -51,7 +51,7 @@
     <DL label="Keywords">
         {#each data.keywords as keyword , i (keyword.loi_id)}
             {#if i > 0} , {/if}
-            <NavLink href={resolve(`/keywords/${keyword.loi_id}`, {})}>{keyword.value}</NavLink>
+            <NavLink href={resolve('/keywords/[id]', {id: keyword.loi_id})}>{keyword.value}</NavLink>
         {/each}
         </DL>
     {/if}
