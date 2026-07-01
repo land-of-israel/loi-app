@@ -25,7 +25,7 @@
         {/if}
         {#if data.genre.length > 0}
             <DL label="Genre">
-                {data.genre.map(g => g.name).join(' | ')}
+                {data.genre.map(g => g.sub_genre).join(' | ')}
             </DL>
         {/if}
         {#if data.date.length > 0}

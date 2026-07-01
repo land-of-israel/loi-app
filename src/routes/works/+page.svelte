@@ -9,7 +9,7 @@ import type {Work} from '$lib/types'
     id: w.id,
     loi_id: w.loi_id,
     title: w.title,
-    genre: w.genre?.map(g => g.name).join(' | '),
+    genre: w.genre?.map(g => g.sub_genre).join(' | '),
     author: w.author?.map(a=> a.name).join(', ') ?? '',
     tpq: w.date[0]?.tpq,
     taq: w.date[0]?.taq,
