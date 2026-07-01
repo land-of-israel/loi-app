@@ -7,7 +7,7 @@ import {
 	clearRefinements,
 	currentRefinements,
     refinementList,
-	//hierarchicalMenu,
+	hierarchicalMenu,
 } from "instantsearch.js/es/widgets";
 import { resolve } from "$app/paths";
 
@@ -88,15 +88,34 @@ export const widgets = {
             container: "#refinement-list-keywords",
             attribute: "keywords",
         }),
-        
-
+     refinementLanguage: () =>
+        wrapInPanel("Language")({
+            ...commonRefinementOptions,
+            container: "#refinement-list-language",
+            attribute: "language",
+        }),  
+    refinementPlace: () =>
+        wrapInPanel("Place")({
+            ...commonRefinementOptions,
+            container: "#refinement-list-place",
+            attribute: "place",
+        }),
+    refinementGenre: () =>
+        wrapHierarcicalMenuInPanel("Genre")({
+             ...commonRefinementOptions,
+            container: "#refinement-list-genre",
+            attributes: ["main_genre", "sub_genre"],
+		    separator: " > ",             
+        })
     };
 
 // function to wrap refinements filter in a panel
 function wrapInPanel(title: string) {
   return panel({
-    collapsed: () => false,
-
+    //collapsed: () => true,
+    collapsed: ({ state }) => {
+			return state?.query?.length === 0;
+		}, // collapse if no query 
     templates: {
       header(_, { html }) {
         return html`
@@ -117,4 +136,24 @@ function wrapInPanel(title: string) {
       root: "border-b",
     },
   })(refinementList);
+}
+// function to wrap hierarchical menu refinements filter in a panel
+function wrapHierarcicalMenuInPanel(title: string) {
+	return panel({
+		//collapsed: () => true, // Always collapsed by default
+		collapsed: ({ state }) => {
+			return state?.query?.length === 0;
+		}, // collapse if no query 
+		templates: {
+			header(_, { html }) {
+				return html` <span class="normal-case text-base font-normal">${title}</span>`;
+			},
+		},
+		cssClasses: {
+			header: "cursor-pointer relative z-10",
+			collapseButton: "absolute inset-0 z-20 flex flex-row-reverse",
+			collapseIcon: "",
+			root: "border-b",
+		},
+	})(hierarchicalMenu);
 }

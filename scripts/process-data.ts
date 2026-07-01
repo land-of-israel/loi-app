@@ -74,7 +74,7 @@ async function main() {
                 .map(g => {
                     return {
                         loi_id: g.loi_id,
-                        name: g.name,
+                        sub_genre: g.main_genre?.value ? `${g.main_genre?.value} > ${g.name}` : `Varia > ${g.name}` ,
                         main_genre: g.main_genre?.value
                     }
                 } )

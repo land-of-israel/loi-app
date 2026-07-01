@@ -15,7 +15,7 @@ export interface AuthorRef {
 }
 export interface GenreRef {
     loi_id: string;
-    name:  string;
+    sub_genre:  string;
     main_genre: string
 }
 

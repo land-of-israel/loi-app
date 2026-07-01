@@ -145,6 +145,10 @@
 	html {
 		@apply font-sans;
   }
+  /* dir attr doesnt work in firefox when inside a ul element, need to attach specific css */
+  *:dir(rtl){
+    @apply text-right;
+  }
 }
 
 /* ############################## */
@@ -164,7 +168,16 @@
 .ais-SearchBox-input {
 	@apply w-full py-2 pl-10 pr-3 border rounded-lg border-gray-300 focus:outline-hidden focus:ring-1 focus:ring-brand-700 focus:border-transparent h-12;
 }
-/* Filter Panel  */
+
+/* Style the reset button */
+.ais-SearchBox-reset {
+	@apply absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent border-none;
+}
+
+.ais-SearchBox-resetIcon {
+	@apply w-5 h-5 text-gray-400;
+}
+/****** Filter Panel ******/
 
 /* Main panel container */
 .ais-Panel {
@@ -206,11 +219,6 @@
 	@apply px-4 py-2;
 }
 
-/* Refinement list */
-.ais-RefinementList-list {
-	@apply space-y-2 mt-2;
-}
-
 /* Refinement item */
 .ais-RefinementList-item {
 	@apply text-sm;
@@ -223,13 +231,13 @@
 
 /* Refinement label */
 .ais-RefinementList-label {
-	@apply flex items-center py-1 cursor-pointer hover:text-brand-600;
+	@apply flex items-center py-1 cursor-pointer;
 }
 
 /* Checkbox */
 .ais-RefinementList-checkbox {
-	@apply mr-2 h-4 w-4 rounded-sm border-gray-300 text-brand-600 focus:ring-brand-600;
-	accent-color: var(--brand-600, #d44807);
+	@apply mr-2 h-4 w-4 rounded-sm border-secondary-800 text-brand-600 focus:ring-brand-600;
+	accent-color: var(--brand-600, #fbc606);
 }
 
 /* Label text */
@@ -308,6 +316,71 @@
 .ais-Hits-item {
   @apply hover:bg-brand-200 rounded-md
 }
+
+/* For the current refinements */
+.ais-CurrentRefinements-list {
+	@apply flex flex-wrap gap-3;
+}
+
+.ais-CurrentRefinements-item {
+	@apply py-1.5 px-2  border rounded-md border-secondary-600 bg-secondary flex gap-2;
+}
+
+.ais-CurrentRefinements-category {
+	@apply flex gap-3 justify-between;
+}
+
+.ais-CurrentRefinements-label {
+	@apply font-semibold text-brand-800;
+}
+
+.ais-CurrentRefinements-delete {
+	@apply hover:font-bold hover:text-red-700 cursor-pointer;
+}
+
+.ais-ClearRefinements-button {
+	@apply py-2 px-3  border cursor-pointer rounded-md hover:border-brand-800 bg-brand-600 text-brand-50 font-semibold text-sm hover:bg-brand-100 hover:text-brand-800 transition;
+}
+
+.ais-ClearRefinements-button--disabled {
+	@apply hidden;
+}
+
+/* Hierarchical Menu Container */
+.ais-HierarchicalMenu-list {
+	@apply space-y-2 mt-2;
+}
+
+/* Hierarchical Menu Item */
+.ais-HierarchicalMenu-item {
+	@apply text-sm;
+}
+
+/* Active (selected) item */
+.ais-HierarchicalMenu-item--selected > .ais-HierarchicalMenu-link {
+	@apply bg-brand-50 rounded-md font-semibold;
+}
+
+/* Hierarchical Menu Link */
+.ais-HierarchicalMenu-link {
+	@apply flex items-center px-2 rounded-md hover:bg-brand-100 hover:text-brand-600 transition-colors;
+	text-decoration: none;
+}
+
+/* Hierarchical Menu Label */
+.ais-HierarchicalMenu-label {
+	@apply text-gray-700 grow;
+}
+
+/* Hierarchical Menu Count */
+.ais-HierarchicalMenu-count {
+	@apply ml-2 bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full;
+}
+
+.ais-HierarchicalMenu-list--child .ais-HierarchicalMenu-list {
+	@apply list-disc pl-8;
+}
+
 
 /* Base Pagination List */
 

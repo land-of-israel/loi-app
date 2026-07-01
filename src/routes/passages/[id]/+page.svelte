@@ -4,10 +4,11 @@
     import NavLink from "$lib/components/NavLink.svelte"
     import { resolve } from "$app/paths";
     import PrevNextNav from "$lib/components/ui/prev-next-nav.svelte"
+    import {langMap} from '$lib/utils';
 </script>
 
 <div class="grid gap-4 p-10">
-   <PrevNextNav
+    <PrevNextNav
     basePath="passages"
     title={data.title}
     prev={data.prev.id}
@@ -27,14 +28,14 @@
             <NavLink href={resolve('/works/[id]', {id: data.work[0]?.loi_id})}>{data.work[0]?.title}</NavLink>
         </DL>
         {/if}
-
-         {#if data.work.length > 0 &&  data.work[0].genre.length > 0 }
+        
+        {#if data.work.length > 0 &&  data.work[0].genre.length > 0 }
         <DL label="Genre">
-            {data.work[0]?.genre.map(g => g.name).join(", ")}
+            {data.work[0]?.genre.map(g => g.sub_genre).join(", ")}
         </DL>
         {/if}
-    
-        <DL label="Text">
+        
+        <DL label="Text" dir="rtl" lang={langMap[data.work[0].language] || undefined}>
             {data.text}
         </DL>
     

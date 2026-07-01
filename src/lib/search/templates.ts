@@ -8,13 +8,19 @@ interface PassageHit {
   author: string;
   genre: string;
   date: string;
+  language: string;
 }
+import {langMap} from '$lib/utils';
+
 export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<PassageHit> {
      return {
         item(hit: PassageHit, { html }) {
         const href = resolveFn('/passages/[id]', {
             id: hit.rec_id
             });
+        
+        const lang = langMap[hit.language] || undefined;
+        const dir = lang ? "rtl" : "ltr";
         return html`
          <article
         class="relative isolate w-full p-2 md:px-4 border-l-brand-700 border rounded-md"
@@ -37,7 +43,7 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<PassageHi
                 <dt class="font-semibold pr-2">Date:</dt>
                 <dd class="pl-5">${hit.date}</dd>
                 <dt class="font-semibold pr-2">Text:</dt>
-                <dd class="pl-5">${hit.text.slice(0,100)} ...</dd>
+               <dd dir=${dir} lang=${lang} class="pl-5"> ${hit.text.slice(0,500)} ${hit.text.length > 500 ? '...': ''}</dd>
             </dl>
         </div>
       </article>
