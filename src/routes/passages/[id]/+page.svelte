@@ -34,8 +34,14 @@
             {data.work[0]?.genre.map(g => g.sub_genre).join(", ")}
         </DL>
         {/if}
+
+        {#if data.work[0]?.language}
+        <DL label="Language">
+            {data.work[0]?.language}
+        </DL>
+        {/if}
         
-        <DL label="Text" dir="rtl" lang={langMap[data.work[0].language] || undefined}>
+        <DL label="Text" dir="rtl" lang={langMap[data?.work[0]?.language] ?? "he"}>
             {data.text}
         </DL>
     
