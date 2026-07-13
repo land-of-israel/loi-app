@@ -11,7 +11,7 @@ onMount(() => {
     return () => search?.dispose();
 });
 </script>
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl px-2 mx-auto">
     <div id="searchbox" class="w-full rounded-lg p-8 bg-brand-200"></div>
     <div id="clearRefinements"></div>
     <div class="grid md:grid-cols-[1fr_3fr] md:gap-6 md:py-5">
@@ -31,8 +31,6 @@ onMount(() => {
             <div id="stats"></div>
             <div id="hits" ></div>
             <div id="pagination"></div>
-        </div>
-    
-    
+        </div>  
     </div>
 </div>

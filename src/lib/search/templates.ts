@@ -33,7 +33,7 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<Hit<Passa
         class="relative isolate w-full p-2 md:px-4 border-l-brand-700 border rounded-md"
       >
         <h2
-          class="text-lg underline underline-offset-2 font-semibold text-brand-800 wrap-break-word"
+          class="text-base md:text-lg underline underline-offset-2 font-semibold text-brand-800 wrap-break-word"
         >
         <a href="${href}">
          <span class="absolute md:static inset-0 z-10 bg-brand-300/15"></span>
@@ -42,7 +42,7 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<Hit<Passa
           </a>
         </h2>
         <div class="text-gray-700">
-			<dl class="md:grid grid-cols-[1fr_5fr] p-2 break-inside-avoid-column">
+			<dl class="md:grid grid-cols-[1fr_5fr] p-2 break-inside-avoid-column text-sm md:text-base">
                 <dt class="font-semibold pr-2">Author:</dt>
                 <dd class="pl-5">${hit.author}</dd>
                 <dt class="font-semibold pr-2">Work:</dt>
@@ -56,20 +56,13 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<Hit<Passa
                     hit
                   })}
               </dd>
-              <dt class="font-semibold pr-2">Translation (EN):</dt>
-              <dd class="pl-5 text-sm">
+              <dt class="hidden md:block font-semibold pr-2">Translation (EN):</dt>
+              <dd class="hidden md:block pl-5 text-sm">
                  ${components.Snippet({
                     attribute: "text_en",
                     hit
                   })}
-              </dd>
-              <dt class="font-semibold pr-2">Commentary:</dt>
-              <dd class="pl-5 text-sm">
-                  ${components.Snippet({
-                    attribute: "commentary",
-                    hit
-                  })}
-              </dd>
+              </dd>             
             </dl>
         </div>
       </article>

@@ -31,7 +31,7 @@ export const widgets = {
     searchBox({
       container: "#searchbox",
       autofocus: true,
-      placeholder: "Text search",
+      placeholder: "Search in original text, translation and commentary",
     }),
 
   stats: () =>

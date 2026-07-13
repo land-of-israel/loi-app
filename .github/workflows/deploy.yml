@@ -33,14 +33,16 @@ jobs:
         with:
           node-version: 22 
 
-      - name: set up pnpm
-        uses: pnpm/action-setup@v6 
-        with:
-          version: 11
+      - name: enable corepack
+        run: |
+          corepack enable
+          corepack install
+      
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile    
 
-      - name: install dependencies 
-        run: pnpm install
-
+     
       - name: fetch fresh data using script
         run: pnpm run fetch-data 
 
@@ -75,5 +77,6 @@ jobs:
           path: 'build/'
 
       - name: Deploy to Github pages
+        if: github.event_name != 'push'
         id: deployment
         uses: actions/deploy-pages@v5
