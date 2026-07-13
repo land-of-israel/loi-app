@@ -2,34 +2,12 @@
 import { onMount } from "svelte";
 import type { InstantSearch } from "instantsearch.js";
 let search: InstantSearch | null = null;
+import { createSearch } from "$lib/search/client";
 
 
-onMount(() => {
-    (async () => {
-        const { createSearch } = await import("$lib/search/client");
-        const { widgets } = await import("$lib/search/widgets");
-
-        search = createSearch();
-
-        search.addWidgets([
-            widgets.searchBox(),
-            widgets.stats(),
-            widgets.hits(),
-            widgets.pagination(),
-            widgets.refinementWork(),
-            widgets.refinementKeywords(),
-            widgets.refinementBibl(),
-            widgets.refinementParallels(),
-            widgets.refinementAuthor(),
-            widgets.refinementLanguage(),
-            widgets.refinementPlace(),
-            widgets.refinementGenre(),
-            widgets.currentRefinements(),
-        ]);
-
-        search.start();
-    })();
-
+onMount(() => {  
+    search = createSearch();
+    search.start();
     return () => search?.dispose();
 });
 </script>
