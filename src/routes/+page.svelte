@@ -26,7 +26,7 @@ import { resolve } from "$app/paths";
                 </div>
             </MenuCard>
 
-            <MenuCard description="Advanced search coming soon"
+            <MenuCard description="Use the faceted search to quickly refine results."
                 color="sky"
                 icon={Search}>
                     <MenuItem title="Search" link={resolve('/search', {})}/>

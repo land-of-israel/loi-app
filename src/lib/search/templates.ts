@@ -27,7 +27,22 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<Hit<Passa
         
         const lang = langMap[hit.language] || undefined;
         const dir = lang ? "rtl" : "ltr";
-       
+       const text = hit.hasQuery
+          ? components.Snippet({
+              attribute: "text",
+              hit,
+            })
+          : truncate(hit.text);
+          const text_en = hit.hasQuery
+          ? components.Snippet({
+              attribute: "text_en",
+              hit,
+            })
+          : truncate(hit.text_en);
+          const translation = text_en ? html`<dt class="hidden md:block font-semibold pr-2">Translation (EN):</dt>
+                <dd class="hidden md:block pl-5 text-sm">
+                  ${text_en}
+                </dd>` : "" ;
         return html`
          <article
         class="relative isolate w-full p-2 md:px-4 border-l-brand-700 border rounded-md"
@@ -51,18 +66,10 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<Hit<Passa
                 <dd class="pl-5">${hit.date}</dd>
                 <dt class="font-semibold pr-2">Text:</dt>
                <dd dir=${dir} lang=${lang} class="pl-5">
-                 ${components.Snippet({
-                    attribute: "text",
-                    hit
-                  })}
+                 ${text}
               </dd>
-              <dt class="hidden md:block font-semibold pr-2">Translation (EN):</dt>
-              <dd class="hidden md:block pl-5 text-sm">
-                 ${components.Snippet({
-                    attribute: "text_en",
-                    hit
-                  })}
-              </dd>             
+              ${translation}
+                     
             </dl>
         </div>
       </article>
@@ -71,3 +78,9 @@ export function hitTemplates(resolveFn: typeof resolve): HitsTemplates<Hit<Passa
   };
 }
 
+//helper to truncate hits with empty search
+function truncate(text: string, max = 250) {
+  return text.length > max
+    ? text.slice(0, max).trimEnd() + " … "
+    : text;
+}

@@ -23,6 +23,10 @@ const adapter = new TypesenseInstantsearchAdapter({
   },
 });
 
+export const searchState = $state({
+	activeFilterCount: 0
+});
+
 export function createSearch() {
   const search = instantsearch({
     searchClient: adapter.searchClient,
@@ -33,19 +37,20 @@ export function createSearch() {
     
   });
    search.addWidgets([
-            widgets.searchBox(),
-            widgets.stats(),
-            widgets.hits(),
-            widgets.pagination(),
-            widgets.refinementWork(),
-            widgets.refinementKeywords(),
-            widgets.refinementBibl(),
-            widgets.refinementParallels(),
-            widgets.refinementAuthor(),
-            widgets.refinementLanguage(),
-            widgets.refinementPlace(),
-            widgets.refinementGenre(),
-            widgets.currentRefinements(),
+      widgets.searchBox(),
+      widgets.stats(),
+      widgets.hits(),
+      widgets.pagination(),
+      widgets.refinementWork(),
+      widgets.refinementKeywords(),
+      widgets.refinementBibl(),
+      widgets.refinementParallels(),
+      widgets.refinementAuthor(),
+      widgets.refinementLanguage(),
+      widgets.refinementPlace(),
+      widgets.refinementGenre(),
+      widgets.currentRefinements(),
+      widgets.currentRefinementsNumber(),
         ]);
 return search
 }

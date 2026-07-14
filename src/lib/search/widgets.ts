@@ -9,9 +9,14 @@ import {
     refinementList,
 	hierarchicalMenu,
 } from "instantsearch.js/es/widgets";
+import { connectCurrentRefinements } from "instantsearch.js/es/connectors";
+
 import { resolve } from "$app/paths";
 
 import { hitTemplates } from "./templates";
+
+import { searchState } from "./client.svelte"; // for badge number of current refinements
+
 
 const commonRefinementOptions = {
   searchable: true,
@@ -26,7 +31,17 @@ const commonRefinementOptions = {
   },
 };
 
+const currentRefinementsNumber = connectCurrentRefinements(({ items }) => {
+	searchState.activeFilterCount = items.reduce(
+		(sum, item) => sum + item.refinements.length,
+		0
+	);
+});
+
 export const widgets = {
+
+   currentRefinementsNumber: () => currentRefinementsNumber({}),
+
   searchBox: () =>
     searchBox({
       container: "#searchbox",
@@ -42,7 +57,15 @@ export const widgets = {
   hits: () =>
     hits({
       container: "#hits",
-      templates: hitTemplates(resolve)
+      templates: hitTemplates(resolve),
+       transformItems(items, { results }) {
+    const hasQuery = (results?.query.trim().length ?? 0) > 1;
+
+    return items.map(item => ({
+      ...item,
+      hasQuery,
+    }));
+  },
     }),
 
   pagination: () =>
@@ -58,6 +81,8 @@ export const widgets = {
         currentRefinements({
             container: "#currentRefinements"
         }),
+
+    
     refinementWork: () =>
         wrapInPanel("Work")({
             ...commonRefinementOptions,
