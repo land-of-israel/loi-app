@@ -50,6 +50,7 @@ export function createSearch() {
       widgets.refinementPlace(),
       widgets.refinementGenre(),
       widgets.currentRefinements(),
+      widgets.clearRefinements(),
       widgets.currentRefinementsNumber(),
         ]);
 return search

@@ -75,8 +75,8 @@ export const widgets = {
 
     clearRefinements: () =>
         clearRefinements({
-            container: "#clearRefinements"
-        }),
+		      container: "#clearRefinements",		
+	  }),
     currentRefinements: () =>
         currentRefinements({
             container: "#currentRefinements"
