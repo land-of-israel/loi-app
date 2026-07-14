@@ -15,6 +15,9 @@ jobs:
       contents: read
       pages: write
       id-token: write    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v6 
@@ -33,12 +36,10 @@ jobs:
       - name: enable corepack
         run: |
           corepack enable
-          corepack install
-      
+          corepack install      
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile    
-
      
       - name: fetch fresh data using script
         run: pnpm run fetch-data 
