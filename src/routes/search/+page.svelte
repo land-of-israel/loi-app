@@ -39,7 +39,7 @@ onMount(() => {
 
         <div id="refinementsDialog" class:hidden={!filtersOpen}
         class="md:block">
-        <div class="bg-white h-[75vh] md:h-auto rounded-t-2xl md:rounded-lg border md:border-slate-200 flex flex-col">
+        <div class="bg-white md:h-auto rounded-t-2xl md:rounded-lg border md:border-slate-200 flex flex-col">
         
     
             <div id="refinements" class="p-4 space-y-4 overflow-y-auto">

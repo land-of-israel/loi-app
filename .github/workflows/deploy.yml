@@ -9,15 +9,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      id-token: write    
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v6 
@@ -74,9 +71,18 @@ jobs:
       - name: upload artifacts
         uses: actions/upload-pages-artifact@v5
         with:
-          path: 'build/'
-
+          path: 'build/'      
+  
+  deploy-to-github:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to Github pages
-        if: github.event_name != 'push'
         id: deployment
         uses: actions/deploy-pages@v5
