@@ -3,7 +3,8 @@ import {
   addTableFilter,
   addPagination,
   addSortBy,
-  addColumnFilters
+  addColumnFilters,
+  addHiddenColumns
 } from "@humanspeak/svelte-headless-table/plugins";
 
 import { readable } from "svelte/store";
@@ -14,8 +15,13 @@ export type StylePlugin = {
   align?: string;
 };
 
-export type CustomPlugins = {
+export type VisibilityPlugin = {
+  hideOnMobile?: boolean;
+};
+
+export type TableCustomPlugins = {
   style?: StylePlugin;
+  visibility?: VisibilityPlugin
 };
 
 export function createDataTable<T>(
@@ -37,10 +43,14 @@ export function createDataTable<T>(
             initialPageSize: 10
             }),
 
-            sort: addSortBy()
+            sort: addSortBy(),
+
+            hide: addHiddenColumns({
+              initialHiddenColumnIds: []
+            })
         });
     type ColumnDef = Parameters<typeof table.column>[0] & {
-        plugins?: CustomPlugins & Record<string, unknown>;
+        plugins?: TableCustomPlugins & Record<string, unknown>;
     };
 
   function col(def: ColumnDef) {

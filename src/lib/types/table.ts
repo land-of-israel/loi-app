@@ -6,6 +6,9 @@ export interface PassageRow {
   author: string;
   workTitle: string;
   keywords: string;
+  language: string;
+  taq: number;
+  tpq: number
 }
 
 export interface WorkRow {
