@@ -17,7 +17,7 @@ onMount(() => {
 <div class="max-w-7xl px-4 sm:px-6 mx-auto py-4 sm:py-6">
      <div id="searchbox" class="w-full rounded-lg p-4 sm:p-6 md:p-8 bg-brand-200 flex items-center"></div>
      <div class="grid md:grid-cols-[1fr_3fr] md:gap-6 md:py-6">
-        <div class="flex gap-4">
+       
             <div class="md:hidden flex items-center py-3">
                 <button
                 type="button"
@@ -35,11 +35,9 @@ onMount(() => {
                         {searchState.activeFilterCount}
                     </span>
                 </button>            
-            </div>
-            <div id="clearRefinements" class="flex items-center py-3"></div>
-        </div>
+            </div>  
 
-        <div id="refinementsDialog" >
+        <div id="refinementsDialog" class={filtersOpen ? "block md:block" : "hidden md:block"}>
             <div class="bg-white md:h-auto rounded-t-2xl md:rounded-lg border md:border-slate-200 flex flex-col">
         
                 <div id="refinements" class="p-4 space-y-4 overflow-y-auto">
@@ -63,8 +61,9 @@ onMount(() => {
         </div>
 
         <!-- Results column -->
-        <div class="space-y-3 md:col-start-2 md:row-start-1 min-w-0">
+        <div class="space-y-1 md:space-y-2 md:col-start-2 md:row-start-1 min-w-0">
             <div id="currentRefinements" class="hidden md:block"></div>
+            <div id="clearRefinements" class="flex items-center"></div>
             <div id="stats" class="text-sm text-slate-500"></div>
             <div id="hits"></div>
             <div id="pagination" class="pt-4"></div>
