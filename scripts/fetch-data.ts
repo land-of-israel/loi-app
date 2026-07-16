@@ -1,5 +1,6 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import {log} from "@acdh-oeaw/lib"
 
 import { request } from "@acdh-oeaw/lib";
 // fetch baserow dumps from github and store them in the raw folder
@@ -42,15 +43,15 @@ async function fetchData(fileName: string): Promise<void> {
 			"utf-8"
 		);
 
-		console.log(`✅ Saved: ${fileName}`);
+		log.success(`Saved: ${fileName}`);
 	} catch (error: unknown) {
-		console.error(`❌ Error fetching ${fileName}:`, error);
+		log.error(`Error fetching ${fileName}:`, error);
 	}
 }
 
 async function fetchAllData(): Promise<void> {
 	await Promise.all(fileNames.map(fetchData));
-	console.log(`All files have been fetched and stored`);
+	log.info(`Finish fetching files`);
 }
 
 fetchAllData();

@@ -1,10 +1,23 @@
 export async function load({ fetch }) {
-	const url = 'https://imprint.acdh.oeaw.ac.at/28231';
+	const url = "https://imprint.acdh.oeaw.ac.at/28231";
 
-	const response = await fetch(url);
-	const data = await response.text();
+	try {
+		const response = await fetch(url);
 
-	return {
-		data, breadcrumbs: [{label: "Imprint"}]
-	};
+		if (!response.ok) {
+			throw new Error(`HTTP ${response.status}`);
+		}
+
+		return {
+			data: await response.text(),
+			breadcrumbs: [{ label: "Imprint" }]
+		};
+	} catch (err) {
+		console.error("Failed to fetch imprint:", err);
+
+		return {
+			data: "<p>The imprint is temporarily unavailable.</p>",
+			breadcrumbs: [{ label: "Imprint" }]
+		};
+	}
 }
