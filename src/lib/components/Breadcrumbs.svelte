@@ -9,7 +9,7 @@
   
   let { breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[] } = $props();
 </script>
-<div class="flex justify-start ml-4 mt-8">
+<div class="flex justify-start ml-4 mt-3 md:mt-8">
   <Breadcrumb.Root>
     <Breadcrumb.List>
       <Breadcrumb.Item>

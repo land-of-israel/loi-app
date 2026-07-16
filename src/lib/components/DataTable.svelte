@@ -49,27 +49,42 @@ type SortState = {
   colFilter: () => void
 };
 
+let isMobile = false;
+
 onMount(() => {
-const initiallyHidden = columns  
+  //check if on mobile to select cols to hide
+  const media = window.matchMedia("(max-width: 767px)");
+
+  function update() {
+    isMobile = media.matches;
+  }
+
+  update();
+  media.addEventListener("change", update);
+
+  // reading the table cols config for cols to hide
+  const initiallyHidden = columns
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .filter((column: any) => column.plugins?.visibility?.initiallyHidden)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .map((column: any) => column.id);
-  hiddenColumnIds.set(initiallyHidden);
 
-  if (window.innerWidth >= 768) return;
-
-  const mobileHidden = columns  
+  const mobileHidden =
+    isMobile
+      ? columns
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((column: any) => column.plugins?.visibility?.hideOnMobile || column.plugins?.visibility?.initiallyHidden)
+          .filter((column: any) => column.plugins?.visibility?.hideOnMobile)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .map((column: any) => column.id);
+          .map((column: any) => column.id)
+      : [];
 
-  hiddenColumnIds.set(mobileHidden);
+  hiddenColumnIds.set([
+    ...new Set([...initiallyHidden, ...mobileHidden])
+  ]);
 });
 
 </script>
-<div class="grid gap-4 my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
+<div class="grid gap-4 py-3 md:my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
 <h1 class="text-2xl font-semibold md:text-3xl">{title}</h1>
 <!-- table filter -->
   <div class="grid md:flex gap-2 justify-between items-end mx-auto md:mx-0">
@@ -172,9 +187,9 @@ const initiallyHidden = columns
       </tbody>
     </table>        
   </div>
-  <div class="flex justify-between gap-1">
+  <div class="grid md:flex justify-between gap-1 justify-items-end">
   <!-- page size selection -->
-    <div class=" flex items-center gap-2 px-2 py-1 rounded-md border ">
+    <div class="flex items-center gap-2 px-2 py-1 rounded-md border">
       <label for="pages">Rows per page:</label>
       <select id="pages" bind:value={$pageSize} class="rounded-md *:focus:outline-2 focus:outline-offset-2 focus:outline-accent">
         <option value={10}>10</option>

@@ -5,7 +5,9 @@ import type {Work} from '$lib/types'
 
   let { data } = $props();
 
-  const rows = $derived(data.works.map((w: Work) => ({
+  const rows = $derived(data.works.map((w: Work) => {
+    const keywords = [...new Set(w.passages.flatMap(p => p.keywords.map(k => k.value)))]
+    return {
     id: w.id,
     loi_id: w.loi_id,
     title: w.title,
@@ -14,8 +16,10 @@ import type {Work} from '$lib/types'
     tpq: w.date[0]?.tpq,
     taq: w.date[0]?.taq,
     place: w.place.map(pl => pl.name).join(' | '),
-    passages: w.passages.length
-  })));
+    passages: w.passages.length,
+    language: w.language,
+    keywords: keywords.join(' | ')
+  }}));
 
   const tableConfig = $derived(
     createWorksTable(rows)

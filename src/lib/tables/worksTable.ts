@@ -8,65 +8,84 @@ export function createWorksTable(data: WorkRow[]) {
             accessor: "title",
             plugins: { 
               style: {
-                width: "w-3/12"
+                width: "md:min-w-80"
               }
             }
           }),
         col({
            header: "Author",
           accessor: "author",
-          plugins: { 
-            style: {
-              width: "w-2/12"
-            }
-          }
+         
         }),
          col({
            header: "Genre",
           accessor: "genre",
-          plugins: { 
-            style: {
-              width: "w-2/12"
+          plugins: {
+             visibility: {
+              hideOnMobile: true
             }
-          }
+            }
+        }),
+         col({
+          header: "Language",
+            accessor: "language",
+          plugins: {
+             visibility: {
+              initiallyHidden: true,
+              hideOnMobile: true
+            }
+            }
         }),
         col({
           header: "Date TPQ",
             accessor: "tpq",
              cell: ({ value }: {value: string | undefined}) => value ?? "",
-          plugins: { 
-            style: {
-              width: "w-1/12"
+          plugins: {
+            visibility: {
+              hideOnMobile: true
             }
-          }
+            }
         }),
         col({
           header: "Date TAQ",
             accessor: "taq",
              cell: ({ value } : {value: string | undefined}) => value ?? "",
-          plugins: { 
-            style: {
-              width: "w-1/12"
+         plugins: {
+             visibility: {
+              hideOnMobile: true
             }
-          }
+            }
         }),
          col({
           header: "Place",
             accessor: "place",
-          plugins: { 
-            style: {
-              width: "w-3/12"
+          plugins: {
+             visibility: {
+              hideOnMobile: true
             }
-          }
+            }
+        }),
+         col({
+          header: "Keywords",
+            accessor: "keywords",
+          plugins: {
+             visibility: {
+              initiallyHidden: true,
+              hideOnMobile: true
+            }
+            }
         }),
         col({
           header: "Passages",
           accessor: "passages",
-          plugins: { 
-            style: {
-              width: "w-2/12"
+         plugins: { 
+              style: {
+                width: "max-w-16"
+              },
+              visibility: {
+              hideOnMobile: true
             }
-          }
+            }
         }),
     ])
   }

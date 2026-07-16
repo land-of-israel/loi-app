@@ -20,6 +20,8 @@ export interface WorkRow {
     taq:       number | undefined;
     place:      string;
     passages:   number | undefined;
+    language: string;
+    keywords: string;
 }
 
 export interface KeywordRow {

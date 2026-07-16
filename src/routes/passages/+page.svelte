@@ -9,7 +9,7 @@ import type {Passage} from '$lib/types'
   .map((p: Passage) => ({
     id: p.id,
     loi_id: p.loi_id,
-    title: p.title,
+    title: p.title || 'TBD',
     text: p.text,
     author: p.work[0]?.author?.map(a=> a.name).join(', ') ?? '',
     workTitle: p.work[0]?.title ?? '',

@@ -134,11 +134,7 @@ import { Menu } from '@lucide/svelte';
         <a {...props} href={resolve("/keywords", {})}>Keywords</a>
       {/snippet}
     </DropdownMenu.Item>
-    <DropdownMenu.Item>
-      {#snippet child({ props })}
-        <a {...props} href={resolve("/passages", {})}>Passages</a>
-      {/snippet}
-    </DropdownMenu.Item>      
+        
     </DropdownMenu.Group>
     <DropdownMenu.Separator />
     <DropdownMenu.Group>
