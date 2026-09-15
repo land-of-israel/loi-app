@@ -70,8 +70,8 @@ async function generate() {
      
       
       // get dates as separate numbers for filtering 'from -to' in the frontend
-      { name: "tpq", type: "int32", facet: true, sort: true },
-      { name: "taq", type: "int32", facet: true, sort: true },
+      { name: "tpq", type: "int32", facet: true, sort: true, optional:true },
+      { name: "taq", type: "int32", facet: true, sort: true, optional:true },
     ],
     token_separators: ["-"],
     default_sorting_field: "sort_id",
@@ -90,8 +90,11 @@ async function generate() {
   // transform data so it conforms to the typesense collection shape
   const records = data
   .filter((value) => value.text !== "")
-  .map((value) => ({
-   sort_id: value.id,
+  .map((value) => {
+    const tpq = value.work[0]?.date[0]?.tpq
+    const taq = value.work[0]?.date[0]?.taq
+    return {
+      sort_id: value.id,
         rec_id: value.loi_id,
         id: String(value.id),
         title: value.title,
@@ -108,10 +111,11 @@ async function generate() {
         bibl_quotes: value.bibl_quotes.map(quote => quote.bible),
         parallels: value.parallels.map(p => p.label),
         keywords: value.keywords.map(k => k.value),
-        date: value.work[0]?.date[0]?.label || "",
-        tpq: value.work[0]?.date[0]?.tpq || 601,
-        taq: value.work[0]?.date[0]?.taq || 1100,
-  }));
+        date: value.work[0]?.date[0]?.label || "",   
+        ...(tpq !== undefined && { tpq }),
+        ...(taq !== undefined && { taq }),    
+      }      
+});
   
   // - import data into typesense collection
 

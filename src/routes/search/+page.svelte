@@ -56,6 +56,8 @@ onMount(() => {
                     <div id="refinement-list-place"></div>
                     <div id="refinement-list-language"></div>
                     <div id="refinement-list-date"></div>
+                    <div id="date-range-refinement"></div>
+                    
                 </div>
     
                 <div class="p-4 border-t md:hidden">

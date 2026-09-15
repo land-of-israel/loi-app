@@ -184,24 +184,24 @@
   @apply bg-white rounded-md
 }
 
-.ais-SortBy-select {
+.ais-SortBy-select, .ais-RangeInput-input {
   @apply w-full p-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-accent focus:border-transparent;
 }
 
 /****** Filter Panel ******/
 
 /* Main panel container */
-.ais-Panel {
+.ais-Panel, .date-filter {
 	@apply md:mb-4 md:rounded-lg md:border border-brand-300 bg-white overflow-hidden md:shadow-xs;
 }
 
 /* Panel header */
-.ais-Panel-header {
+.ais-Panel-header , .date-filter-title {
 	@apply px-4 py-2 md:bg-brand-100 flex justify-between items-center md:border-b border-gray-200;
 }
 
 /* Panel header text */
-.ais-Panel-header span {
+.ais-Panel-header span , .date-filter-title {
 	@apply text-brand-800 font-medium;
 }
 
@@ -271,6 +271,11 @@
 .ais-RefinementList-showMore--disabled,
 .ais-HierarchicalMenu-showMore--disabled {
 	@apply hidden;
+}
+
+/* date range */
+.ais-RangeInput {
+  @apply p-1
 }
 
 /* Search box in refinement */

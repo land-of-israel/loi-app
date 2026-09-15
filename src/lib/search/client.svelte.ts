@@ -27,7 +27,9 @@ export const searchState = $state({
 	activeFilterCount: 0
 });
 
+
 export function createSearch() {
+ 
   const search = instantsearch({
     searchClient: adapter.searchClient,
     indexName: "LOI",
@@ -50,6 +52,8 @@ export function createSearch() {
       widgets.refinementLanguage(),
       widgets.refinementPlace(),
       widgets.refinementGenre(),
+      widgets.customDateRangeWidget("#date-range-refinement"),   
+      widgets.customDateCurrentRefinement("#currentRefinements"),   
       widgets.currentRefinements(),
       widgets.clearRefinements(),
       widgets.currentRefinementsNumber(),
