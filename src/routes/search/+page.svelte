@@ -37,7 +37,13 @@ onMount(() => {
                 </button>            
             </div>  
 
-        <div id="refinementsDialog" class={filtersOpen ? "block md:block" : "hidden md:block"}>
+        <div id="refinementsDialog" class={filtersOpen ? "block md:block" : "hidden md:block space-y-2"}>
+            <div class="flex items-center gap-3 min-w-0 text-sm ms-auto border rounded-lg px-3 py-2 bg-brand-100">
+                <h3 class="text-center font-semibold uppercase text-neutral-700">
+                    Sort by:
+                </h3>
+                <div id="sort-by" class="grow"></div>
+            </div>
             <div class="bg-white md:h-auto rounded-t-2xl md:rounded-lg border md:border-slate-200 flex flex-col">
         
                 <div id="refinements" class="p-4 space-y-4 overflow-y-auto">
@@ -65,6 +71,7 @@ onMount(() => {
             <div id="currentRefinements" class="hidden md:block"></div>
             <div id="clearRefinements" class="flex items-center"></div>
             <div id="stats" class="text-sm text-slate-500"></div>
+            
             <div id="hits"></div>
             <div id="pagination" class="pt-4"></div>
         </div>

@@ -177,6 +177,17 @@
 .ais-SearchBox-resetIcon {
 	@apply w-5 h-5 text-gray-400;
 }
+
+/***** sort by widget *****/
+
+.ais-SortBy {
+  @apply bg-white rounded-md
+}
+
+.ais-SortBy-select {
+  @apply w-full p-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-accent focus:border-transparent;
+}
+
 /****** Filter Panel ******/
 
 /* Main panel container */

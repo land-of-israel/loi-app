@@ -38,6 +38,7 @@ export function createSearch() {
   });
    search.addWidgets([
       widgets.searchBox(),
+      widgets.sortBy(),
       widgets.stats(),
       widgets.hits(),
       widgets.pagination(),

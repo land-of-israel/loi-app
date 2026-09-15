@@ -6,8 +6,9 @@ import {
 	panel,
 	clearRefinements,
 	currentRefinements,
-    refinementList,
+  refinementList,
 	hierarchicalMenu,
+  sortBy,
 } from "instantsearch.js/es/widgets";
 import { connectCurrentRefinements } from "instantsearch.js/es/connectors";
 
@@ -47,6 +48,18 @@ export const widgets = {
       container: "#searchbox",
       autofocus: true,
       placeholder: "Search in original text, translation and commentary",
+    }),
+
+  sortBy: () => 
+    sortBy({
+      container: "#sort-by",
+      items: [
+        { value: "LOI/sort/author:asc", label: "author (A-Z)" },
+        { value: "LOI/sort/author:desc", label: "author (Z-A)" },
+        { value: "LOI/sort/tpq:asc", label: "date (ascending)" },
+        { value: "LOI/sort/taq:asc", label: "date (descending)" },
+        { value: "LOI/sort/sort_id:asc", label: "none" },
+      ],
     }),
 
   stats: () =>
