@@ -83,19 +83,26 @@ onMount(() => {
   ]);
 });
 
+function resetSearch() {
+  $filterValue = ""
+}
+
 </script>
 <div class="grid gap-4 py-3 md:my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
 <h1 class="text-2xl font-semibold md:text-3xl">{title}</h1>
 <!-- table filter -->
   <div class="grid md:flex gap-2 justify-between items-end mx-auto md:mx-0">
-    <div class="grid gap-1 justify-end items-center-safe">
-      <h2>Search inside the table</h2>
+    <div class="flex gap-1 items-stretch justify-end">
+      <h2 class="sr-only">Search inside the table</h2>
       <input
         type="text"
         bind:value={$filterValue}
         placeholder = 'calendar'
-        class="py-1 px-4 rounded-md border italic focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+        class="h-8 py-1 px-4 rounded-md border italic focus-visible:accent-accent"
       />
+      {#if $filterValue} 
+      <Button variant="destructive" onclick={resetSearch} class="uppercase">Clear</Button> 
+      {/if}
     </div>
     <DropdownMenu.Root>
        <DropdownMenu.Trigger>
@@ -138,7 +145,7 @@ onMount(() => {
                   class="p-1 md:py-2 md:px-3 border border-black text-white text-base font-medium first:rounded-tl-sm last:rounded-tr-sm"
                   
                 >
-                  <button class="flex gap-2 py-1 *:focus:outline-2 focus:outline-accent" onclick={sort ? sort.toggle : undefined}>
+                  <button class="rounded-md flex gap-2 py-1 *:focus:outline-2 focus:outline-accent" onclick={sort ? sort.toggle : undefined}>
                     <Render of={cell.render()} />
                     {#if sort && !sort.disabled}
                       {#if sort.order === 'asc'}
@@ -189,7 +196,7 @@ onMount(() => {
   </div>
   <div class="grid md:flex justify-between gap-1 justify-items-end">
   <!-- page size selection -->
-    <div class="flex items-center gap-2 px-2 py-1 rounded-md border">
+    <div class="flex items-center gap-2 px-2 py-1 rounded-md border text-sm">
       <label for="pages">Rows per page:</label>
       <select id="pages" bind:value={$pageSize} class="rounded-md *:focus:outline-2 focus:outline-offset-2 focus:outline-accent">
         <option value={10}>10</option>
@@ -199,10 +206,10 @@ onMount(() => {
       </select>
     </div>
     <!-- pagination -->
-      <div>
+      <div class="text-sm">
         <Button variant="secondary" disabled={$pageIndex == 0} onclick={() => pageIndex.set(0)}>First</Button>
         <Button variant="secondary" disabled={!$hasPreviousPage} onclick={() => pageIndex.update((n: number) => n - 1)}>Previous Page</Button>
-      <span class="px-2">{$pageIndex + 1}</span>
+      <span class="px-2 font-semibold">Page {$pageIndex + 1} of {$pageCount}</span>
         <Button variant="secondary" disabled={!$hasNextPage} onclick={() => pageIndex.update((n: number) => n + 1)}>Next Page</Button>
         <Button variant="secondary" disabled={$pageIndex+1 == $pageCount} onclick={() => pageIndex.set($pageCount-1)}>Last</Button>
       </div>
