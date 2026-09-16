@@ -55,6 +55,7 @@
 		"@acdh-oeaw/lib": "^1.0.7",
 		"@fontsource/cormorant-garamond": "^5.2.11",
 		"@humanspeak/svelte-headless-table": "^6.0.6",
+		"@tanstack/svelte-table": "^9.2.4",
 		"instantsearch.js": "^4.102.0",
 		"typesense": "^3.0.6",
 		"typesense-instantsearch-adapter": "^3.0.2",
