@@ -1,13 +1,17 @@
 // here is how the columns for an Authors table look like
 //  (matching the author row type)
+import { createAtom } from '@tanstack/svelte-store'
+import type { ColumnVisibilityState } from '@tanstack/svelte-table'
 
 
-import type { ColumnDef } from '@tanstack/svelte-table'
-import type {AuthorRow} from "$lib/types"
-import {features} from "$lib/tables/tableFeatures"
+const ColumnVisibility = createAtom<ColumnVisibilityState>({
+    
+})
 
 
-export const authorColumns: ColumnDef<typeof features, AuthorRow>[] = [
+export const authorTableConfig = {
+  columnVisibility: ColumnVisibility,
+  columns:  [
   {
     accessorKey: 'name',
     header: 'Name',
@@ -17,7 +21,7 @@ export const authorColumns: ColumnDef<typeof features, AuthorRow>[] = [
   {
     accessorKey: 'works',
     header: 'Works',
-    enableSorting: true
+    enableSorting: true,
   },
 
-]
+]}

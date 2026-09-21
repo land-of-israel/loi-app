@@ -1,6 +1,6 @@
 <script lang="ts">
   import DataTable from '$lib/components/Table.svelte';
-  import { authorColumns } from '$lib/tables/authorsTable';
+  import { authorTableConfig } from '$lib/tables/authorsTable';
 
   let { data } = $props();
 
@@ -16,4 +16,4 @@
 </script>
 
     
-    <DataTable data={rows} columns={authorColumns} {basePath} title="Authors"/>
+    <DataTable data={rows} {basePath} {...authorTableConfig} title="Authors"/>

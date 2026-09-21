@@ -17,6 +17,9 @@ importers:
       '@humanspeak/svelte-headless-table':
         specifier: ^6.0.6
         version: 6.0.6(svelte@5.55.5(@typescript-eslint/types@8.59.2))
+      '@tanstack/svelte-store':
+        specifier: ^0.12.1
+        version: 0.12.1(svelte@5.55.5(@typescript-eslint/types@8.59.2))
       '@tanstack/svelte-table':
         specifier: ^9.2.4
         version: 9.2.4(svelte@5.55.5(@typescript-eslint/types@8.59.2))
