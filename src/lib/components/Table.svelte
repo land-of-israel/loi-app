@@ -2,22 +2,24 @@
 // use generic data type TData satisfying the Rowdata type of tanstack
 // so the table remain generic and can accept any data (authros, passages etc.)
 import { goto } from "$app/navigation";
-  import{ resolve} from "$app/paths"  
-  import {Button} from "$lib/components/ui/button"
-
+import{ resolve} from "$app/paths"  
+import {Button} from "$lib/components/ui/button"
+import {
+    SvelteURLSearchParams
+  } from 'svelte/reactivity';
 import type { ColumnDef, RowData, ColumnVisibilityState } from '@tanstack/svelte-table'
-  import {
+import {
     createTable,
     FlexRender,
   } from '@tanstack/svelte-table'
-  import type { Atom } from '@tanstack/svelte-store'
+import type { Atom } from '@tanstack/svelte-store'
 import {features} from "$lib/tables/tableFeatures"
 
 
-  import ArrowDonwUp from '@lucide/svelte/icons/arrow-down-up';
-  import ArrowUp from '@lucide/svelte/icons/arrow-up-narrow-wide';
-  import ArrowDown from '@lucide/svelte/icons/arrow-down-wide-narrow';
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
+import ArrowDonwUp from '@lucide/svelte/icons/arrow-down-up';
+import ArrowUp from '@lucide/svelte/icons/arrow-up-narrow-wide';
+import ArrowDown from '@lucide/svelte/icons/arrow-down-wide-narrow';
+import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
 
    type Props = {
       data: TData[]
@@ -65,7 +67,58 @@ import {features} from "$lib/tables/tableFeatures"
         }
       })
 
-   
+// read tanstack atoms for building the URL
+const unsubscribeSorting = table.atoms.sorting.subscribe(() => {
+  updateUrl()
+})
+
+const unsubscribeFilters = table.atoms.columnFilters.subscribe(() => {
+  updateUrl()
+})
+
+const unsubscribeGlobalFilter = table.atoms.globalFilter.subscribe(() => {
+  updateUrl()
+})
+
+const unsubscribePagination = table.atoms.pagination.subscribe(() => {
+  updateUrl()
+})
+
+async function updateUrl() {
+  const sorting = table.atoms.sorting.get() 
+  const filters = table.atoms.columnFilters.get()
+  const globalFilter = table.atoms.globalFilter.get()
+  const pagination = table.atoms.pagination.get()
+
+  console.log("params:", filters)
+  // build URL 
+
+    const params = new SvelteURLSearchParams()
+   if (sorting.length > 0) {
+    params.set('sort', sorting[0].id)
+    params.set('dir', sorting[0].desc ? 'desc' : 'asc')
+  }
+  if (filters.length) {
+   for (const filter of filters) {
+      params.set(`filter_${filter.id}`, String(filter.value))
+    }
+  }
+  if(globalFilter) {
+    console.log(globalFilter)
+    params.set('filter', globalFilter)
+  }
+ //pagination is always present
+  params.set('pageIndex', pagination.pageIndex.toString())
+  params.set('pageSize', pagination.pageSize.toString())
+
+  console.log('params:', params.toString())
+
+  await goto(`?${params.toString()}`, {
+  replaceState: true,
+  noScroll: true,
+  keepFocus: true,
+})
+}
 
 </script>
 <div class="grid gap-4 py-3 md:my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
@@ -93,11 +146,10 @@ import {features} from "$lib/tables/tableFeatures"
        <DropdownMenu.Content class="w-56" align="start">
         {#each table.getAllColumns() as column (column.id)}
         <DropdownMenu.CheckboxItem
-           checked={column.getIsVisible()}
-      disabled={!column.getCanHide()}
-       onCheckedChange={(checked) => column.toggleVisibility(checked)}
-      
-    >
+          checked={column.getIsVisible()}
+          disabled={!column.getCanHide()}
+          onCheckedChange={(checked) => column.toggleVisibility(checked)}
+        >
           {column.id}
         </DropdownMenu.CheckboxItem>
         
