@@ -1,6 +1,6 @@
 <script lang="ts">
-  import DataTable from '$lib/components/DataTable.svelte';
-  import { createKeywordsTable } from '$lib/tables/keywordsTable';
+  import DataTable from '$lib/components/Table.svelte';
+  import { keywordsTableConfig } from '$lib/tables/keywordsTable';
   import type {Keyword} from "$lib/types"
   let { data } = $props();
 
@@ -11,14 +11,9 @@
     passages: keyword.passages.length
     })));
 
-  const tableConfig = $derived(
-    createKeywordsTable(rows)
-    );
-
-const table = $derived(tableConfig.table);
-const columns = $derived(tableConfig.columns);
+ 
   const basePath = 'keywords'
 </script>
 
     
-    <DataTable {table} {columns} {basePath} title="Keywords" />
+    <DataTable data={rows} {...keywordsTableConfig} {basePath} title="Keywords" />

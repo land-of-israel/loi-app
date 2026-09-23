@@ -1,6 +1,7 @@
 <script lang="ts">
-  import DataTable from '$lib/components/DataTable.svelte';
-  import { createPassagesTable } from '$lib/tables/passagesTable';
+  import DataTable from '$lib/components/Table.svelte';
+  import { passageTableConfig } from '$lib/tables/passagesTable';
+
 import type {Passage} from '$lib/types'
 
   let { data } = $props();
@@ -24,14 +25,9 @@ import type {Passage} from '$lib/types'
     parallels: p.parallels.map(p => p.label).join(' | ')
   })));
 
-  const tableConfig = $derived(
-    createPassagesTable(rows)
-    );
 
-const table = $derived(tableConfig.table);
-const columns = $derived(tableConfig.columns);
   const basePath = 'passages'
 </script>
 
     
-    <DataTable {table} {columns} {basePath} title="Passages" />
+      <DataTable data={rows} {basePath}  {...passageTableConfig} title="Passages"/>

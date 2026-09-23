@@ -17,6 +17,12 @@ importers:
       '@humanspeak/svelte-headless-table':
         specifier: ^6.0.6
         version: 6.0.6(svelte@5.55.5(@typescript-eslint/types@8.59.2))
+      '@tanstack/svelte-store':
+        specifier: ^0.12.1
+        version: 0.12.1(svelte@5.55.5(@typescript-eslint/types@8.59.2))
+      '@tanstack/svelte-table':
+        specifier: ^9.2.4
+        version: 9.2.4(svelte@5.55.5(@typescript-eslint/types@8.59.2))
       instantsearch.js:
         specifier: ^4.102.0
         version: 4.102.0(algoliasearch@5.55.0)
@@ -32,7 +38,7 @@ importers:
     devDependencies:
       '@eslint/compat':
         specifier: latest
-        version: 2.1.0(eslint@10.3.0(jiti@2.7.0))
+        version: 2.1.1(eslint@10.3.0(jiti@2.7.0))
       '@eslint/js':
         specifier: latest
         version: 10.0.1(eslint@10.3.0(jiti@2.7.0))
@@ -371,8 +377,8 @@ packages:
     resolution: {integrity: sha512-EriSTlt5OC9/7SXkRSCAhfSxxoSUgBm33OH+IkwbdpgoqsSsUg7y3uh+IICI/Qg4BBWr3U2i39RpmycbxMq4ew==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
 
-  '@eslint/compat@2.1.0':
-    resolution: {integrity: sha512-LgaSCymEpw7tF53xvDw9SNsraPb1IBHxpdABIOM0hW8UAlP8znrjYtuxfR58FSJ3L9BhwD+FaPRFQpZq84Nh6g==}
+  '@eslint/compat@2.1.1':
+    resolution: {integrity: sha512-rMcy8GSrwNzcISX/BlTDY/GLB4eCopEuy9woIls3To+15OLxykZrxxq+WUcylCPCQ6F4MujjBM1DX5V1aqI3Vw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: ^8.40 || 9 || 10
@@ -743,6 +749,24 @@ packages:
     resolution: {integrity: sha512-t6J3OrB5Fc0ExuhohouH0fWUGMYL6PTLhW+E7zIk/pdbnJARZDCwjBznFnkh5ynRnIRSI4YjtTH0t6USjJISrw==}
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
+
+  '@tanstack/store@0.11.1':
+    resolution: {integrity: sha512-mzTOBhypOuDJAy/D8n2MfUZ1HFkXnmSETviRyhqEC8LUE7/IZQExOTxMANj3KjTofYTkFNpBY67qaVrT41YccA==}
+
+  '@tanstack/svelte-store@0.12.1':
+    resolution: {integrity: sha512-ZFj8gyIWHZRYLv8RHp5jhnMhvw15g86KinotrUp9RfY7ygjkU3CcaMUytIdMJ4Xzq/9GqVlAphV9gFIGKRXWSw==}
+    peerDependencies:
+      svelte: ^5.0.0
+
+  '@tanstack/svelte-table@9.2.4':
+    resolution: {integrity: sha512-s1A82cJhp3e2Lx3mhVJnhswnGJihBaFNs+gf3/jsDdmKa/zjUDY43Z7kWLZ8408yuNwFG0dR4WGdJ0g8dnuMkQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      svelte: ^5.0.0
+
+  '@tanstack/table-core@9.2.4':
+    resolution: {integrity: sha512-GwdDyGGr6UXAtubF14yAwcXvdaogqfsQgIk89Suebjxob/Rjq2xvfmXsjDF1rQmKmhHsJm9TOY7myxv3i6geJw==}
+    engines: {node: '>=20'}
 
   '@tybys/wasm-util@0.10.2':
     resolution: {integrity: sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg==}
@@ -2019,7 +2043,7 @@ snapshots:
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/compat@2.1.0(eslint@10.3.0(jiti@2.7.0))':
+  '@eslint/compat@2.1.1(eslint@10.3.0(jiti@2.7.0))':
     dependencies:
       '@eslint/core': 1.2.1
     optionalDependencies:
@@ -2314,6 +2338,23 @@ snapshots:
       '@tailwindcss/oxide': 4.3.0
       tailwindcss: 4.3.0
       vite: 8.0.12(@types/node@22.19.18)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.21.0)
+
+  '@tanstack/store@0.11.1': {}
+
+  '@tanstack/svelte-store@0.12.1(svelte@5.55.5(@typescript-eslint/types@8.59.2))':
+    dependencies:
+      '@tanstack/store': 0.11.1
+      svelte: 5.55.5(@typescript-eslint/types@8.59.2)
+
+  '@tanstack/svelte-table@9.2.4(svelte@5.55.5(@typescript-eslint/types@8.59.2))':
+    dependencies:
+      '@tanstack/svelte-store': 0.12.1(svelte@5.55.5(@typescript-eslint/types@8.59.2))
+      '@tanstack/table-core': 9.2.4
+      svelte: 5.55.5(@typescript-eslint/types@8.59.2)
+
+  '@tanstack/table-core@9.2.4':
+    dependencies:
+      '@tanstack/store': 0.11.1
 
   '@tybys/wasm-util@0.10.2':
     dependencies:

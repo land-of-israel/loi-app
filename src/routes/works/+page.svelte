@@ -1,6 +1,6 @@
 <script lang="ts">
-  import DataTable from '$lib/components/DataTable.svelte';
-  import { createWorksTable } from '$lib/tables/worksTable';
+  import DataTable from '$lib/components/Table.svelte';
+  import { workTableConfig } from '$lib/tables/worksTable';
 import type {Work} from '$lib/types'
 
   let { data } = $props();
@@ -21,14 +21,9 @@ import type {Work} from '$lib/types'
     keywords: keywords.join(' | ')
   }}));
 
-  const tableConfig = $derived(
-    createWorksTable(rows)
-    );
 
-const table = $derived(tableConfig.table);
-const columns = $derived(tableConfig.columns);
   const basePath = 'works'
 </script>
 
     
-    <DataTable {table} {columns} {basePath} title="Works" />
+    <DataTable data={rows} {basePath} {...workTableConfig} title="Works" />
