@@ -13,7 +13,10 @@
 
  
   const basePath = 'keywords'
+  const title = "Keywords"
 </script>
-
+<svelte:head>
+  <title>LOI · {title}</title>
+</svelte:head>
     
-    <DataTable data={rows} {...keywordsTableConfig} {basePath} title="Keywords" />
+    <DataTable data={rows} {...keywordsTableConfig} {basePath} {title} />

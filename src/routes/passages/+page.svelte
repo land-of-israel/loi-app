@@ -27,7 +27,11 @@ import type {Passage} from '$lib/types'
 
 
   const basePath = 'passages'
+  const title = "Passages"
 </script>
+<svelte:head>
+  <title>LOI · {title}</title>
+</svelte:head>
 
     
-      <DataTable data={rows} {basePath}  {...passageTableConfig} title="Passages"/>
+      <DataTable data={rows} {basePath}  {...passageTableConfig} {title}/>

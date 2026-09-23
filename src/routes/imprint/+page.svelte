@@ -1,6 +1,9 @@
 <script>
 let { data } = $props();
 </script>
+<svelte:head>
+  <title>LOI · Imprint</title>
+</svelte:head>
 
 <div class="mx-auto w-full max-w-(--breakpoint-xl) py-16">
 	<div class="prose max-w-(--breakpoint-md)">

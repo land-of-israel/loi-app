@@ -4,7 +4,11 @@
     import { resolve } from "$app/paths";
     import PrevNextNav from "$lib/components/ui/prev-next-nav.svelte"
     import {Button} from "$lib/components/ui/button"
+ const title = `Keyword · ${data.label}`
 </script>
+<svelte:head>
+  <title>LOI · {title}</title>
+</svelte:head>
 
 <div class="grid gap-4 p-10">
     <PrevNextNav

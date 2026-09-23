@@ -68,7 +68,7 @@
     <div class="flex flex-col gap-4">
       <span class="hidden md:inline-flex py-1">
         <NavLink  href="https://www.oeaw.ac.at/acdh/">
-            <img src={fwfLogo} alt="" class="w-50 h-auto"/>
+            <img src={fwfLogo} alt="FWF Österreichischer Wissenschaftsfonds" class="w-50 h-auto"/>
         </NavLink>
       </span>
       <span>

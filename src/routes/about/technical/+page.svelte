@@ -4,6 +4,9 @@
     import {Button} from '$lib/components/ui/button'
     import loidatamodel from '$lib/assets/loi-datamodel.svg'
 </script>
+<svelte:head>
+  <title>LOI · About · Technical realisation</title>
+</svelte:head>
 <div class="grid justify-center gap-4 py-8">
     <h1 class="text-3xl font-semibold">Technical realisation</h1>
     <section class="grid gap-3">
