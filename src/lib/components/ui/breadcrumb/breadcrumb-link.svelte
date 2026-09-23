@@ -25,7 +25,7 @@
 {#if child}
 	{@render child({ props: attrs })}
 {:else}
-	<a bind:this={ref} {...attrs}>
+	<a bind:this={ref} {...attrs} class="*:focus:outline-2 focus:outline-accent rounded-sm	">
 		{@render children?.()}
 	</a>
 {/if}

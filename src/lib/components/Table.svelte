@@ -14,7 +14,7 @@ import {
     createTable,
     FlexRender,
   } from '@tanstack/svelte-table'
-import type { Atom } from '@tanstack/svelte-store'
+//import type { Atom } from '@tanstack/svelte-store'
 import { createAtom } from '@tanstack/svelte-store'
 import {features} from "$lib/tables/tableFeatures"
 
@@ -29,21 +29,34 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
       columns: ColumnDef<typeof features, TData>[]
       basePath: string
       title: string
-       columnVisibility: Atom<ColumnVisibilityState>
+      desktopVisibility: ColumnVisibilityState
     }
 
     let {
         data,
         columns,
-        columnVisibility,
+        desktopVisibility,
         basePath,
         title
     }: Props = $props()
 
     
+// helper to select column depending on screen
+    function getMobileVisibility(): ColumnVisibilityState {
+    return Object.fromEntries(
+        columns
+            .filter(column => column.meta?.mobileVisible === false)
+            .filter(column => 'accessorKey' in column)
+            .map(column => [column.accessorKey, false])
+    )
+}
+    
+const mobileVisibility = getMobileVisibility()
+
 // tanstack atoms are read-only. To write atom we need external ones
   // Create stable external atoms for the individual state slices we want to
   // own. The table still creates internal base atoms for everything else.
+  const columnVisibility = createAtom<ColumnVisibilityState>({})
     const sortingAtom = createAtom<SortingState>([])
     const colFilterAtom = createAtom<ColumnFiltersState>([])
     const filterAtom = createAtom<string>('')
@@ -68,7 +81,7 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
         globalFilter: filterAtom,
         sorting: sortingAtom,
         pagination: paginationAtom,
-          get columnVisibility() {
+        get columnVisibility() {
             return columnVisibility
           },
         },        
@@ -81,6 +94,33 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
       })
 // lifecycle initialization sequence: read URL -> set created atoms -> subscribe atoms use to update URL
     onMount(() => {
+
+//hide column if on mobile, 1. check screen
+  // responsive column visibility
+    const media = window.matchMedia('(max-width: 767px)')
+
+    columnVisibility.set(
+        media.matches
+            ? mobileVisibility
+            : desktopVisibility
+    )
+
+    const handleChange = (event: MediaQueryListEvent) => {
+        columnVisibility.set(
+            event.matches
+                ? mobileVisibility
+                : desktopVisibility
+        )
+    }
+
+    media.addEventListener('change', handleChange)
+
+    // your existing URL -> atom initialization
+    // ...
+
+    return () => {
+        media.removeEventListener('change', handleChange)
+
     // URL → atoms
         //read urls and set the atoms sort and filters
         const searchParams = new URLSearchParams(window.location.search)
@@ -169,26 +209,30 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
           keepFocus: true,
         })
         }
-    }
+    }}
   )
+
 
 
 </script>
 <div class="grid gap-4 py-3 md:my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
 <h1 class="text-2xl font-semibold md:text-3xl">{title}</h1>
-<div class="flex justify-between">
-<input
-  title="global-filter"
-  type="text"
-  class="border rounded-md p-2"
-  placeholder="Filter ..."
-  value={table.atoms.globalFilter.get() ?? ''}
- oninput={(event) =>
-        table.setGlobalFilter(
-            (event.currentTarget as HTMLInputElement).value
-        )
-    }
-/>
+<div class="grid md:flex md:justify-between gap-1 md:gap-0">
+  <label class="w-full md:w-64">
+    <span class="sr-only">Global Filter</span>
+    <input
+      name="global-filter"
+      type="text"
+      class="w-full border rounded-md p-2 *:focus:outline-2 focus:outline-accent"
+      placeholder="Filter ..."
+      value={table.atoms.globalFilter.get() ?? ''}
+      oninput={(event) =>
+            table.setGlobalFilter(
+                (event.currentTarget as HTMLInputElement).value
+            )
+        }
+      />
+  </label>
 <!-- hide show columns -->
   <DropdownMenu.Root>
        <DropdownMenu.Trigger>
@@ -220,9 +264,9 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
                 <tr class="bg-brand-500 text-text">         
 
         {#each headerGroup.headers as header (header.id)}
-          <th
+          <th scope="col"
           style:width="{header.getSize()}px"
-             class="{header.column.columnDef.meta?.textAlign} p-1 md:py-2 md:px-3 text-white text-base font-medium"                  
+             class="{header.column.columnDef.meta?.textAlign} p-1 md:py-2 md:px-3 text-white text-base font-semibold"                  
                 >
             {#if !header.isPlaceholder}
               <button
@@ -240,17 +284,21 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
                 {/if}
               </button>
               {#if header.column.getCanFilter()}
-              <input
-                type="text"
-                value={header.column.getFilterValue() ?? ''}
-                class="border rounded-md bg-brand-100 text-brand-800 px-2 text-sm w-full"
-                placeholder="Filter ..."
-                oninput={(event) =>
-                  header.column.setFilterValue(
-                    (event.currentTarget as HTMLInputElement).value
-                  )
-                }
-              />
+              <label>
+              <span class="sr-only">Filter for column {header.column.id}</span>
+                <input
+                  type="text"
+                  name="column filter"
+                  value={header.column.getFilterValue() ?? ''}
+                  class="border-2 rounded-md bg-brand-100 text-brand-800 px-2 text-sm w-full *focus:outline-2 focus-visible:outline-accent"
+                  placeholder="Filter ..."
+                  oninput={(event) =>
+                    header.column.setFilterValue(
+                      (event.currentTarget as HTMLInputElement).value
+                    )
+                  }
+                />
+              </label>
               {/if}
             {/if}
           </th>

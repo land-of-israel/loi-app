@@ -97,9 +97,12 @@ import { Menu } from '@lucide/svelte';
     </NavigationMenu.Root>
 </div>
     <div class="hidden md:block ml-auto text-2xl">
-      <a href={resolve("/", {})} class="hover:text-accent font-lg text-semibold">
-        The Land of Israel in Geonic Times
-      </a>
+      <a
+  href={resolve("/", {})}
+  class="text-2xl font-semibold hover:text-accent focus-visible:outline-4 focus-visible:outline-accent focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-accent/30"
+>
+  The Land of Israel in Geonic Times
+</a>
     </div>
     <!-- small screen -->
     <div class="ml-auto md:hidden">

@@ -1,10 +1,9 @@
 import type { PassageRow } from "$lib/types";
-import type { ColumnDef, ColumnVisibilityState } from '@tanstack/svelte-table'
-import { createAtom } from '@tanstack/svelte-store'
+import type { ColumnDef } from '@tanstack/svelte-table'
 import {features} from "$lib/tables/tableFeatures"
 
 
-const passageColumnVisibility = createAtom<ColumnVisibilityState>({
+const ColumnVisibility = {
     taq: false,
     tpq: false,
     parallels: false,
@@ -12,10 +11,10 @@ const passageColumnVisibility = createAtom<ColumnVisibilityState>({
     translation_de: false,
     language: false,
     bibl_quotes: false
-})
+}
 
 export const passageTableConfig = {
-   columnVisibility: passageColumnVisibility,
+  desktopVisibility: ColumnVisibility,  
 
 columns: [
   {
@@ -36,6 +35,9 @@ columns: [
   {
     accessorKey: 'genre',
     header: 'Genre',
+    meta: {
+      mobileVisible: false
+    }
   },
 
    {
@@ -44,48 +46,70 @@ columns: [
     size: 250, 
      meta: {  
       dir: "rtl",                
-      textAlign: "text-right"
+      textAlign: "text-right",
+      mobileVisible: false
                 },
   },
 
    {
     accessorKey: 'language',
     header: 'Language',
+    meta: {
+      mobileVisible: false
+    }
   },
 
    {
     accessorKey: 'tpq',
     header: 'Date TPQ',
     filterFn: 'filterTpq',
-    size: 60
+    size: 60,
+    meta: {
+      mobileVisible: false
+    }
   },
 
    {
     accessorKey: 'taq',
     header: 'Date TAQ',
-    filterFn: 'filterTaq'
+    filterFn: 'filterTaq',
+    meta: {
+      mobileVisible: false
+    }
 
   },
 
   {
     accessorKey: 'parallels',
     header: 'Parallels',
+    meta: {
+      mobileVisible: false
+    }
     
   },
 
   {
     accessorKey: 'bibl_quotes',
     header: 'Bible quotes',
+    meta: {
+      mobileVisible: false
+    }
   },
 
    {
     accessorKey: 'translation_en',
     header: 'English',
+    meta: {
+      mobileVisible: false
+    }
   },
 
    {
     accessorKey: 'translation_de',
     header: 'German',
+    meta: {
+      mobileVisible: false
+    }
   },
 
 ] satisfies ColumnDef<typeof features, PassageRow>[], 

@@ -13,7 +13,11 @@
 
 
   const basePath = 'authors'
+const title = "Authors"
 </script>
+<svelte:head>
+  <title>LOI · {title}</title>
+</svelte:head>
 
     
-    <DataTable data={rows} {basePath} {...authorTableConfig} title="Authors"/>
+    <DataTable data={rows} {basePath} {...authorTableConfig} {title}/>

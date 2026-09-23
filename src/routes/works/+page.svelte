@@ -23,7 +23,11 @@ import type {Work} from '$lib/types'
 
 
   const basePath = 'works'
+  const title = "Works"
 </script>
+<svelte:head>
+  <title>LOI · {title}</title>
+</svelte:head>
 
     
     <DataTable data={rows} {basePath} {...workTableConfig} title="Works" />

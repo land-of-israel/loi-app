@@ -13,6 +13,9 @@ onMount(() => {
     return () => search?.dispose();
 });
 </script>
+<svelte:head>
+  <title>LOI · Search</title>
+</svelte:head>
 
 <div class="max-w-7xl px-4 sm:px-6 mx-auto py-4 sm:py-6">
      <div id="searchbox" class="w-full rounded-lg p-4 sm:p-6 md:p-8 bg-brand-200 flex items-center"></div>

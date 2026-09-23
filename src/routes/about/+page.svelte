@@ -3,6 +3,9 @@
     import { SquareArrowUpRight} from '@lucide/svelte';
     import {Button} from '$lib/components/ui/button'
 </script>
+<svelte:head>
+  <title>LOI · About</title>
+</svelte:head>
 <div class="grid justify-center gap-4 py-8">
     <h1 class="text-3xl font-semibold">About the Project</h1>
     <p class="prose">        
