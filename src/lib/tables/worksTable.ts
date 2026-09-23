@@ -1,91 +1,65 @@
-import { createDataTable } from "./createDataTable";
-import type {WorkRow} from "$lib/types"
+// here is how the columns for an Authors table look like
+//  (matching the author row type)
+import type { WorkRow } from "$lib/types";
+import {features} from "$lib/tables/tableFeatures"
+import { createAtom } from '@tanstack/svelte-store'
+import type { ColumnDef, ColumnVisibilityState } from '@tanstack/svelte-table'
 
-export function createWorksTable(data: WorkRow[]) {
-  return createDataTable(data, (table, col) => [
-        col({
-            header: "Title",
-            accessor: "title",
-            plugins: { 
-              style: {
-                width: "md:min-w-80"
-              }
-            }
-          }),
-        col({
-           header: "Author",
-          accessor: "author",
-         
-        }),
-         col({
-           header: "Genre",
-          accessor: "genre",
-          plugins: {
-             visibility: {
-              hideOnMobile: true
-            }
-            }
-        }),
-         col({
-          header: "Language",
-            accessor: "language",
-          plugins: {
-             visibility: {
-              initiallyHidden: true,
-              hideOnMobile: true
-            }
-            }
-        }),
-        col({
-          header: "Date TPQ",
-            accessor: "tpq",
-             cell: ({ value }: {value: string | undefined}) => value ?? "",
-          plugins: {
-            visibility: {
-              hideOnMobile: true
-            }
-            }
-        }),
-        col({
-          header: "Date TAQ",
-            accessor: "taq",
-             cell: ({ value } : {value: string | undefined}) => value ?? "",
-         plugins: {
-             visibility: {
-              hideOnMobile: true
-            }
-            }
-        }),
-         col({
-          header: "Place",
-            accessor: "place",
-          plugins: {
-             visibility: {
-              hideOnMobile: true
-            }
-            }
-        }),
-         col({
-          header: "Keywords",
-            accessor: "keywords",
-          plugins: {
-             visibility: {
-              initiallyHidden: true,
-              hideOnMobile: true
-            }
-            }
-        }),
-        col({
-          header: "Passages",
-          accessor: "passages",
-         plugins: { 
-              style: {
-                width: "max-w-16"
-              },
-              visibility: {
-              hideOnMobile: true
-            }
-            }
-        }),
-    ])
-  }
+
+const ColumnVisibility = createAtom<ColumnVisibilityState>({
+    language: false,
+    place: false
+})
+
+
+export const workTableConfig = {
+  columnVisibility: ColumnVisibility,
+  columns:  [
+  {
+    accessorKey: 'title',
+    header: 'Title',
+  },
+
+  {
+    accessorKey: 'author',
+    header: 'Author',
+  },
+   {
+    accessorKey: 'genre',
+    header: 'Genre',
+  },
+   {
+    accessorKey: 'language',
+    header: 'Language',
+  },
+   {
+    accessorKey: 'tpq',
+    header: 'Date TPQ',
+    filterFn: 'filterTpq',
+    size: 60
+  },
+
+   {
+    accessorKey: 'taq',
+    header: 'Date TAQ',
+    filterFn: 'filterTaq'
+
+  },
+   {
+    accessorKey: 'place',
+    header: 'Place',
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'keywords',
+    header: 'Keywords',
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'passages',
+    header: 'Passages',
+    enableSorting: true,
+    
+  },
+]satisfies ColumnDef<typeof features, WorkRow>[],}
+

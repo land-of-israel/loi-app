@@ -3,23 +3,26 @@
 // so the table remain generic and can accept any data (authros, passages etc.)
 import { goto } from "$app/navigation";
 import{ resolve} from "$app/paths"  
+import { onMount } from 'svelte'
+
 import {Button} from "$lib/components/ui/button"
 import {
     SvelteURLSearchParams
   } from 'svelte/reactivity';
-import type { ColumnDef, RowData, ColumnVisibilityState } from '@tanstack/svelte-table'
+import type { ColumnDef, RowData, ColumnVisibilityState, PaginationState, SortingState, ColumnFiltersState } from '@tanstack/svelte-table'
 import {
     createTable,
     FlexRender,
   } from '@tanstack/svelte-table'
 import type { Atom } from '@tanstack/svelte-store'
+import { createAtom } from '@tanstack/svelte-store'
 import {features} from "$lib/tables/tableFeatures"
-
 
 import ArrowDonwUp from '@lucide/svelte/icons/arrow-down-up';
 import ArrowUp from '@lucide/svelte/icons/arrow-up-narrow-wide';
 import ArrowDown from '@lucide/svelte/icons/arrow-down-wide-narrow';
 import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
+	
 
    type Props = {
       data: TData[]
@@ -37,14 +40,20 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
         title
     }: Props = $props()
 
-    let filterValue = $state('')
+    
+// tanstack atoms are read-only. To write atom we need external ones
+  // Create stable external atoms for the individual state slices we want to
+  // own. The table still creates internal base atoms for everything else.
+    const sortingAtom = createAtom<SortingState>([])
+    const colFilterAtom = createAtom<ColumnFiltersState>([])
+    const filterAtom = createAtom<string>('')
+    const paginationAtom = createAtom<PaginationState>({
+      pageIndex: 0,
+      pageSize: 10,
+    })
    
-
-    function setGlobalFilter(value: string) {
-        table.setGlobalFilter(value)
-        }
-
-    // 5. Create the table instance
+   
+    // Create the table instance
     const table = createTable({
         features,
         columns,
@@ -55,10 +64,14 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
         },
 
        atoms: {
+        columnFilters: colFilterAtom, //using here the external atoms we crated
+        globalFilter: filterAtom,
+        sorting: sortingAtom,
+        pagination: paginationAtom,
           get columnVisibility() {
             return columnVisibility
           },
-        },
+        },        
 
         globalFilterFn: 'includesString',
 
@@ -66,73 +79,115 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
           return data
         }
       })
+// lifecycle initialization sequence: read URL -> set created atoms -> subscribe atoms use to update URL
+    onMount(() => {
+    // URL → atoms
+        //read urls and set the atoms sort and filters
+        const searchParams = new URLSearchParams(window.location.search)
+        const sort = searchParams.get('sort')
+        const dir = searchParams.get('dir')
+        // if sort int he url params, set the external atom we created above to that value
+        if (sort) {
+          sortingAtom.set([
+            {
+              id: sort,
+              desc: dir === 'desc',
+            },
+          ])
+        }
 
-// read tanstack atoms for building the URL
-const unsubscribeSorting = table.atoms.sorting.subscribe(() => {
-  updateUrl()
-})
+        const pageIndex = searchParams.get('pageIndex')
+        const pageSize = searchParams.get('pageSize')
 
-const unsubscribeFilters = table.atoms.columnFilters.subscribe(() => {
-  updateUrl()
-})
+        if (pageIndex || pageSize) {
+          paginationAtom.set({
+            pageIndex: pageIndex ? Number(pageIndex) : 0,
+            pageSize: pageSize ? Number(pageSize) : 10,
+          })
+        }
+        const filter = searchParams.get('filter')
+        if (filter) {
+          filterAtom.set(filter)
+        }
 
-const unsubscribeGlobalFilter = table.atoms.globalFilter.subscribe(() => {
-  updateUrl()
-})
+        const columnFilters: ColumnFiltersState = []
+        for ( const [key, value] of searchParams.entries()) {
+          if (key.startsWith('filter_')) {
+            columnFilters.push({
+              id: key.replace('filter_', ''),
+              value
+            })
+          }
+        }
+        colFilterAtom.set(columnFilters)
 
-const unsubscribePagination = table.atoms.pagination.subscribe(() => {
-  updateUrl()
-})
+// atoms -> URL
+// make persistent URL based on filters sorting pagination
+// read / subscirbe to tanstack atoms for building the URL
 
-async function updateUrl() {
-  const sorting = table.atoms.sorting.get() 
-  const filters = table.atoms.columnFilters.get()
-  const globalFilter = table.atoms.globalFilter.get()
-  const pagination = table.atoms.pagination.get()
+        const subscriptions = [
+            table.atoms.sorting,
+            table.atoms.columnFilters,
+            table.atoms.globalFilter,
+            table.atoms.pagination
+        ].map((atom) => atom.subscribe(updateUrl))
 
-  console.log("params:", filters)
-  // build URL 
+        return () => {
+          subscriptions.forEach((subscription) => {
+            subscription.unsubscribe()
+          })
+        }
 
-    const params = new SvelteURLSearchParams()
-   if (sorting.length > 0) {
-    params.set('sort', sorting[0].id)
-    params.set('dir', sorting[0].desc ? 'desc' : 'asc')
-  }
-  if (filters.length) {
-   for (const filter of filters) {
-      params.set(`filter_${filter.id}`, String(filter.value))
+        function updateUrl() {
+          const sorting = table.atoms.sorting.get() 
+          const filters = table.atoms.columnFilters.get()
+          const globalFilter = table.atoms.globalFilter.get()
+          const pagination = table.atoms.pagination.get()
+
+          // build URL 
+
+          const params = new SvelteURLSearchParams()
+          if (sorting.length > 0) {
+            params.set('sort', sorting[0].id)
+            params.set('dir', sorting[0].desc ? 'desc' : 'asc')
+          }
+        
+          for (const filter of filters) {
+              params.set(`filter_${filter.id}`, String(filter.value))
+            }
+
+          if(globalFilter) {
+            params.set('filter', globalFilter)
+          }
+        //pagination is always present
+          params.set('pageIndex', pagination.pageIndex.toString())
+          params.set('pageSize', pagination.pageSize.toString())
+
+          return goto(`?${params.toString()}`, {
+          replaceState: true,
+          noScroll: true,
+          keepFocus: true,
+        })
+        }
     }
-  }
-  if(globalFilter) {
-    console.log(globalFilter)
-    params.set('filter', globalFilter)
-  }
- //pagination is always present
-  params.set('pageIndex', pagination.pageIndex.toString())
-  params.set('pageSize', pagination.pageSize.toString())
+  )
 
-  console.log('params:', params.toString())
-
-  await goto(`?${params.toString()}`, {
-  replaceState: true,
-  noScroll: true,
-  keepFocus: true,
-})
-}
 
 </script>
 <div class="grid gap-4 py-3 md:my-10 max-w-full mx-2 xl:max-w-4/6 xl:mx-auto">
 <h1 class="text-2xl font-semibold md:text-3xl">{title}</h1>
 <div class="flex justify-between">
 <input
+  title="global-filter"
   type="text"
   class="border rounded-md p-2"
   placeholder="Filter ..."
-  value={filterValue}
-  oninput={(event) => {
-    filterValue = event.currentTarget.value
-    setGlobalFilter(filterValue)
-  }}
+  value={table.atoms.globalFilter.get() ?? ''}
+ oninput={(event) =>
+        table.setGlobalFilter(
+            (event.currentTarget as HTMLInputElement).value
+        )
+    }
 />
 <!-- hide show columns -->
   <DropdownMenu.Root>
@@ -187,6 +242,7 @@ async function updateUrl() {
               {#if header.column.getCanFilter()}
               <input
                 type="text"
+                value={header.column.getFilterValue() ?? ''}
                 class="border rounded-md bg-brand-100 text-brand-800 px-2 text-sm w-full"
                 placeholder="Filter ..."
                 oninput={(event) =>
@@ -225,7 +281,7 @@ async function updateUrl() {
         <Button variant="secondary" onclick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>First</Button>
         <Button variant="secondary" onclick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous Page</Button>
       <span class="px-2 font-semibold">
-          Page {table.atoms.pagination.get().pageIndex + 1} of {table.atoms.pagination.get().pageSize}
+          Page {table.atoms.pagination.get().pageIndex + 1} of {table.getPageCount()}
       </span>
         <Button variant="secondary" onclick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next Page</Button>
         <Button variant="secondary" onclick={() => table.lastPage()} disabled={!table.getCanLastPage()}>Last</Button>
