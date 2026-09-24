@@ -14,7 +14,6 @@ import {
     createTable,
     FlexRender,
   } from '@tanstack/svelte-table'
-//import type { Atom } from '@tanstack/svelte-store'
 import { createAtom } from '@tanstack/svelte-store'
 import {features} from "$lib/tables/tableFeatures"
 
@@ -29,35 +28,25 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
       columns: ColumnDef<typeof features, TData>[]
       basePath: string
       title: string
-      desktopVisibility: ColumnVisibilityState
+      columnVisibility: ColumnVisibilityState
     }
 
     let {
         data,
         columns,
-        desktopVisibility,
         basePath,
-        title
+        title,
+        columnVisibility
     }: Props = $props()
 
     
-// helper to select column depending on screen
-    function getMobileVisibility(): ColumnVisibilityState {
-    return Object.fromEntries(
-        columns
-            .filter(column => column.meta?.mobileVisible === false)
-            .filter(column => 'accessorKey' in column)
-            .map(column => [column.accessorKey, false])
-    )
-}
-    
-const mobileVisibility = getMobileVisibility()
+
 
 // tanstack atoms are read-only. To write atom we need external ones
   // Create stable external atoms for the individual state slices we want to
   // own. The table still creates internal base atoms for everything else.
-  const columnVisibility = createAtom<ColumnVisibilityState>({})
     const sortingAtom = createAtom<SortingState>([])
+    const columnVisibilityAtom = createAtom<ColumnVisibilityState>(columnVisibility)
     const colFilterAtom = createAtom<ColumnFiltersState>([])
     const filterAtom = createAtom<string>('')
     const paginationAtom = createAtom<PaginationState>({
@@ -65,25 +54,25 @@ const mobileVisibility = getMobileVisibility()
       pageSize: 10,
     })
    
-   
+
     // Create the table instance
     const table = createTable({
         features,
+        autoResetPageIndex: false,
         columns,
         defaultColumn: {
           size: 80, // starting column size
           minSize: 50, // enforced during column resizing
           maxSize: 500, // enforced during column resizing
         },
+        
 
        atoms: {
         columnFilters: colFilterAtom, //using here the external atoms we crated
         globalFilter: filterAtom,
         sorting: sortingAtom,
         pagination: paginationAtom,
-        get columnVisibility() {
-            return columnVisibility
-          },
+        columnVisibility: columnVisibilityAtom,
         },        
 
         globalFilterFn: 'includesString',
@@ -93,35 +82,10 @@ const mobileVisibility = getMobileVisibility()
         }
       })
 // lifecycle initialization sequence: read URL -> set created atoms -> subscribe atoms use to update URL
+    let isHydrating = true // guard flag
     onMount(() => {
-
-//hide column if on mobile, 1. check screen
-  // responsive column visibility
-    const media = window.matchMedia('(max-width: 767px)')
-
-    columnVisibility.set(
-        media.matches
-            ? mobileVisibility
-            : desktopVisibility
-    )
-
-    const handleChange = (event: MediaQueryListEvent) => {
-        columnVisibility.set(
-            event.matches
-                ? mobileVisibility
-                : desktopVisibility
-        )
-    }
-
-    media.addEventListener('change', handleChange)
-
-    // your existing URL -> atom initialization
-    // ...
-
-    return () => {
-        media.removeEventListener('change', handleChange)
-
-    // URL → atoms
+     
+    // 2. URL → atoms
         //read urls and set the atoms sort and filters
         const searchParams = new URLSearchParams(window.location.search)
         const sort = searchParams.get('sort')
@@ -135,16 +99,7 @@ const mobileVisibility = getMobileVisibility()
             },
           ])
         }
-
-        const pageIndex = searchParams.get('pageIndex')
-        const pageSize = searchParams.get('pageSize')
-
-        if (pageIndex || pageSize) {
-          paginationAtom.set({
-            pageIndex: pageIndex ? Number(pageIndex) : 0,
-            pageSize: pageSize ? Number(pageSize) : 10,
-          })
-        }
+        
         const filter = searchParams.get('filter')
         if (filter) {
           filterAtom.set(filter)
@@ -161,7 +116,32 @@ const mobileVisibility = getMobileVisibility()
         }
         colFilterAtom.set(columnFilters)
 
-// atoms -> URL
+        const pageIndex = searchParams.get('pageIndex')
+        const pageSize = searchParams.get('pageSize')
+        if (pageIndex || pageSize) {
+          paginationAtom.set({
+            pageIndex: pageIndex ? Number(pageIndex) : 0,
+            pageSize: pageSize ? Number(pageSize) : 10,
+          })
+        }
+
+    // hydration finished
+      isHydrating = false
+
+      // Reset pageIndex whenever sorting/filtering changes AFTER hydration
+      const resetPageOnFilterChange = () => {
+        if (isHydrating) return
+        paginationAtom.set((p) => ({ ...p, pageIndex: 0 }))
+      }
+
+      const resetSubscriptions = [
+        sortingAtom.subscribe(resetPageOnFilterChange),
+        colFilterAtom.subscribe(resetPageOnFilterChange),
+        filterAtom.subscribe(resetPageOnFilterChange),
+      ]
+        
+
+// 3. atoms -> URL
 // make persistent URL based on filters sorting pagination
 // read / subscirbe to tanstack atoms for building the URL
 
@@ -171,11 +151,11 @@ const mobileVisibility = getMobileVisibility()
             table.atoms.globalFilter,
             table.atoms.pagination
         ].map((atom) => atom.subscribe(updateUrl))
-
-        return () => {
-          subscriptions.forEach((subscription) => {
-            subscription.unsubscribe()
-          })
+       
+       
+       return () => {
+          subscriptions.forEach((s) => s.unsubscribe())
+          resetSubscriptions.forEach((s) => s.unsubscribe())
         }
 
         function updateUrl() {
@@ -209,7 +189,7 @@ const mobileVisibility = getMobileVisibility()
           keepFocus: true,
         })
         }
-    }}
+    }
   )
 
 
@@ -258,7 +238,7 @@ const mobileVisibility = getMobileVisibility()
     </DropdownMenu.Root>
 </div>
 <!-- 6. Render markup from the table instance APIs -->
-<table class="w-full table-fixed overflow-scroll">
+<table class="w-full table-fixed ">
   <thead>
     {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
                 <tr class="bg-brand-500 text-text">         
