@@ -28,7 +28,7 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
       columns: ColumnDef<typeof features, TData>[]
       basePath: string
       title: string
-      columnVisibility: ColumnVisibilityState
+      desktopVisibility: ColumnVisibilityState
     }
 
     let {
@@ -36,17 +36,28 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
         columns,
         basePath,
         title,
-        columnVisibility
+        desktopVisibility
     }: Props = $props()
 
     
-
+// helper to select column depending on screen
+    function getMobileVisibility(): ColumnVisibilityState {
+    return Object.fromEntries(
+        columns
+            .filter(column => column.meta?.mobileVisible === false)
+            .filter(column => 'accessorKey' in column)
+            .map(column => [column.accessorKey, false])
+    )
+}
+    
+const mobileVisibility = getMobileVisibility()
 
 // tanstack atoms are read-only. To write atom we need external ones
   // Create stable external atoms for the individual state slices we want to
   // own. The table still creates internal base atoms for everything else.
+    const columnVisibilityAtom = createAtom<ColumnVisibilityState>({})
     const sortingAtom = createAtom<SortingState>([])
-    const columnVisibilityAtom = createAtom<ColumnVisibilityState>(columnVisibility)
+    //const columnVisibilityAtom = createAtom<ColumnVisibilityState>(columnVisibility)
     const colFilterAtom = createAtom<ColumnFiltersState>([])
     const filterAtom = createAtom<string>('')
     const paginationAtom = createAtom<PaginationState>({
@@ -84,7 +95,25 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
 // lifecycle initialization sequence: read URL -> set created atoms -> subscribe atoms use to update URL
     let isHydrating = true // guard flag
     onMount(() => {
-     
+     //hide column if on mobile, 1. check screen
+  // responsive column visibility
+    const media = window.matchMedia('(max-width: 767px)')
+
+    columnVisibilityAtom.set(
+        media.matches
+            ? mobileVisibility
+            : desktopVisibility
+    )
+
+    const handleChange = (event: MediaQueryListEvent) => {
+        columnVisibilityAtom.set(
+            event.matches
+                ? mobileVisibility
+                : desktopVisibility
+        )
+    }
+
+    media.addEventListener('change', handleChange)
     // 2. URL → atoms
         //read urls and set the atoms sort and filters
         const searchParams = new URLSearchParams(window.location.search)
@@ -154,6 +183,7 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
        
        
        return () => {
+         media.removeEventListener('change', handleChange)
           subscriptions.forEach((s) => s.unsubscribe())
           resetSubscriptions.forEach((s) => s.unsubscribe())
         }
@@ -305,13 +335,13 @@ import * as DropdownMenu from "$lib/components/ui/dropdown-menu"
 </table>
 <div class="grid md:flex justify-between gap-1 justify-items-end">
   <!-- page size selection -->
-   <div class="text-sm">
+   <div class="text-xs sm:text-sm">
         <Button variant="secondary" onclick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>First</Button>
-        <Button variant="secondary" onclick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous Page</Button>
+        <Button variant="secondary" onclick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Previous</Button>
       <span class="px-2 font-semibold">
           Page {table.atoms.pagination.get().pageIndex + 1} of {table.getPageCount()}
       </span>
-        <Button variant="secondary" onclick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next Page</Button>
+        <Button variant="secondary" onclick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Next</Button>
         <Button variant="secondary" onclick={() => table.lastPage()} disabled={!table.getCanLastPage()}>Last</Button>
   </div>
    

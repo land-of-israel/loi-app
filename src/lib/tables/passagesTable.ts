@@ -14,7 +14,7 @@ const ColumnVisibility = {
 }
 
 export const passageTableConfig = {
-  columnVisibility: ColumnVisibility,  
+  desktopVisibility: ColumnVisibility,  
 
 columns: [
   {

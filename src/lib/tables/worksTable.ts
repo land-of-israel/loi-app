@@ -12,7 +12,7 @@ const ColumnVisibility = {
 
 
 export const workTableConfig = {
-  columnVisibility: ColumnVisibility,  
+  desktopVisibility: ColumnVisibility,  
   columns:  [
   {
     accessorKey: 'title',
